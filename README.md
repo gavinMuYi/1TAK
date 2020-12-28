@@ -1,12 +1,23 @@
 # 1TAK
-Visual Web building platform
+可视化建站平台
 # 定义结构
 * 单元组件   
 ```
-  function fun(){
-       echo "这是一句非常牛逼的代码";
+  {
+    layout: {
+      position: {
+        x: 0, // 相对上级dom绝对定位
+        y: 0,
+      },
+      style: {
+        // dom树遍历
+        .a.b#c: {
+          color: #000000
+        }
+      }
+      props
+    }
   }
-  fun();
 ```
 * 组合组件   
 * 嵌套组件   
