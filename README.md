@@ -178,6 +178,15 @@
 
 ```javascript
 // 外层一定是一个有slot的单元组件
+/*
+    <div #id x,y>
+        <unit-f>
+            <div #id x,y slot scopedData>
+                <unit-c />
+            </div>
+        </unit-f>
+    </div>
+*/
 {
     type: 'nestification', // 嵌套组件
     name: 'customer-nestification',
