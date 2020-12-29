@@ -100,8 +100,8 @@
                 var data = JSON.parse(ev.dataTransfer.getData('DragComp'))
                 var dragCompData = {
                     id: data.id,
-                    x: ev.screenX - 310,
-                    y: ev.screenY - 130,
+                    x: ev.clientX - 310,
+                    y: ev.clientY - 50,
                     name: this.iconCompMap[data.id]
                 }
                 data.index !== undefined && this.comps.splice(data.index, 1)
