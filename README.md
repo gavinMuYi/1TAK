@@ -6,9 +6,9 @@
 
 * 单元组件  
 
-dom结构
-    - div #id
-        - unit
+dom结构  
+    - div #id  
+        - unit  
 
 ```javascript
 {
