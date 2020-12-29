@@ -8,18 +8,23 @@
 
 ```javascript
   {
+    type: 'unit', // 单元组件
+    name: 'INPUT',
+    id: 'INPUT-hash' // 组件id
     layout: {
-      position: {
-        x: 0, // 相对上级dom绝对定位
-        y: 0,
-      },
-      style: {
-        // dom树遍历
-        .a.b#c: {
-          color: #000000
+        position: {
+            x: 0, // 相对上级dom绝对定位
+            y: 0,
+        },
+        style: {
+            // dom树遍历
+            #INPUT-hash: {
+                border: none //组件外层div
+            },
+            #INPUT-hash.a.b#c: {
+                color: #000000
+            }
         }
-      }
-      props
     }
   }
 ```
