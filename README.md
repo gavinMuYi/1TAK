@@ -75,24 +75,99 @@
         }
     },
     props: {
-        data... // 从data中选择
+        combination-hash-$local-C: {
+            type: 'String',
+            dafault: ''
+        },
+        combination-hash-data... // 从data中选择+前缀命名
     },
     data: {
+        $local-C: '用户自定义变量',
         INPUT-hash: {
+            // 初始化配置时从 vue组件对象获取，clone一遍props，若在scoped对象中可选择设置于method中，
+            // 若依赖props设置 用户自定义变量
             INPUT-hash.props
         }
     },
+    event: ['combination-customer-event'],
     eventHandler: {
-        INPUT-hash.eventA: function(e) {}
+        INPUT-hash.eventA: function(e) {
+            this.INPUT2-hash.x = e
+            this.$emit('combination-customer-event', this.INPUT2-hash.x)
+        }
     },
-    children: [
+    children: [ // 被嵌套获得参数loop-hash-item,loop-hash-id,dom从外向里
         {
-            kind: 'single',
+            kind: 'unit',
             component: {
                 type: 'unit',
                 name: 'INPUT',
                 id: 'INPUT-hash'
                 ...
+            }
+        },
+        {
+            kind: 'combination',
+            component: {
+                type: 'combination',
+                ...
+            }
+        },
+        {
+            kind: 'group',
+            children: [{
+                kind: kind: 'unit',
+                component: {
+                    type: 'unit',
+                    ...
+                }
+            }, {
+                kind: kind: 'unit',
+                component: {
+                    type: 'unit',
+                    ...
+                }
+            }]
+        },
+        {
+            kind: 'loop',
+            flagData: 'loop-hash',
+            flagDesign: function() { // 注入methods,被嵌套获得参数loop-hash-item,loop-hash-id dom从外向里
+                res = this.x + this.$local-C + ...
+                return res
+            },
+            scoped: { // 配置时获得 loop-hash-item, loop-hash-id
+                kind: 'group',
+                children: [{
+                    kind: kind: 'unit',
+                    component: {
+                        type: 'unit',
+                        ...
+                    }
+                }, {
+                    kind: kind: 'unit',
+                    component: {
+                        type: 'unit',
+                        ...
+                    }
+                }]
+            }
+        },
+        {
+            kind: 'if',
+            flagData: 'if-hash',
+            flagDesign: function() { // 注入methods
+                res = this.y + this.$local-C + ...
+                return Boolean(res)
+            },
+            scoped: {
+                kind: 'unit',
+                component: {
+                    type: 'unit',
+                    name: 'INPUT',
+                    id: 'INPUT-hash'
+                    ...
+                }
             }
         }
     ]
