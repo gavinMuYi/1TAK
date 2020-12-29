@@ -177,6 +177,7 @@
 * 嵌套组件  
 
 ```javascript
+// 外层一定是一个有slot的单元组件
 {
     type: 'nestification', // 嵌套组件
     name: 'customer-nestification',
@@ -187,13 +188,69 @@
             y: 0,
         },
         style: {
-            // dom树遍历
-            #INPUT-hash: {
-                border: none //组件外层div
-            },
-            #INPUT-hash.a.b#c: {
-                color: #000000
+            #nestification-hash: {
+                border: none // 只设置组件外层div
             }
+        }
+    },
+    father: {
+        type: 'unit', // 单元组件
+        name: 'INPUT',
+        id: 'INPUT-hash' // 组件id
+        layout: {
+            position: {
+                x: 0, // 相对上级dom绝对定位
+                y: 0
+            },
+            style: {
+                // dom树遍历
+                #INPUT-hash: {
+                    border: none //组件外层div
+                },
+                #INPUT-hash.a.b#c: {
+                    color: #000000
+                }
+            }
+        }
+    },
+    child: {
+        slotA: {
+            type: 'unit', // 单元组件
+            name: 'INPUT',
+            id: 'INPUT-hash' // 组件id
+            layout: { // 没有定位
+                style: {
+                    // dom树遍历
+                    #INPUT-hash: {
+                        border: none //组件外层div
+                    },
+                    #INPUT-hash.a.b#c: {
+                        color: #000000
+                    }
+                }
+            }
+        }
+    },
+    props: {
+        combination-hash-$local-C: {
+            type: 'String',
+            dafault: ''
+        },
+        combination-hash-data... // 从data中选择+前缀命名
+    },
+    data: {
+        $local-C: '用户自定义变量',
+        INPUT-hash: {
+            // 初始化配置时从 vue组件对象获取，clone一遍props，若在child对象中可选择设置于method中，
+            // 若依赖props设置 用户自定义变量
+            INPUT-hash.props
+        }
+    },
+    event: ['combination-customer-event'],
+    eventHandler: {
+        INPUT-hash.eventA: function(e) {
+            this.INPUT2-hash.x = e
+            this.$emit('combination-customer-event', this.INPUT2-hash.x)
         }
     }
 }
