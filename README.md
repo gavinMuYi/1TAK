@@ -202,7 +202,7 @@
             }
         }
     },
-    father: {
+    component: {
         type: 'unit', // 单元组件
         name: 'INPUT',
         id: 'INPUT-hash' // 组件id
@@ -224,20 +224,20 @@
     },
     child: {
         slotA: {
-            type: 'unit', // 单元组件
-            name: 'INPUT',
-            id: 'INPUT-hash' // 组件id
-            layout: { // 没有定位
-                style: {
-                    // dom树遍历
-                    #INPUT-hash: {
-                        border: none //组件外层div
-                    },
-                    #INPUT-hash.a.b#c: {
-                        color: #000000
-                    }
+            kind: 'group',
+            children: [{
+                kind: kind: 'unit',
+                component: {
+                    type: 'unit',
+                    ...
                 }
-            }
+            }, {
+                kind: kind: 'unit',
+                component: {
+                    type: 'unit',
+                    ...
+                }
+            }]
         }
     },
     props: {
