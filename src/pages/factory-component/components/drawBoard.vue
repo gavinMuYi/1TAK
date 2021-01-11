@@ -9,8 +9,8 @@
                 top: comp.y + 'px',
                 left:  comp.x + 'px'
             }"
-            @drop.stop="dropin"
-            @dragover.stop="allowDropin"
+            @drop.stop="ev => {ev.preventDefault()}"
+            @dragover.stop="ev => {ev.preventDefault()}"
             draggable="true"
             @dragstart="move($event, comp, index)">
             {{ comp.name }}
@@ -21,7 +21,7 @@
 
 <script>
     // 注册单位组件
-    const requireComponent = require.context('../unit-components', false, /\w+\.(vue|js)$/);
+    const requireComponent = require.context('../../../unit-components', false, /\w+\.(vue|js)$/);
     var cmps = {};
     requireComponent.keys().map(fileName => {
         let cmp = requireComponent(fileName).default
@@ -42,12 +42,6 @@
             ...cmps
         },
         methods: {
-            allowDropin (ev) {
-                ev.preventDefault();
-            },
-            dropin (ev) {
-                ev.preventDefault();
-            },
             move (ev, comp, index) {
                 ev.dataTransfer.setData('DragComp', JSON.stringify({
                     id: comp.id,
