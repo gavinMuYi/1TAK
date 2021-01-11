@@ -10,47 +10,25 @@
         </div>
         <div class="work-space">
             <div class="left-bar">
-                <div class="title">单位 组件</div>
-                <ul class="materials-list" :style="{height: `calc(${100 * 2 / 3}% - 30px)`}">
-                    <li class="material" v-for="icon in unitCompIcons" :key="icon.key">
-                        <span
-                            :id="icon.key"
-                            :class="['list-icon', 'iconfont', icon.key]"
-                            draggable="true"
-                            @dragstart="drag">
-                        </span>
-                        <div class="material-name">
-                            {{ icon.name }}
-                        </div>
-                    </li>
-                </ul>
-                <div class="title">复合 组件</div>
-                <ul class="materials-list" :style="{height: `calc(${100 * 1 / 3}% - 30px)`}">
-                    <li class="material" v-for="icon in unitCompIcons" :key="icon.key">
-                        <span :class="['list-icon', 'iconfont', icon.key]"></span>
-                        <div class="material-name">
-                            {{ icon.name }}
-                        </div>
-                    </li>
-                </ul>
+                <span v-for="(menu, index) in componentsMenu" :key="menu.title">
+                    <div class="title">{{ menu.title }}</div>
+                    <ul class="materials-list" :style="{height: `calc(${100 * (index ? 1 : 2) / 3}% - 30px)`}">
+                        <li class="material" v-for="icon in menu.components" :key="icon.key">
+                            <span
+                                :id="icon.key"
+                                :class="['list-icon', 'iconfont', icon.key]"
+                                draggable="true"
+                                @dragstart="drag">
+                            </span>
+                            <div class="material-name">
+                                {{ icon.name }}
+                            </div>
+                        </li>
+                    </ul>
+                </span>
             </div>
             <div class="component-draw-space" @drop="drop" @dragover="allowDrop">
-                <div
-                    class="comp-box"
-                    v-for="(comp, index) in comps"
-                    :key="comp.id + comp.x + comp.y  + index"
-                    :style="{
-                        position: 'absolute',
-                        top: comp.y + 'px',
-                        left:  comp.x + 'px'
-                    }"
-                    @drop.stop="dropin"
-                    @dragover.stop="allowDropin"
-                    draggable="true"
-                    @dragstart="move($event, comp, index)">
-                    {{ comp.name }}
-                    <component :is="comp.name" />
-                </div>
+                <draw-board :comps="comps" />
             </div>
             <div class="right-bar">
                 <div class="title">子组件</div>
@@ -60,17 +38,14 @@
 </template>
 
 <script>
+    import DrawBoard from '../../components/drawBoard';
     import { unitCompIcons, iconCompMap } from './config.js';
-    const requireComponent = require.context('../../unit-components', false, /\w+\.(vue|js)$/);
-    var cmps = {};
-    requireComponent.keys().map(fileName => {
-        let cmp = requireComponent(fileName).default
-        cmps[cmp.name] = cmp
-    });
 
     export default {
         name: 'FactoryComponent',
-        components: cmps,
+        components: {
+            DrawBoard
+        },
         data () {
             return {
                 unitCompIcons: unitCompIcons,
@@ -78,13 +53,18 @@
                 comps: []
             }
         },
+        computed: {
+            componentsMenu () {
+                return [{
+                    title: '单位 组件',
+                    components: this.unitCompIcons
+                }, {
+                    title: '复合 组件',
+                    components: this.unitCompIcons
+                }]
+            }
+        },
         methods: {
-            move (ev, comp, index) {
-                ev.dataTransfer.setData('DragComp', JSON.stringify({
-                    id: comp.id,
-                    index: index
-                }));
-            },
             drag (ev) {
                 ev.dataTransfer.setData('DragComp', JSON.stringify({
                     id: ev.target.id
@@ -104,13 +84,6 @@
                 };
                 data.index !== undefined && this.comps.splice(data.index, 1);
                 this.comps.push(dragCompData);
-            },
-            allowDropin (ev) {
-                ev.preventDefault();
-            },
-            dropin (ev) {
-                ev.preventDefault();
-                console.log('21312', ev.target);
             }
         }
     }
@@ -125,26 +98,32 @@
         .pro-title {
             line-height: 50px;
             font-size: 32px;
+            font-weight: 700;
             color: #FFF;
             margin-left: 10px;
             display: inline-block;
             .icon-zuzhuangqiang {
-                font-size: 32px;
+                font-size: 40px;
                 display: inline-block;
-                padding-left: 8px;
+                padding-left: 10px;
                 line-height: 50px;
                 position: relative;
-                top: 4px;
+                top: 5px;
             }
         }
         .actions {
             float: right;
             color: #FFF;
+            font-weight: 700;
             .icon-baocun_mian {
                 font-size: 24px;
                 line-height: 50px;
                 color: #FFF;
+                font-weight: 400;
+                padding-left: 10px;
                 margin-right: 10px;
+                position: relative;
+                top: 2px;
             }
         }
     }
@@ -163,11 +142,6 @@
             vertical-align: top;
             font-size: 12px;
             overflow: auto;
-            .comp-box {
-                &:hover {
-                    background: #d9edff;
-                }
-            }
         }
         .right-bar {
             display: inline-block;
