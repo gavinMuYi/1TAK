@@ -1,4 +1,9 @@
-exports.sysCompIcons = [{
+exports.iconCompMap = {
+    'icon-shurukuang': 'TAK_INPUT',
+    'icon-wenzi': 'TAK_TEXT'
+};
+
+exports.unitCompIcons = [{
     key: 'icon-xunhuan',
     name: '循环'
 }, {
@@ -157,4 +162,4 @@ exports.sysCompIcons = [{
 }, {
     key: 'icon-liuchengtuh5-29',
     name: '下一步'
-}]
+}];

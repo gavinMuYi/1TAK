@@ -1,5 +1,5 @@
 <template>
-    <div class="depository-component">
+    <div class="factory-component">
         <div class="top-bar">
             <div class="pro-title">
                 1TAK<span class="iconfont icon-zuzhuangqiang"></span>
@@ -10,9 +10,9 @@
         </div>
         <div class="work-space">
             <div class="left-bar">
-                <div class="title">元 组件</div>
+                <div class="title">单位 组件</div>
                 <ul class="materials-list" :style="{height: `calc(${100 * 2 / 3}% - 30px)`}">
-                    <li class="material" v-for="icon in sysCompIcons" :key="icon.key">
+                    <li class="material" v-for="icon in unitCompIcons" :key="icon.key">
                         <span
                             :id="icon.key"
                             :class="['list-icon', 'iconfont', icon.key]"
@@ -26,7 +26,7 @@
                 </ul>
                 <div class="title">复合 组件</div>
                 <ul class="materials-list" :style="{height: `calc(${100 * 1 / 3}% - 30px)`}">
-                    <li class="material" v-for="icon in sysCompIcons" :key="icon.key">
+                    <li class="material" v-for="icon in unitCompIcons" :key="icon.key">
                         <span :class="['list-icon', 'iconfont', icon.key]"></span>
                         <div class="material-name">
                             {{ icon.name }}
@@ -60,22 +60,20 @@
 </template>
 
 <script>
-    import { sysCompIcons } from './depository-config/static-config.js'
-    import { iconCompMap } from './depository-config/icon-component-map.js'
-    const requireComponent = require.context('../meta-components', false, /\w+\.(vue|js)$/)
-    var cmps = {}
-
+    import { unitCompIcons, iconCompMap } from './config.js';
+    const requireComponent = require.context('../../unit-components', false, /\w+\.(vue|js)$/);
+    var cmps = {};
     requireComponent.keys().map(fileName => {
         let cmp = requireComponent(fileName).default
         cmps[cmp.name] = cmp
-    })
+    });
 
     export default {
-        name: 'DepositoryComponent',
+        name: 'FactoryComponent',
         components: cmps,
         data () {
             return {
-                sysCompIcons: sysCompIcons,
+                unitCompIcons: unitCompIcons,
                 iconCompMap: iconCompMap,
                 comps: []
             }
@@ -85,41 +83,41 @@
                 ev.dataTransfer.setData('DragComp', JSON.stringify({
                     id: comp.id,
                     index: index
-                }))
+                }));
             },
             drag (ev) {
                 ev.dataTransfer.setData('DragComp', JSON.stringify({
                     id: ev.target.id
-                }))
+                }));
             },
             allowDrop (ev) {
-                ev.preventDefault()
+                ev.preventDefault();
             },
             drop (ev) {
-                ev.preventDefault()
-                var data = JSON.parse(ev.dataTransfer.getData('DragComp'))
+                ev.preventDefault();
+                var data = JSON.parse(ev.dataTransfer.getData('DragComp'));
                 var dragCompData = {
                     id: data.id,
                     x: ev.clientX - 310,
                     y: ev.clientY - 50,
                     name: this.iconCompMap[data.id]
-                }
-                data.index !== undefined && this.comps.splice(data.index, 1)
-                this.comps.push(dragCompData)
+                };
+                data.index !== undefined && this.comps.splice(data.index, 1);
+                this.comps.push(dragCompData);
             },
             allowDropin (ev) {
-                ev.preventDefault()
+                ev.preventDefault();
             },
             dropin (ev) {
-                ev.preventDefault()
-                console.log('21312', ev.target)
+                ev.preventDefault();
+                console.log('21312', ev.target);
             }
         }
     }
 </script>
 
 <style lang="less">
-.depository-component {
+.factory-component {
     height: 100%;
     .top-bar {
         height: 50px;
@@ -209,14 +207,15 @@
                 display: block;
                 height: 70px;
                 line-height: 70px;
-                font-size: 30px;
+                font-size: 24px;
                 margin: 0 auto 5px;
                 color: #191f1e;
-                -webkit-transition: font-size 0.25s linear, width 0.25s linear;
-                -moz-transition: font-size 0.25s linear, width 0.25s linear;
-                transition: font-size 0.25s linear, width 0.25s linear;
+                -webkit-transition: font-size 0.15s linear, width 0.15s linear;
+                -moz-transition: font-size 0.15s linear, width 0.15s linear;
+                transition: font-size 0.15s linear, width 0.15s linear;
                 &:hover {
-                    font-size: 60px;
+                    font-size: 56px;
+                    color: #6879ff;
                 }
             }
             .material-name {

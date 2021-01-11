@@ -1,13 +1,11 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Factory from '@/pages/factory'
-import Depository from '@/pages/depository'
-import DepositoryComponent from '@/pages/depository-component'
-import ExhibitionHall from '@/pages/exhibition-hall'
-import NewMaterial from '@/pages/new-material'
-import Index from '@/pages/index'
+import Vue from 'vue';
+import Router from 'vue-router';
+import FactoryPage from '@/pages/factory-page/index';
+import FactoryComponent from '@/pages/factory-component/index';
+import PageExhibition from '@/pages/page-exhibition/index';
+import Index from '@/pages/index';
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
     routes: [
@@ -20,44 +18,28 @@ export default new Router({
             component: Index
         },
         {
-            path: '/factory',
-            name: 'Factory',
-            meta: {
-                title: '首页'
-            },
-            component: Factory
-        },
-        {
-            path: '/depository',
-            name: 'Depository',
+            path: '/factory/page',
+            name: 'FactoryPage',
             meta: {
                 title: '页面工厂'
             },
-            component: Depository
+            component: FactoryPage
         },
         {
-            path: '/exhibition-hall',
-            name: 'ExhibitionHall',
-            meta: {
-                title: '页面展示'
-            },
-            component: ExhibitionHall
-        },
-        {
-            path: '/new-material',
-            name: 'NewMaterial',
-            meta: {
-                title: '单位组件'
-            },
-            component: NewMaterial
-        },
-        {
-            path: '/depository-component',
-            name: 'DepositoryComponent',
+            path: '/factory/component',
+            name: 'FactoryComponent',
             meta: {
                 title: '组件工厂'
             },
-            component: DepositoryComponent
+            component: FactoryComponent
+        },
+        {
+            path: '/page/exhibition',
+            name: 'PageExhibition',
+            meta: {
+                title: '页面展示'
+            },
+            component: PageExhibition
         }
     ]
-})
+});

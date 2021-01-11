@@ -1,12 +1,12 @@
 <template>
-    <div class="1tak-factory">
-        1tak-factory
+    <div class="1tak-page_exhibition">
+        1tak-page_exhibition
     </div>
 </template>
 
 <script>
     export default {
-        name: 'Factory',
+        name: 'PageExhibition',
         data () {
             return {
             }
