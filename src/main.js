@@ -7,6 +7,11 @@ import '@/assets/system-icons/iconfont.css'
 
 Vue.config.productionTip = false
 
+router.beforeEach((to, from, next) => {
+    document.title = '1TAK - ' + to.meta.title;
+    next();
+});
+
 /* eslint-disable no-new */
 new Vue({
     el: '#app',

@@ -120,7 +120,7 @@
     height: 100%;
     .top-bar {
         height: 50px;
-        background: #333;
+        background: #191f1e;
         .pro-title {
             line-height: 50px;
             font-size: 32px;
@@ -174,7 +174,7 @@
         font-size: 14px;
         font-weight: 700;
         padding-left: 15px;
-        background: #191f1e;
+        background: #4854b4;
         color: #FFF;
     }
     .materials-list {
@@ -200,7 +200,7 @@
                 line-height: 70px;
                 font-size: 30px;
                 margin: 0 auto 5px;
-                color: #333;
+                color: #191f1e;
                 -webkit-transition: font-size 0.25s linear, width 0.25s linear;
                 -moz-transition: font-size 0.25s linear, width 0.25s linear;
                 transition: font-size 0.25s linear, width 0.25s linear;

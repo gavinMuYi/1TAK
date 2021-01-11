@@ -21,6 +21,7 @@ module.exports = {
     ],
     // add your custom rules here
     rules: {
+        'semi': 0,
         'indent': 'off',
         'vue/script-indent': [
             'error',
