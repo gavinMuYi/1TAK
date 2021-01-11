@@ -108,7 +108,7 @@
             display: inline-block;
             height: 100%;
             width: 300px;
-            border-left: 1px solid #191f1e;
+            border-left: 1px solid #ededed;
             vertical-align: top;
         }
     }

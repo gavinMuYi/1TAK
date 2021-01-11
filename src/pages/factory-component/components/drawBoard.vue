@@ -13,7 +13,6 @@
             @dragover.stop="ev => {ev.preventDefault()}"
             draggable="true"
             @dragstart="move($event, comp, index)">
-            {{ comp.name }}
             <component :is="comp.name" />
         </div>
     </div>

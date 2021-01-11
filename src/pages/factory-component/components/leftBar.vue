@@ -54,5 +54,6 @@
     .left-bar {
         display: inline-block;
         height: 100%;
+        border-right: 1px solid #ededed;;
     }
 </style>
