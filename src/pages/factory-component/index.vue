@@ -11,29 +11,31 @@
         <div class="work-space">
             <left-bar />
             <div class="component-draw-space" @drop="drop" @dragover="ev => {ev.preventDefault()}">
-                <draw-board :comps="comps" />
+                <draw-board :comps="comps" @editComponent="editComponent" />
             </div>
-            <div class="right-bar">
-                <div class="title">子组件</div>
-            </div>
+            <right-bar :nowEdit="nowEdit" />
         </div>
     </div>
 </template>
 
 <script>
     import LeftBar from './components/leftBar';
+    import RightBar from './components/rightBar';
     import DrawBoard from './components/drawBoard';
     import { iconCompMap } from './config.js';
+    import { createHash } from '../../utils/common.js';
 
     export default {
         name: 'FactoryComponent',
         components: {
             LeftBar,
+            RightBar,
             DrawBoard
         },
         data () {
             return {
                 iconCompMap: iconCompMap,
+                nowEdit: {},
                 comps: []
             }
         },
@@ -44,11 +46,18 @@
                 var dragCompData = {
                     id: data.id,
                     x: ev.clientX - 310,
-                    y: ev.clientY - 50,
+                    y: ev.clientY - 100,
                     name: this.iconCompMap[data.id]
                 };
+                data.config !== undefined
+                    ? (dragCompData.config = data.config)
+                    : (dragCompData.config = { hash: createHash() });
                 data.index !== undefined && this.comps.splice(data.index, 1);
                 this.comps.push(dragCompData);
+                this.editComponent(dragCompData);
+            },
+            editComponent (e) {
+                this.$set(this, 'nowEdit', e);
             }
         }
     }
@@ -58,42 +67,44 @@
 .factory-component {
     height: 100%;
     .top-bar {
-        height: 50px;
-        background: #191f1e;
+        height: 100px;
+        background: #FFF;
+        border-bottom: 1px solid #ededed;
+        box-sizing: border-box;
         .pro-title {
-            line-height: 50px;
+            line-height: 100px;
             font-size: 32px;
             font-weight: 700;
-            color: #FFF;
-            margin-left: 10px;
+            color: #4854b4;
+            margin-left: 30px;
             display: inline-block;
             .icon-zuzhuangqiang {
                 font-size: 40px;
                 display: inline-block;
                 padding-left: 10px;
-                line-height: 50px;
+                line-height: 100px;
                 position: relative;
                 top: 5px;
             }
         }
         .actions {
             float: right;
-            color: #FFF;
+            color: #4854b4;
             font-weight: 700;
             .icon-baocun_mian {
                 font-size: 24px;
-                line-height: 50px;
-                color: #FFF;
+                line-height: 100px;
+                color: #4854b4;
                 font-weight: 400;
                 padding-left: 10px;
-                margin-right: 10px;
+                margin-right: 30px;
                 position: relative;
                 top: 2px;
             }
         }
     }
     .work-space {
-        height: ~'calc(100% - 50px)';
+        height: ~'calc(100% - 100px)';
         font-size: 0px;
         .component-draw-space {
             display: inline-block;
@@ -103,13 +114,6 @@
             vertical-align: top;
             font-size: 12px;
             overflow: auto;
-        }
-        .right-bar {
-            display: inline-block;
-            height: 100%;
-            width: 300px;
-            border-left: 1px solid #ededed;
-            vertical-align: top;
         }
     }
     .title {

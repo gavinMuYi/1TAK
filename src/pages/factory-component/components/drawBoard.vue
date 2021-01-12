@@ -4,16 +4,18 @@
             class="comp-box"
             v-for="(comp, index) in comps"
             :key="comp.id + comp.x + comp.y  + index"
+            :id="comp.config.hash + '-box'"
             :style="{
                 position: 'absolute',
                 top: comp.y + 'px',
                 left:  comp.x + 'px'
             }"
+            draggable="true"
             @drop.stop="ev => {ev.preventDefault()}"
             @dragover.stop="ev => {ev.preventDefault()}"
-            draggable="true"
-            @dragstart="move($event, comp, index)">
-            <component :is="comp.name" />
+            @dragstart="move($event, comp, index)"
+            @click="editComponent(comp)">
+            <component :is="comp.name" :id="comp.config.hash" />
         </div>
     </div>
 </template>
@@ -44,8 +46,12 @@
             move (ev, comp, index) {
                 ev.dataTransfer.setData('DragComp', JSON.stringify({
                     id: comp.id,
+                    config: comp.config,
                     index: index
                 }));
+            },
+            editComponent (comp) {
+                this.$emit('editComponent', comp);
             }
         }
     }

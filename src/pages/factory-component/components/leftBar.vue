@@ -2,7 +2,7 @@
     <div class="left-bar">
         <span v-for="(menu, index) in componentsMenu" :key="menu.title">
             <div class="title">{{ menu.title }}</div>
-            <ul class="materials-list" :style="{height: `calc(${100 * (index ? 1 : 2) / 3}% - 30px)`}">
+            <ul class="materials-list" :style="{height: `calc(${100 * (index ? 2 : 3) / 5}% - 30px)`}">
                 <li class="material" v-for="icon in menu.components" :key="icon.key">
                     <span
                         :id="icon.key"
