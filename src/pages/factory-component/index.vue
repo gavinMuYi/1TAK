@@ -12,7 +12,7 @@
             <left-bar />
             <div class="space-content">
                 <div class="component-draw-space" ref="drawSpace" @drop="drop" @dragover="ev => {ev.preventDefault()}">
-                    <draw-board :comps="comps" @editComponent="editComponent" @editContent="editContent" />
+                    <draw-board :comps="comps" @editComponent="editComponent" @editContent="editContent" :cusComp="cusComp" :key="refresh" />
                 </div>
             </div>
             <right-bar :nowEdit="nowEdit" />
@@ -42,6 +42,7 @@
         },
         data () {
             return {
+                refresh: 0,
                 iconCompMap: iconCompMap,
                 nowEdit: {},
                 comps: [],
@@ -50,10 +51,8 @@
         },
         computed: {
             cusComp () {
-                // console.log(cmps[this.comps[0].name].props);
                 return {
                     content: true, // 仅用于配置
-                    id: 'cus-comp-cus-name',
                     type: 'combination',
                     config: {
                         hash: this.cusCompHash,
@@ -64,7 +63,7 @@
                         data: {
                             props: {},
                             data: {
-                                // this.comps.props
+                                ...this.getCompsProps(this.comps) // 获取子组件的props
                             },
                             eventHandlers: {},
                             emitEvents: []
@@ -78,6 +77,20 @@
             this.$set(this, 'nowEdit', this.cusComp);
         },
         methods: {
+            getCompsProps (comps) {
+                this.$nextTick(() => {
+                    this.refresh++;
+                });
+                let props = {};
+                comps.forEach(comp => {
+                    this.$set(props, comp.name + '-' + comp.config.hash, {});
+                    var prop = cmps[comp.name].props;
+                    for (let key in prop) {
+                        this.$set(props[comp.name + '-' + comp.config.hash], key, prop[key].default);
+                    }
+                });
+                return props;
+            },
             drop (ev) {
                 ev.preventDefault();
                 var data = JSON.parse(ev.dataTransfer.getData('DragComp'));

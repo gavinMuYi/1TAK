@@ -1,6 +1,6 @@
 <template>
     <div class="draw-board" @click="editContent">
-        <cus-comp :comps="comps" @editComponent="editComponent" />
+        <cus-comp :comps="cusComp.comps" @editComponent="editComponent" />
     </div>
 </template>
 
@@ -17,14 +17,16 @@
     export default {
         name: 'DrawBoard',
         props: {
-            comps: {
-                type: Array,
+            cusComp: {
+                type: Object,
                 default: () => {
-                    return [];
+                    return {
+                    };
                 }
             }
         },
         created () {
+            let that = this;
             Vue.component('cus-comp', {
                 template: `
                     <div class="cus-comp">
@@ -54,6 +56,14 @@
                             return [];
                         }
                     }
+                },
+                data () {
+                    return {
+                        ...that.cusComp.config.data.data
+                    }
+                },
+                mounted () {
+                    console.log(this);
                 },
                 components: {
                     ...cmps
