@@ -8,7 +8,7 @@
                         :id="icon.key"
                         :class="['list-icon', 'iconfont', icon.key]"
                         draggable="true"
-                        @dragstart="drag">
+                        @dragstart="drag($event, index ? 'combination' : 'unit')">
                     </span>
                     <div class="material-name">
                         {{ icon.name }}
@@ -41,9 +41,10 @@
             }
         },
         methods: {
-            drag (ev) {
+            drag (ev, type) {
                 ev.dataTransfer.setData('DragComp', JSON.stringify({
-                    id: ev.target.id
+                    id: ev.target.id,
+                    type: type
                 }));
             }
         }

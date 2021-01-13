@@ -1,8 +1,11 @@
 <template>
     <div class="right-bar">
-        <div class="title">子组件</div>
-        <div class="config-bar" v-if="Object.keys(nowEdit).length">
-            <div class="config-comp">
+        <div class="title">{{ nowEdit.content ? '容器' : '子组件' }}</div>
+        <div class="config-bar" v-if="Object.keys(nowEdit).length"><div class="config-comp">
+            <span class="config-comp-title">组件分类: </span>
+                <span>{{ compType[nowEdit.type] }}</span>
+            </div>
+            <div class="config-comp" v-if="!nowEdit.content">
                 <span class="config-comp-title">组件类型: </span>
                 <span>{{ getType(nowEdit.id) }}</span>
             </div>
@@ -10,11 +13,11 @@
                 <span class="config-comp-title">ID: </span>
                 <span>{{ nowEdit.config.hash }}</span>
             </div>
-            <div class="config-comp">
+            <div class="config-comp" v-if="!nowEdit.content">
                 <span class="config-comp-title">X轴: </span>
                 <span>{{ nowEdit.x }}</span>
             </div>
-            <div class="config-comp">
+            <div class="config-comp" v-if="!nowEdit.content">
                 <span class="config-comp-title">Y轴: </span>
                 <span>{{ nowEdit.y }}</span>
             </div>
@@ -37,7 +40,12 @@
         },
         data () {
             return {
-                unitCompIcons: unitCompIcons
+                unitCompIcons: unitCompIcons,
+                compType: {
+                    unit: '单位组件',
+                    combination: '组合组件',
+                    nestification: '嵌套组件'
+                }
             }
         },
         methods: {

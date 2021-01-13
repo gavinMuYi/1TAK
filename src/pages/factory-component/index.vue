@@ -10,8 +10,10 @@
         </div>
         <div class="work-space">
             <left-bar />
-            <div class="component-draw-space" @drop="drop" @dragover="ev => {ev.preventDefault()}">
-                <draw-board :comps="comps" @editComponent="editComponent" />
+            <div class="space-content">
+                <div class="component-draw-space" ref="drawSpace" @drop="drop" @dragover="ev => {ev.preventDefault()}">
+                    <draw-board :comps="comps" @editComponent="editComponent" @editContent="editContent" />
+                </div>
             </div>
             <right-bar :nowEdit="nowEdit" />
         </div>
@@ -36,17 +38,39 @@
             return {
                 iconCompMap: iconCompMap,
                 nowEdit: {},
-                comps: []
+                comps: [],
+                cusCompHash: createHash()
             }
+        },
+        computed: {
+            cusComp () {
+                return {
+                    content: true, // 仅用于配置
+                    id: 'cus-comp-cus-name',
+                    type: 'combination',
+                    config: {
+                        hash: this.cusCompHash,
+                        style: {
+                            width: '100%',
+                            height: '100%'
+                        }
+                    },
+                    comps: this.comps
+                }
+            }
+        },
+        mounted () {
+            this.$set(this, 'nowEdit', this.cusComp);
         },
         methods: {
             drop (ev) {
                 ev.preventDefault();
                 var data = JSON.parse(ev.dataTransfer.getData('DragComp'));
                 var dragCompData = {
+                    ...data,
                     id: data.id,
-                    x: ev.clientX - 310,
-                    y: ev.clientY - 100,
+                    x: ev.clientX - this.$refs.drawSpace.offsetLeft,
+                    y: ev.clientY - this.$refs.drawSpace.offsetTop,
                     name: this.iconCompMap[data.id]
                 };
                 data.config !== undefined
@@ -58,6 +82,9 @@
             },
             editComponent (e) {
                 this.$set(this, 'nowEdit', e);
+            },
+            editContent () {
+                this.$set(this, 'nowEdit', this.cusComp);
             }
         }
     }
@@ -106,11 +133,19 @@
     .work-space {
         height: ~'calc(100% - 100px)';
         font-size: 0px;
+        .space-content {
+            height: 100%;
+            width: ~'calc(100% - 620px)';
+            display: inline-block;
+            vertical-align: top;
+            background: #ededed;
+        }
         .component-draw-space {
             display: inline-block;
             position: relative;
             height: 100%;
-            width: ~'calc(100% - 620px)';
+            background: #fff;
+            width: 100%;
             vertical-align: top;
             font-size: 12px;
             overflow: auto;
