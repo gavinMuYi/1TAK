@@ -53,6 +53,14 @@
                         style: {
                             width: '100%',
                             height: '100%'
+                        },
+                        data: {
+                            props: {},
+                            data: {
+                                // this.comps.props
+                            },
+                            eventHandlers: {},
+                            emitEvents: []
                         }
                     },
                     comps: this.comps
