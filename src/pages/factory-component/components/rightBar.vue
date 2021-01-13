@@ -5,9 +5,9 @@
             <span class="config-comp-title">组件分类: </span>
                 <span>{{ compType[nowEdit.type] }}</span>
             </div>
-            <div class="config-comp" v-if="!nowEdit.content">
+            <div class="config-comp">
                 <span class="config-comp-title">组件类型: </span>
-                <span>{{ getType(nowEdit.id) }}</span>
+                <span>{{ nowEdit.content ? '容器' : getType(nowEdit.id) }}</span>
             </div>
             <div class="config-comp">
                 <span class="config-comp-title">ID: </span>
