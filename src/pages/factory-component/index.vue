@@ -2,7 +2,7 @@
     <div class="factory-component">
         <div class="top-bar">
             <div class="pro-title">
-                ACE<span class="iconfont icon-zuzhuangqiang"></span>
+                Vv Page<span class="iconfont icon-zuzhuangqiang"></span>
             </div>
             <div class="actions">
                 create component... <span class="iconfont icon-baocun_mian"></span>
@@ -86,7 +86,7 @@
                     this.$set(props, comp.name + '-' + comp.config.hash, {});
                     var prop = cmps[comp.name].props;
                     for (let key in prop) {
-                        this.$set(props[comp.name + '-' + comp.config.hash], key, prop[key].default);
+                        this.$set(props[comp.name + '-' + comp.config.hash], key, typeof prop[key].type() === 'object' ? prop[key].default() : prop[key].default);
                     }
                 });
                 return props;

@@ -21,6 +21,10 @@
                 <span class="config-comp-title">Y轴: </span>
                 <span>{{ nowEdit.y }}</span>
             </div>
+            <div class="config-comp" v-if="nowEdit.content">
+                <span class="config-comp-title">数据: </span>
+                <span>{{ nowEdit.config }}</span>
+            </div>
         </div>
     </div>
 </template>

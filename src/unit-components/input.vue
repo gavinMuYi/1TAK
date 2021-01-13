@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        name: 'ACE_INPUT',
+        name: 'Vv_INPUT',
         props: {
             value: {
                 type: String,

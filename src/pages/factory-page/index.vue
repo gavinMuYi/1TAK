@@ -1,6 +1,6 @@
 <template>
     <div class="factory-page">
-        ACE-factory-page
+        Vv Page-factory-page
     </div>
 </template>
 

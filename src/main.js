@@ -6,7 +6,7 @@ import '@/assets/system-icons/iconfont.css';
 Vue.config.productionTip = false;
 
 router.beforeEach((to, from, next) => {
-    document.title = 'ACE - ' + to.meta.title;
+    document.title = 'Vv Page - ' + to.meta.title;
     next();
 });
 
