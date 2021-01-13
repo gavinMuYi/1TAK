@@ -1,12 +1,19 @@
 <template>
     <div>
-        TEXTsss
+        {{ value }}
     </div>
 </template>
 
 <script>
     export default {
-        name: 'TAK_TEXT'
+        name: 'ACE_TEXT',
+        props: {
+            value: {
+                type: String,
+                default: '这是一个文本框'
+            }
+        }
+
     }
 </script>
 

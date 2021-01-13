@@ -26,6 +26,12 @@
     import DrawBoard from './components/drawBoard';
     import { iconCompMap } from './config.js';
     import { createHash } from '../../utils/common.js';
+    const requireComponent = require.context('../../unit-components', false, /\w+\.(vue|js)$/);
+    var cmps = {};
+    requireComponent.keys().map(fileName => {
+        let cmp = requireComponent(fileName).default
+        cmps[cmp.name] = cmp
+    });
 
     export default {
         name: 'FactoryComponent',
@@ -44,6 +50,7 @@
         },
         computed: {
             cusComp () {
+                // console.log(cmps[this.comps[0].name].props);
                 return {
                     content: true, // 仅用于配置
                     id: 'cus-comp-cus-name',

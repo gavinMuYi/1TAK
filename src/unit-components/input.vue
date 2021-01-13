@@ -1,12 +1,22 @@
 <template>
     <div>
-        <input />
+        <input :placeholder="placeholder" :value="value" />
     </div>
 </template>
 
 <script>
     export default {
-        name: 'TAK_INPUT'
+        name: 'ACE_INPUT',
+        props: {
+            value: {
+                type: String,
+                default: ''
+            },
+            placeholder: {
+                type: String,
+                default: '请输入'
+            }
+        }
     }
 </script>
 
