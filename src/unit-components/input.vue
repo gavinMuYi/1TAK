@@ -7,6 +7,11 @@
 <script>
     export default {
         name: 'Vv_INPUT',
+        event: [{
+            name: 'change',
+            label: '输入框chang事件',
+            params: '输入值'
+        }],
         props: {
             value: {
                 type: String,
