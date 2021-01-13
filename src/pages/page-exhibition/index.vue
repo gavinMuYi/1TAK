@@ -1,6 +1,6 @@
 <template>
-    <div class="1tak-page_exhibition">
-        1tak-page_exhibition
+    <div class="ACE-page_exhibition">
+        ACE-page_exhibition
     </div>
 </template>
 

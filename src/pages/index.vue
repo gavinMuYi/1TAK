@@ -1,5 +1,5 @@
 <template>
-    <div class="1tak-index">
+    <div class="ACE-index">
         <router-link :to="{ name: 'NewMaterial' }">New Material</router-link>
         <router-link :to="{ name: 'Depository' }">Depository</router-link>
         <router-link :to="{ name: 'Factory' }">Factory</router-link>

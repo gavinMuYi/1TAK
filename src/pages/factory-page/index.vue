@@ -1,6 +1,6 @@
 <template>
     <div class="factory-page">
-        1tak-factory-page
+        ACE-factory-page
     </div>
 </template>
 

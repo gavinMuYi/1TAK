@@ -2,7 +2,7 @@
     <div class="factory-component">
         <div class="top-bar">
             <div class="pro-title">
-                1TAK<span class="iconfont icon-zuzhuangqiang"></span>
+                ACE<span class="iconfont icon-zuzhuangqiang"></span>
             </div>
             <div class="actions">
                 create component... <span class="iconfont icon-baocun_mian"></span>
@@ -68,14 +68,14 @@
     height: 100%;
     .top-bar {
         height: 100px;
-        background: #FFF;
+        background: #333;
         border-bottom: 1px solid #ededed;
         box-sizing: border-box;
         .pro-title {
             line-height: 100px;
             font-size: 32px;
             font-weight: 700;
-            color: #4854b4;
+            color: #ffb100;
             margin-left: 30px;
             display: inline-block;
             .icon-zuzhuangqiang {
@@ -89,12 +89,12 @@
         }
         .actions {
             float: right;
-            color: #4854b4;
+            color: #ffb100;
             font-weight: 700;
             .icon-baocun_mian {
                 font-size: 24px;
                 line-height: 100px;
-                color: #4854b4;
+                color: #ffb100;
                 font-weight: 400;
                 padding-left: 10px;
                 margin-right: 30px;
@@ -122,7 +122,7 @@
         font-size: 14px;
         font-weight: 700;
         padding-left: 15px;
-        background: #4854b4;
+        background: #ffb100;
         color: #FFF;
     }
     .materials-list {
@@ -154,7 +154,7 @@
                 transition: font-size 0.15s linear, width 0.15s linear;
                 &:hover {
                     font-size: 56px;
-                    color: #6879ff;
+                    color: #ffb100;
                 }
             }
             .material-name {
