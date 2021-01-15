@@ -28,27 +28,45 @@
         created () {
             let that = this;
             Vue.component('cus-comp', {
-                template: `
-                    <div class="cus-comp">
-                        <div
-                            class="comp-box"
-                            v-for="(comp, index) in comps"
-                            :key="comp.id + comp.x + comp.y  + index"
-                            :id="comp.config.hash + '-box'"
-                            :style="{
-                                position: 'absolute',
-                                top: comp.y + 'px',
-                                left:  comp.x + 'px'
-                            }"
-                            draggable="true"
-                            @drop.stop="ev => {ev.preventDefault()}"
-                            @dragover.stop="ev => {ev.preventDefault()}"
-                            @dragstart="move($event, comp, index)"
-                            @click.stop="editComponent(comp)">
-                            <component :is="comp.name" :id="comp.config.hash" />
+                render (h) {
+                    return (
+                        <div class="cus-comp">
+                        {
+                            this.comps.map((comp, index) => {
+                                var props = {};
+                                Object.keys(that.cusComp.config.data.data[comp.name + '-' + comp.config.hash]).forEach(key => {
+                                    props[key] = that.cusComp.config.data.data[comp.name + '-' + comp.config.hash][key]
+                                })
+                                return (
+                                    <div
+                                        class="comp-box"
+                                        key={comp.id + comp.x + comp.y + index}
+                                        id={comp.config.hash + '-box'}
+                                        style={{
+                                            position: 'absolute',
+                                            top: comp.y + 'px',
+                                            left: comp.x + 'px'
+                                        }}
+                                        draggable={true}
+                                        onDrop={ev => { ev.stopPropagation(); ev.preventDefault(); }}
+                                        onDragover={ev => { ev.stopPropagation(); ev.preventDefault(); }}
+                                        onDragstart={ev => { this.move(ev, comp, index); }}
+                                        onClick={ev => { ev.stopPropagation(); this.editComponent(comp); }}>
+                                        {
+                                            h(comp.name, {
+                                                attrs: {
+                                                    id: comp.config.hash
+                                                },
+                                                props: props
+                                            })
+                                        }
+                                    </div>
+                                )
+                            })
+                        }
                         </div>
-                    </div>
-                `,
+                    )
+                },
                 props: {
                     comps: {
                         type: Array,

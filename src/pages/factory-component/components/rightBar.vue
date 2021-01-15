@@ -27,8 +27,8 @@
             </div>
             <div v-if="currentEdit.content">
                 <div class="config-comp" v-for="key in Object.keys(currentEdit.config.data.data)" :key="key">
-                    <div>{{ key }}</div>
-                    <div>组件接口:</div>
+                    <div class="config-comp">{{ key }}</div>
+                    <div class="config-comp">组件接口:</div>
                     <div class="config-comp" v-for="datakey in Object.keys(currentEdit.config.data.data[key])" :key="datakey">
                         <span class="config-comp-title">{{ datakey }}</span>
                         <input v-model="currentEdit.config.data.data[key][datakey]" />
