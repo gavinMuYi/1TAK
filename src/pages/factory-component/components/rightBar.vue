@@ -15,11 +15,11 @@
             </div>
             <div class="config-comp" v-if="!currentEdit.content">
                 <span class="config-comp-title">X轴: </span>
-                <input v-model="currentEdit.x" />
+                <input v-model="currentEdit.x" /> px
             </div>
             <div class="config-comp" v-if="!currentEdit.content">
                 <span class="config-comp-title">Y轴: </span>
-                <input v-model="currentEdit.y" />
+                <input v-model="currentEdit.y" /> px
             </div>
             <div class="config-comp" v-if="currentEdit.content">
                 <span class="config-comp-title">数据: </span>
