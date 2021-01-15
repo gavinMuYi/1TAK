@@ -1,29 +1,29 @@
 <template>
     <div class="right-bar">
-        <div class="title">{{ nowEdit.content ? '容器' : '子组件' }}</div>
-        <div class="config-bar" v-if="Object.keys(nowEdit).length"><div class="config-comp">
+        <div class="title">{{ currentEdit.content ? '容器' : '子组件' }}</div>
+        <div class="config-bar" v-if="Object.keys(currentEdit).length"><div class="config-comp">
             <span class="config-comp-title">组件分类: </span>
-                <span>{{ compType[nowEdit.type] }}</span>
+                <span>{{ compType[currentEdit.type] }}</span>
             </div>
             <div class="config-comp">
                 <span class="config-comp-title">组件类型: </span>
-                <span>{{ nowEdit.content ? '容器' : getType(nowEdit.id) }}</span>
+                <span>{{ currentEdit.content ? '容器' : getType(currentEdit.id) }}</span>
             </div>
             <div class="config-comp">
                 <span class="config-comp-title">ID: </span>
-                <span>{{ nowEdit.config.hash }}</span>
+                <span>{{ currentEdit.config.hash }}</span>
             </div>
-            <div class="config-comp" v-if="!nowEdit.content">
+            <div class="config-comp" v-if="!currentEdit.content">
                 <span class="config-comp-title">X轴: </span>
-                <span>{{ nowEdit.x }}</span>
+                <input v-model="currentEdit.x" />
             </div>
-            <div class="config-comp" v-if="!nowEdit.content">
+            <div class="config-comp" v-if="!currentEdit.content">
                 <span class="config-comp-title">Y轴: </span>
-                <span>{{ nowEdit.y }}</span>
+                <input v-model="currentEdit.y" />
             </div>
-            <div class="config-comp" v-if="nowEdit.content">
+            <div class="config-comp" v-if="currentEdit.content">
                 <span class="config-comp-title">数据: </span>
-                <span>{{ nowEdit.config }}</span>
+                <span>{{ currentEdit.config }}</span>
             </div>
         </div>
     </div>
@@ -50,6 +50,19 @@
                     combination: '组合组件',
                     nestification: '嵌套组件'
                 }
+            }
+        },
+        computed: {
+            currentEdit () {
+                return this.nowEdit;
+            }
+        },
+        watch: {
+            currentEdit: {
+                handler (val) {
+                    this.$emit('updateParams', val);
+                },
+                deep: true
             }
         },
         methods: {
