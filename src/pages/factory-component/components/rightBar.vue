@@ -100,6 +100,8 @@
         border-left: 1px solid #ededed;
         vertical-align: top;
         .config-bar {
+            overflow: auto;
+            width: 308px;
             height: ~'calc(100% - 30px)';
             box-sizing: border-box;
             padding: 20px 10px 0 20px;
