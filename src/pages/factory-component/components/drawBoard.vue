@@ -80,9 +80,6 @@
                         ...that.cusComp.config.data.data
                     }
                 },
-                mounted () {
-                    console.log(this);
-                },
                 components: {
                     ...cmps
                 },

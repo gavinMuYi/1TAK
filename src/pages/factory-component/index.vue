@@ -15,7 +15,7 @@
                     <draw-board :comps="comps" @editComponent="editComponent" @editContent="editContent" :cusComp="cusComp" :key="refresh" />
                 </div>
             </div>
-            <right-bar :nowEdit="nowEdit" />
+            <right-bar :nowEdit="nowEdit" @updateParams="updateParams"/>
         </div>
     </div>
 </template>
@@ -46,7 +46,8 @@
                 iconCompMap: iconCompMap,
                 nowEdit: {},
                 comps: [],
-                cusCompHash: createHash()
+                cusCompHash: createHash(),
+                config_data_data_bak: {}
             }
         },
         computed: {
@@ -63,7 +64,8 @@
                         data: {
                             props: {},
                             data: {
-                                ...this.getCompsProps(this.comps) // 获取子组件的props
+                                ...this.getCompsProps(this.comps), // 获取子组件的props
+                                ...this.config_data_data_bak
                             },
                             eventHandlers: {},
                             emitEvents: []
@@ -77,6 +79,9 @@
             this.$set(this, 'nowEdit', this.cusComp);
         },
         methods: {
+            updateParams (comps) {
+                comps.content && (this.config_data_data_bak = comps.config.data.data);
+            },
             getCompsProps (comps) {
                 this.$nextTick(() => {
                     this.refresh++;
