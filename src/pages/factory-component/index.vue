@@ -2,7 +2,7 @@
     <div class="factory-component">
         <div class="top-bar">
             <div class="pro-title">
-                Vv Page<span class="iconfont icon-zuzhuangqiang"></span>
+                Vv Page<span class="iconfont icon-yezhu"></span>
             </div>
             <div class="actions">
                 create component... <span class="iconfont icon-baocun_mian"></span>
@@ -133,13 +133,13 @@
             color: #ffb100;
             margin-left: 30px;
             display: inline-block;
-            .icon-zuzhuangqiang {
-                font-size: 40px;
+            .icon-yezhu {
+                font-size: 37px;
                 display: inline-block;
-                padding-left: 10px;
+                padding-left: 14px;
                 line-height: 100px;
                 position: relative;
-                top: 5px;
+                top: 3px;
             }
         }
         .actions {
