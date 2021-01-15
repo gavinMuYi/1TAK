@@ -22,6 +22,20 @@
                 <input v-model="currentEdit.y" /> px
             </div>
             <div class="config-comp" v-if="currentEdit.content">
+                <span class="config-comp-title">容器暴露接口(props): </span>
+                <span>{{ currentEdit.config.data.props }}</span>
+            </div>
+            <div v-if="currentEdit.content">
+                <div class="config-comp" v-for="key in Object.keys(currentEdit.config.data.data)" :key="key">
+                    <div>{{ key }}</div>
+                    <div>组件接口:</div>
+                    <div class="config-comp" v-for="datakey in Object.keys(currentEdit.config.data.data[key])" :key="datakey">
+                        <span class="config-comp-title">{{ datakey }}</span>
+                        <input v-model="currentEdit.config.data.data[key][datakey]" />
+                    </div>
+                </div>
+            </div>
+            <div class="config-comp" v-if="currentEdit.content">
                 <span class="config-comp-title">数据: </span>
                 <span>{{ currentEdit.config }}</span>
             </div>
