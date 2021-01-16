@@ -120,12 +120,14 @@
             color: #ffb100;
         }
         .config-bar {
+            direction: rtl;
             overflow: auto;
             width: 308px;
             height: ~'calc(100% - 30px)';
             box-sizing: border-box;
             padding: 20px 10px 0 20px;
             .config-comp {
+                direction: ltr;
                 margin-bottom: 10px;
                 textarea {
                     width: 260px;
