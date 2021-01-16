@@ -2,38 +2,38 @@
     <div class="right-bar">
         <div class="title">{{ currentEdit.content ? '容器' : '子组件' }}</div>
         <div class="config-bar" v-if="Object.keys(currentEdit).length"><div class="config-comp">
-            <span class="config-comp-title">组件分类: </span>
+            <span class="config-comp-title vv-title">组件分类: </span>
                 <span>{{ compType[currentEdit.type] }}</span>
             </div>
             <div class="config-comp">
-                <span class="config-comp-title">组件类型: </span>
+                <span class="config-comp-title vv-title">组件类型: </span>
                 <span>{{ currentEdit.content ? '容器' : getType(currentEdit.id) }}</span>
             </div>
             <div class="config-comp">
-                <span class="config-comp-title">ID: </span>
+                <span class="config-comp-title vv-title">ID: </span>
                 <span>{{ currentEdit.config.hash }}</span>
             </div>
             <div class="config-comp" v-if="!currentEdit.content">
-                <span class="config-comp-title">X轴: </span>
+                <span class="config-comp-title vv-title">X轴: </span>
                 <input v-model="currentEdit.x" /> px
             </div>
             <div class="config-comp" v-if="!currentEdit.content">
-                <span class="config-comp-title">Y轴: </span>
+                <span class="config-comp-title vv-title">Y轴: </span>
                 <input v-model="currentEdit.y" /> px
             </div>
             <div class="config-comp" v-if="currentEdit.content">
-                <span class="config-comp-title">容器暴露接口(props): </span>
+                <span class="config-comp-title vv-title">容器暴露接口(props): </span>
                 <span>{{ currentEdit.config.data.props }}</span>
             </div>
             <div v-if="currentEdit.content">
                 <div class="config-comp" v-for="key in Object.keys(currentEdit.config.data.data)" :key="key">
-                    <div class="config-comp">{{ key }}</div>
-                    <div class="config-comp">组件接口:</div>
+                    <div class="config-comp vv-title compname">{{ key }}</div>
+                    <div class="config-comp vv-title" v-if="Object.keys(currentEdit.config.data.data[key]).length">组件接口:</div>
                     <div class="config-comp" v-for="datakey in Object.keys(currentEdit.config.data.data[key])" :key="datakey">
                         <span class="config-comp-title">{{ datakey }}</span>
                         <input v-model="currentEdit.config.data.data[key][datakey]" />
                     </div>
-                    <div class="config-comp">事件处理:</div>
+                    <div class="config-comp vv-title">事件处理:</div>
                     <div class="config-comp" v-for="eventKey in Object.keys(currentEdit.config.data.eventHandlers)" :key="eventKey">
                         <div v-if="eventKey.indexOf(key) > -1">
                             <div class="config-comp">
@@ -112,6 +112,13 @@
         width: 300px;
         border-left: 1px solid #ededed;
         vertical-align: top;
+        .vv-title {
+            color: #191f1e;
+            font-weight: 700;
+        }
+        .compname {
+            color: #ffb100;
+        }
         .config-bar {
             overflow: auto;
             width: 308px;
