@@ -29,6 +29,19 @@
             let that = this;
             Vue.component('cus-comp', {
                 render (h) {
+                    this.eventhandlers = {};
+                    var configEventHandlers = that.cusComp.config.data.eventHandlers;
+                    that.cusComp.comps.forEach((comp, index) => {
+                        Object.keys(configEventHandlers).forEach(funcKey => {
+                            if (funcKey.indexOf(comp.config.hash) > -1) {
+                                var funcStr = configEventHandlers[funcKey].handler;
+                                /* eslint-disable */
+                                var resFunc = new Function('return ' + funcStr).call(this);
+                                /* eslint-enable */
+                                this[configEventHandlers[funcKey].name + comp.config.hash] = resFunc.bind(this._self);
+                            }
+                        });
+                    });
                     return (
                         <div class="cus-comp">
                         {
@@ -36,7 +49,12 @@
                                 var props = {};
                                 Object.keys(that.cusComp.config.data.data[comp.name + '-' + comp.config.hash]).forEach(key => {
                                     props[key] = that.cusComp.config.data.data[comp.name + '-' + comp.config.hash][key]
-                                })
+                                });
+                                var configEventHandlers = that.cusComp.config.data.eventHandlers;
+                                var eventhandlers = {};
+                                Object.keys(configEventHandlers).forEach(funcKey => {
+                                    funcKey.indexOf(comp.config.hash) > -1 && (eventhandlers[configEventHandlers[funcKey].name] = this[configEventHandlers[funcKey].name + comp.config.hash]);
+                                });
                                 return (
                                     <div
                                         class="comp-box"
@@ -57,7 +75,10 @@
                                                 attrs: {
                                                     id: comp.config.hash
                                                 },
-                                                props: props
+                                                props: props,
+                                                on: {
+                                                    ...eventhandlers
+                                                }
                                             })
                                         }
                                     </div>

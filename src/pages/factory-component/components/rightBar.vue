@@ -33,6 +33,23 @@
                         <span class="config-comp-title">{{ datakey }}</span>
                         <input v-model="currentEdit.config.data.data[key][datakey]" />
                     </div>
+                    <div class="config-comp">事件处理:</div>
+                    <div class="config-comp" v-for="eventKey in Object.keys(currentEdit.config.data.eventHandlers)" :key="eventKey">
+                        <div v-if="eventKey.indexOf(key) > -1">
+                            <div class="config-comp">
+                                <span class="config-comp-title">事件名: </span>
+                                <span>{{ currentEdit.config.data.eventHandlers[eventKey].label }}</span>
+                            </div>
+                            <div class="config-comp">
+                                <span class="config-comp-title">事件参数: </span>
+                                <span>{{ currentEdit.config.data.eventHandlers[eventKey].params }}</span>
+                            </div>
+                            <div class="config-comp">
+                                <div class="config-comp">事件处理器: </div>
+                                <textarea v-model="currentEdit.config.data.eventHandlers[eventKey].handler" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="config-comp" v-if="currentEdit.content">
@@ -107,6 +124,10 @@
             padding: 20px 10px 0 20px;
             .config-comp {
                 margin-bottom: 10px;
+                textarea {
+                    width: 260px;
+                    height: 150px;
+                }
                 .config-comp-title {
                     display: inline-block;
                     margin-right: 5px

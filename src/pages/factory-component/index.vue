@@ -47,7 +47,8 @@
                 nowEdit: {},
                 comps: [],
                 cusCompHash: createHash(),
-                config_data_data_bak: {}
+                config_data_data_bak: {},
+                config_data_eventHandlers_bak: {}
             }
         },
         computed: {
@@ -64,10 +65,13 @@
                         data: {
                             props: {},
                             data: {
-                                ...this.getCompsProps(this.comps), // 获取子组件的props
+                                ...this.getCompsProps(this.comps),
                                 ...this.config_data_data_bak
                             },
-                            eventHandlers: {},
+                            eventHandlers: {
+                                ...this.getCompsEvents(this.comps),
+                                ...this.config_data_eventHandlers_bak
+                            },
                             emitEvents: []
                         }
                     },
@@ -80,7 +84,27 @@
         },
         methods: {
             updateParams (comps) {
-                comps.content && (this.config_data_data_bak = comps.config.data.data);
+                if (comps.content) {
+                    this.config_data_data_bak = comps.config.data.data;
+                    this.config_data_eventHandlers_bak = comps.config.data.eventHandlers;
+                }
+            },
+            getCompsEvents (comps) {
+                this.$nextTick(() => {
+                    this.refresh++;
+                });
+                let events = {};
+                comps.forEach(comp => {
+                    cmps[comp.name].event && cmps[comp.name].event.forEach(func => {
+                        this.$set(events, comp.name + '-' + comp.config.hash + '-' + func.name, {
+                            name: func.name,
+                            label: func.label,
+                            params: func.params,
+                            handler: `function ${func.name + comp.config.hash}() {}`
+                        });
+                    });
+                });
+                return events;
             },
             getCompsProps (comps) {
                 this.$nextTick(() => {

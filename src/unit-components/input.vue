@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input :placeholder="placeholder" :value="value" />
+        <input :placeholder="placeholder" :value="value" @input="input"/>
     </div>
 </template>
 
@@ -8,8 +8,8 @@
     export default {
         name: 'Vv_INPUT',
         event: [{
-            name: 'change',
-            label: '输入框chang事件',
+            name: 'input',
+            label: '输入框input事件',
             params: '输入值'
         }],
         props: {
@@ -20,6 +20,11 @@
             placeholder: {
                 type: String,
                 default: '请输入'
+            }
+        },
+        methods: {
+            input (val) {
+                this.$emit('input', val)
             }
         }
     }
