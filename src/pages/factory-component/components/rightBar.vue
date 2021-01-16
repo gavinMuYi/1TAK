@@ -52,10 +52,6 @@
                     </div>
                 </div>
             </div>
-            <div class="config-comp" v-if="currentEdit.content">
-                <span class="config-comp-title">数据: </span>
-                <span>{{ currentEdit.config }}</span>
-            </div>
         </div>
     </div>
 </template>
