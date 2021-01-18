@@ -23,6 +23,10 @@
                     return {
                     };
                 }
+            },
+            preview: {
+                type: Boolean,
+                default: false
             }
         },
         created () {
@@ -57,7 +61,7 @@
                                 });
                                 return (
                                     <div
-                                        class="comp-box"
+                                        class={['comp-box', {'preview': that.preview}]}
                                         key={comp.id + comp.x + comp.y + index}
                                         id={comp.config.hash + '-box'}
                                         style={{
@@ -65,10 +69,10 @@
                                             top: comp.y + 'px',
                                             left: comp.x + 'px'
                                         }}
-                                        draggable={true}
-                                        onDrop={ev => { ev.stopPropagation(); ev.preventDefault(); }}
-                                        onDragover={ev => { ev.stopPropagation(); ev.preventDefault(); }}
-                                        onDragstart={ev => { this.move(ev, comp, index); }}
+                                        draggable={!that.preview}
+                                        onDrop={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
+                                        onDragover={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
+                                        onDragstart={ev => { if (that.preview) { return; } this.move(ev, comp, index); }}
                                         onClick={ev => { ev.stopPropagation(); this.editComponent(comp); }}>
                                         {
                                             h(comp.name, {
@@ -113,6 +117,7 @@
                         }));
                     },
                     editComponent (comp) {
+                        if (that.preview) { return; }
                         this.$emit('editComponent', comp);
                     }
                 }
@@ -123,6 +128,7 @@
                 this.$emit('editComponent', comp);
             },
             editContent () {
+                if (this.preview) { return; }
                 this.$emit('editContent');
             }
         }
@@ -140,7 +146,23 @@
         }
         .comp-box {
             &:hover {
-                background: #d9edff;
+                &:before {
+                    content: '';
+                    position: absolute;
+                    top: -7px;
+                    left: -7px;
+                    width: 100%;
+                    height: 100%;
+                    padding: 5px;
+                    border: 2px solid #ffb100;
+                }
+            }
+        }
+        .preview {
+            &:hover {
+                &:before {
+                    display: none;
+                }
             }
         }
     }

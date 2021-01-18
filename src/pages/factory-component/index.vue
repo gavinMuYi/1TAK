@@ -5,14 +5,14 @@
                 Vv Page<span class="iconfont icon-yezhu"></span>
             </div>
             <div class="actions">
-                create component... <span class="iconfont icon-baocun_mian"></span>
+                <span @click="preview = !preview"><span class="iconfont icon-xunhuan"></span>{{ preview ? '预览' : '配置' }}态</span><span class="iconfont icon-baocun_mian"></span>
             </div>
         </div>
         <div class="work-space">
             <left-bar />
             <div class="space-content">
                 <div class="component-draw-space" ref="drawSpace" @drop="drop" @dragover="ev => {ev.preventDefault()}">
-                    <draw-board :comps="comps" @editComponent="editComponent" @editContent="editContent" :cusComp="cusComp" :key="refresh" />
+                    <draw-board :comps="comps" @editComponent="editComponent" @editContent="editContent" :cusComp="cusComp" :key="refresh" :preview="preview" />
                 </div>
             </div>
             <right-bar :nowEdit="nowEdit" @updateParams="updateParams"/>
@@ -42,6 +42,7 @@
         },
         data () {
             return {
+                preview: false,
                 refresh: 0,
                 iconCompMap: iconCompMap,
                 nowEdit: {},
