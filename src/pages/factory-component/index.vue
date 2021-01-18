@@ -8,7 +8,7 @@
                 <span @click="preview = !preview"><span class="iconfont icon-xunhuan"></span>{{ preview ? '预览' : '配置' }}态</span><span class="iconfont icon-baocun_mian"></span>
             </div>
         </div>
-        <div class="work-space">
+        <div :class="['work-space', {'preview': preview}]">
             <left-bar />
             <div class="space-content">
                 <div class="component-draw-space" ref="drawSpace" @drop="drop" @dragover="ev => {ev.preventDefault()}">
@@ -207,6 +207,13 @@
             vertical-align: top;
             font-size: 12px;
             overflow: auto;
+        }
+    }
+    .preview {
+        .left-bar,
+        .right-bar {
+            background: #ededed;
+            pointer-events: none;
         }
     }
     .title {
