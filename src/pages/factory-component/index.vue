@@ -5,7 +5,11 @@
                 Vv Page<span class="iconfont icon-yezhu"></span>
             </div>
             <div class="actions">
-                <span @click="preview = !preview"><span class="iconfont icon-xunhuan"></span>{{ preview ? '预览' : '配置' }}态</span><span class="iconfont icon-baocun_mian"></span>
+                <span @click="preview = !preview">
+                    <span class="iconfont icon-xunhuan"></span>
+                    {{ preview ? '预览' : '配置' }}态
+                </span>
+                <span class="iconfont icon-baocun_mian" @click="save"></span>
             </div>
         </div>
         <div :class="['work-space', {'preview': preview}]">
@@ -84,6 +88,9 @@
             this.$set(this, 'nowEdit', this.cusComp);
         },
         methods: {
+            save () {
+                console.log(this.cusComp);
+            },
             updateParams (comps) {
                 if (comps.content) {
                     this.config_data_data_bak = comps.config.data.data;
