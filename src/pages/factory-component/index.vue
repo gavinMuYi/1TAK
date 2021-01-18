@@ -212,8 +212,25 @@
     .preview {
         .left-bar,
         .right-bar {
-            background: #ededed;
-            pointer-events: none;
+            position: relative;
+            &:before {
+                content: '';
+                position: absolute;
+                background: #403e3e24;
+                width: 100%;
+                height: 100%;
+                &:hover {
+                    cursor: not-allowed;
+                }
+            }
+            &:hover {
+                cursor: not-allowed;
+            }
+        }
+        .right-bar {
+            &:before {
+                width: 310px;
+            }
         }
     }
     .title {
