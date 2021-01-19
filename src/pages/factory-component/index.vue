@@ -96,7 +96,7 @@
                 let events = {};
                 comps.forEach(comp => {
                     cmps[comp.name].event && cmps[comp.name].event.forEach(func => {
-                        this.$set(events, comp.name + '-' + comp.config.hash + '-' + func.name, {
+                        this.$set(events, comp.config.hash + '-' + func.name, {
                             name: func.name,
                             label: func.label,
                             params: func.params,
@@ -112,10 +112,10 @@
                 });
                 let props = {};
                 comps.forEach(comp => {
-                    this.$set(props, comp.name + '-' + comp.config.hash, {});
+                    this.$set(props, comp.config.hash, {});
                     var prop = cmps[comp.name].props;
                     for (let key in prop) {
-                        this.$set(props[comp.name + '-' + comp.config.hash], key, typeof prop[key].type() === 'object' ? prop[key].default() : prop[key].default);
+                        this.$set(props[comp.config.hash], key, typeof prop[key].type() === 'object' ? prop[key].default() : prop[key].default);
                     }
                 });
                 return props;

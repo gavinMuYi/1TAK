@@ -45,7 +45,7 @@
                                 <span>{{ currentEdit.config.data.eventHandlers[eventKey].params }}</span>
                             </div>
                             <div class="config-comp">
-                                <div class="config-comp">事件处理器: </div>
+                                <div class="config-comp">事件处理器: <span class="btn">更新</span></div>
                                 <textarea v-model="currentEdit.config.data.eventHandlers[eventKey].handler" />
                             </div>
                         </div>
@@ -127,6 +127,16 @@
             padding: 20px 10px 0 20px;
             .config-comp {
                 margin-bottom: 10px;
+                .btn {
+                    border: 1px solid #ededed;
+                    font-size: 12px;
+                    padding: 2px 5px;
+                    border-radius: 3px;
+                    background: #ededed;
+                    float: right;
+                    margin-right: 12px;
+                    box-shadow: 3px 1px 1px #888888;
+                }
                 textarea {
                     width: 260px;
                     height: 150px;

@@ -6,6 +6,7 @@
 
 <script>
     import Vue from 'vue';
+    import clone from 'clone';
     // 注册单位组件
     const requireComponent = require.context('../../../unit-components', false, /\w+\.(vue|js)$/);
     var cmps = {};
@@ -25,13 +26,18 @@
                 }
             }
         },
+        computed: {
+            _renderCusComp () {
+                return clone(this.cusComp);
+            }
+        },
         created () {
             let that = this;
             Vue.component('cus-comp', {
                 render (h) {
                     this.eventhandlers = {};
-                    var configEventHandlers = that.cusComp.config.data.eventHandlers;
-                    that.cusComp.comps.forEach((comp, index) => {
+                    var configEventHandlers = that._renderCusComp.config.data.eventHandlers;
+                    that._renderCusComp.comps.forEach((comp, index) => {
                         Object.keys(configEventHandlers).forEach(funcKey => {
                             if (funcKey.indexOf(comp.config.hash) > -1) {
                                 var funcStr = configEventHandlers[funcKey].handler;
@@ -47,10 +53,10 @@
                         {
                             this.comps.map((comp, index) => {
                                 var props = {};
-                                Object.keys(that.cusComp.config.data.data[comp.name + '-' + comp.config.hash]).forEach(key => {
-                                    props[key] = that.cusComp.config.data.data[comp.name + '-' + comp.config.hash][key]
+                                Object.keys(that._renderCusComp.config.data.data[comp.config.hash]).forEach(key => {
+                                    props[key] = that._renderCusComp.config.data.data[comp.config.hash][key]
                                 });
-                                var configEventHandlers = that.cusComp.config.data.eventHandlers;
+                                var configEventHandlers = that._renderCusComp.config.data.eventHandlers;
                                 var eventhandlers = {};
                                 Object.keys(configEventHandlers).forEach(funcKey => {
                                     funcKey.indexOf(comp.config.hash) > -1 && (eventhandlers[configEventHandlers[funcKey].name] = this[configEventHandlers[funcKey].name + comp.config.hash]);
@@ -98,7 +104,7 @@
                 },
                 data () {
                     return {
-                        ...that.cusComp.config.data.data
+                        ...that._renderCusComp.config.data.data
                     }
                 },
                 components: {
