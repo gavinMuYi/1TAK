@@ -5,14 +5,18 @@
                 Vv Page<span class="iconfont icon-yezhu"></span>
             </div>
             <div class="actions">
-                create component... <span class="iconfont icon-baocun_mian"></span>
+                <span @click="preview = !preview">
+                    <span class="iconfont icon-xunhuan"></span>
+                    {{ preview ? '预览' : '配置' }}态
+                </span>
+                <span class="iconfont icon-baocun_mian" @click="save"></span>
             </div>
         </div>
-        <div class="work-space">
+        <div :class="['work-space', {'preview': preview}]">
             <left-bar />
             <div class="space-content">
                 <div class="component-draw-space" ref="drawSpace" @drop="drop" @dragover="ev => {ev.preventDefault()}">
-                    <draw-board :comps="comps" @editComponent="editComponent" @editContent="editContent" :cusComp="cusComp" :key="refresh" />
+                    <draw-board :comps="comps" @editComponent="editComponent" @editContent="editContent" :cusComp="cusComp" :key="refresh" :preview="preview" />
                 </div>
             </div>
             <right-bar :nowEdit="nowEdit" @updateParams="updateParams"/>
@@ -42,6 +46,7 @@
         },
         data () {
             return {
+                preview: false,
                 refresh: 0,
                 iconCompMap: iconCompMap,
                 nowEdit: {},
@@ -83,6 +88,9 @@
             this.$set(this, 'nowEdit', this.cusComp);
         },
         methods: {
+            save () {
+                console.log(this.cusComp);
+            },
             updateParams (comps) {
                 if (comps.content) {
                     this.config_data_data_bak = comps.config.data.data;
@@ -206,6 +214,30 @@
             vertical-align: top;
             font-size: 12px;
             overflow: auto;
+        }
+    }
+    .preview {
+        .left-bar,
+        .right-bar {
+            position: relative;
+            &:before {
+                content: '';
+                position: absolute;
+                background: #403e3e24;
+                width: 100%;
+                height: 100%;
+                &:hover {
+                    cursor: not-allowed;
+                }
+            }
+            &:hover {
+                cursor: not-allowed;
+            }
+        }
+        .right-bar {
+            &:before {
+                width: 310px;
+            }
         }
     }
     .title {
