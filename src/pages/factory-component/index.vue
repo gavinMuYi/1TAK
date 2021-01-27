@@ -228,7 +228,7 @@
             &:before {
                 content: '';
                 position: absolute;
-                background: #403e3e24;
+                background: #ededed5c;
                 width: 100%;
                 height: 100%;
                 &:hover {
