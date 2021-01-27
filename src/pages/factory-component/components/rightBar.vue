@@ -15,11 +15,11 @@
             </div>
             <div class="config-comp" v-if="!currentEdit.content">
                 <span class="config-comp-title vv-title">X轴: </span>
-                <input v-model="currentEdit.x" /> px
+                <input v-model="currentEdit.x" @keydown="moveDom($event, 'x')" /> px
             </div>
             <div class="config-comp" v-if="!currentEdit.content">
                 <span class="config-comp-title vv-title">Y轴: </span>
-                <input v-model="currentEdit.y" /> px
+                <input v-model="currentEdit.y" @keydown="moveDom($event, 'y')" /> px
             </div>
             <div class="config-comp" v-if="currentEdit.content">
                 <span class="config-comp-title vv-title">容器暴露接口(props): </span>
@@ -106,6 +106,18 @@
                     item.key === id && (res = item.name);
                 });
                 return res;
+            },
+            moveDom (ev, s) {
+                switch (ev.keyCode) {
+                case 38:
+                    this.currentEdit[s]++;
+                    break;
+                case 40:
+                    this.currentEdit[s]--;
+                    break;
+                default:
+                    break;
+                }
             }
         }
     }
