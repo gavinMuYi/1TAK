@@ -67,7 +67,7 @@
                                 });
                                 return (
                                     <div
-                                        class={['comp-box', {'preview': that.preview}]}
+                                        class={['comp-box', {'config-box': !that.preview}]}
                                         key={comp.id + comp.x + comp.y + index}
                                         id={comp.config.hash + '-box'}
                                         style={{
@@ -150,7 +150,7 @@
             width: 100%;
             position: relative;
         }
-        .comp-box {
+        .config-box {
             &:hover {
                 &:before {
                     content: '';
@@ -161,13 +161,6 @@
                     height: 100%;
                     padding: 5px;
                     border: 2px solid #ffb100;
-                }
-            }
-        }
-        .preview {
-            &:hover {
-                &:before {
-                    display: none;
                 }
             }
         }
