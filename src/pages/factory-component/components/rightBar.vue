@@ -48,7 +48,7 @@
                             <span class="config-comp-title">{{ datakey }}</span>
                             <input v-model="currentEdit.config.data.data[key][datakey]" />
                         </div>
-                        <div class="config-comp vv-title">事件处理:</div>
+                        <div class="config-comp vv-title" v-if="hasEvent(key)">事件处理:</div>
                         <div class="config-comp" v-for="eventKey in Object.keys(currentEdit.config.data.eventHandlers)" :key="eventKey">
                             <div v-if="eventKey.indexOf(key) > -1">
                                 <div class="config-comp">
@@ -129,6 +129,13 @@
             }
         },
         methods: {
+            hasEvent (key) {
+                let res = false;
+                Object.keys(this.currentEdit.config.data.eventHandlers).forEach(eventKey => {
+                    eventKey.indexOf(key) > -1 && (res = true);
+                });
+                return res;
+            },
             doSelectComp (key) {
                 this.showSelectComp = !this.showSelectComp;
                 this.currentComp = key;
