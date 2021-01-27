@@ -5,6 +5,10 @@
                 Vv Page<span class="iconfont icon-yezhu"></span>
             </div>
             <div class="actions">
+                <span @click="mode = !mode">
+                    <span class="iconfont icon-xunhuan"></span>
+                    {{ mode ? '拖动布局' : '积木布局' }}
+                </span>
                 <span @click="preview = !preview">
                     <span class="iconfont icon-xunhuan"></span>
                     {{ preview ? '预览' : '配置' }}态
@@ -46,6 +50,7 @@
         },
         data () {
             return {
+                mode: true,
                 preview: false,
                 refresh: 0,
                 iconCompMap: iconCompMap,
