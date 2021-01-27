@@ -147,9 +147,9 @@
                         document.getElementById(that.currentComp).classList.remove('event-box');
                         time++;
                         setTimeout(() => {
-                            time < 3 && heightLight();
-                        }, 200)
-                    }, 200);
+                            time < 5 && heightLight();
+                        }, 50)
+                    }, 150);
                 };
                 heightLight();
             },
@@ -179,6 +179,7 @@
 <style lang="less">
     .event-box {
         border: 2px dashed #ffb100;
+        padding: 5px;
     }
     .right-bar {
         font-size: 14px;
