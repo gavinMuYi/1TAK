@@ -45,8 +45,8 @@
                                 <span>{{ currentEdit.config.data.eventHandlers[eventKey].params }}</span>
                             </div>
                             <div class="config-comp">
-                                <div class="config-comp">事件处理器: <span class="btn">更新</span></div>
-                                <textarea v-model="currentEdit.config.data.eventHandlers[eventKey].handler" />
+                                <div class="config-comp">事件处理器: <span class="btn" @click="currentEdit.config.data.eventHandlers[eventKey].handler = loaclHandler[eventKey]">更新</span></div>
+                                <textarea v-model="loaclHandler[eventKey]" />
                             </div>
                         </div>
                     </div>
@@ -82,6 +82,13 @@
         computed: {
             currentEdit () {
                 return this.nowEdit;
+            },
+            loaclHandler () {
+                let res = {};
+                Object.keys(this.currentEdit.config.data.eventHandlers).forEach(eventKey => {
+                    res[eventKey] = this.currentEdit.config.data.eventHandlers[eventKey].handler;
+                });
+                return res;
             }
         },
         watch: {
