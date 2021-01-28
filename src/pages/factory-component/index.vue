@@ -1,5 +1,6 @@
 <template>
     <div class="factory-component">
+        <div id="ballId">drag</div>
         <div class="top-bar">
             <div class="pro-title">
                 Vv Page<span class="iconfont icon-yezhu"></span>
@@ -34,6 +35,7 @@
     import DrawBoard from './components/drawBoard';
     import { iconCompMap } from './config.js';
     import { createHash } from '../../utils/common.js';
+    import { suspensionBall } from '../../utils/drag-ball.js';
     const requireComponent = require.context('../../unit-components', false, /\w+\.(vue|js)$/);
     var cmps = {};
     requireComponent.keys().map(fileName => {
@@ -91,6 +93,7 @@
         },
         mounted () {
             this.$set(this, 'nowEdit', this.cusComp);
+            suspensionBall('ballId', 'https://www.baidu.com');
         },
         methods: {
             save () {
@@ -163,6 +166,26 @@
 <style lang="less">
 .factory-component {
     height: 100%;
+    #ballId {
+        background: #333;
+        color: white;
+        width: 50px;
+        text-align: center;
+        height: 50px;
+        line-height: 50px;
+        border-radius: 50%;
+        box-shadow: 5px 5px 40px rgba(0, 0, 0, 0.5);
+        z-index: 10000;
+        /* 过渡效果在IE下展示效果不友好 */
+        transition: all 0.08s;
+        user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        top: 50%;
+        left: 50%;
+        transform: translate3d(-50%, -50%, 0);
+    }
     .top-bar {
         height: 100px;
         background: #f7f8fa;
