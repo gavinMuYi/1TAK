@@ -35,7 +35,7 @@
     import DrawBoard from './components/drawBoard';
     import { iconCompMap } from './config.js';
     import { createHash } from '../../utils/common.js';
-    import { suspensionBall } from '../../utils/drag-ball.js';
+    // import { suspensionBall } from '../../utils/drag-ball.js';
     const requireComponent = require.context('../../unit-components', false, /\w+\.(vue|js)$/);
     var cmps = {};
     requireComponent.keys().map(fileName => {
@@ -93,7 +93,7 @@
         },
         mounted () {
             this.$set(this, 'nowEdit', this.cusComp);
-            suspensionBall('ballId', 'https://www.baidu.com');
+            // suspensionBall('ballId', 'https://www.baidu.com');
         },
         methods: {
             save () {
