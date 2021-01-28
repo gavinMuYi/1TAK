@@ -148,8 +148,8 @@
                         time++;
                         setTimeout(() => {
                             time < 5 && heightLight();
-                        }, 50)
-                    }, 150);
+                        }, (100 - time * 15))
+                    }, (300 - time * 55));
                 };
                 heightLight();
             },
@@ -178,8 +178,16 @@
 
 <style lang="less">
     .event-box {
-        border: 2px dashed #ffb100;
-        padding: 5px;
+        &:before {
+            content: '';
+            position: absolute;
+            top: -7px;
+            left: -7px;
+            width: 100%;
+            height: 100%;
+            padding: 5px;
+            border: 2px dashed #333;
+        }
     }
     .right-bar {
         font-size: 14px;
@@ -232,7 +240,7 @@
             }
         }
         .compname {
-            color: #ffb100;
+            color: #333;
             font-weight: 700;
         }
         .config-bar {

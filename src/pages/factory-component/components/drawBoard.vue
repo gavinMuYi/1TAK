@@ -160,7 +160,7 @@
                     width: 100%;
                     height: 100%;
                     padding: 5px;
-                    border: 2px solid #ffb100;
+                    border: 2px solid #333;
                 }
             }
         }

@@ -165,14 +165,14 @@
     height: 100%;
     .top-bar {
         height: 100px;
-        background: #333;
+        background: #f7f8fa;
         border-bottom: 1px solid #ededed;
         box-sizing: border-box;
         .pro-title {
             line-height: 100px;
             font-size: 32px;
             font-weight: 700;
-            color: #ffb100;
+            color: #333;
             margin-left: 30px;
             display: inline-block;
             .icon-yezhu {
@@ -186,12 +186,12 @@
         }
         .actions {
             float: right;
-            color: #ffb100;
+            color: #333;
             font-weight: 700;
             .icon-baocun_mian {
                 font-size: 24px;
                 line-height: 100px;
-                color: #ffb100;
+                color: #333;
                 font-weight: 400;
                 padding-left: 10px;
                 margin-right: 30px;
@@ -228,7 +228,7 @@
             &:before {
                 content: '';
                 position: absolute;
-                background: #ededed5c;
+                background: #ededed40;
                 width: 100%;
                 height: 100%;
                 &:hover {
@@ -251,7 +251,7 @@
         font-size: 14px;
         font-weight: 700;
         padding-left: 15px;
-        background: #ffb100;
+        background: #333;
         color: #FFF;
     }
     .materials-list {
@@ -283,7 +283,7 @@
                 transition: font-size 0.15s linear, width 0.15s linear;
                 &:hover {
                     font-size: 56px;
-                    color: #ffb100;
+                    color: #333;
                 }
             }
             .material-name {
