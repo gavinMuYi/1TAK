@@ -25,7 +25,7 @@
                 <span class="config-comp-title vv-title">容器暴露接口: </span>
                 <span>{{ currentEdit.config.data.props }}</span>
             </div>
-            <div v-if="currentEdit.content && Object.keys(currentEdit.config.data.data).length" class="event-system">
+            <div v-if="currentEdit.content && Object.keys(currentEdit.config.data.data).length">
                 <div class="config-comp" v-if="currentEdit.content">
                     <span class="config-comp-title vv-title">子组件配置: </span>
                 </div>
@@ -41,7 +41,7 @@
                             @click.stop="doSelectComp(key)">{{key}}</div>
                     </div>
                 </div>
-                <div class="config-comp" v-for="key in Object.keys(currentEdit.config.data.data)" :key="key">
+                <div class="config-comp event-system" v-for="key in Object.keys(currentEdit.config.data.data)" :key="key">
                     <span v-show="key === currentComp">
                         <div class="config-comp vv-title" v-if="Object.keys(currentEdit.config.data.data[key]).length">组件接口:</div>
                         <div class="config-comp" v-for="datakey in Object.keys(currentEdit.config.data.data[key])" :key="datakey">
@@ -202,8 +202,9 @@
             font-weight: 700;
         }
         .event-system {
-            border: 1px solid #ededed;
-            padding: 5px;
+            padding-left: 15px;
+            border-left: 1px solid #ededed;
+            border-bottom: 1px solid #ededed;
         }
         .comp-select {
             position: relative;
