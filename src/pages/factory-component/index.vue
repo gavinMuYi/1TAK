@@ -209,6 +209,8 @@
             display: inline-block;
             vertical-align: top;
             background: #ededed;
+            padding: 10px;
+            box-sizing: border-box;
         }
         .component-draw-space {
             display: inline-block;
@@ -219,6 +221,7 @@
             vertical-align: top;
             font-size: 12px;
             overflow: auto;
+            box-shadow: 5px 4px 1px #88888830;
         }
     }
     .preview {
