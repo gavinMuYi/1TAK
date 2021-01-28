@@ -187,6 +187,7 @@
             height: 100%;
             padding: 5px;
             border: 2px dashed #333;
+            border-radius: 3px;
         }
     }
     .right-bar {

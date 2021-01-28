@@ -161,6 +161,7 @@
                     height: 100%;
                     padding: 5px;
                     border: 2px solid #333;
+                    border-radius: 3px;
                 }
             }
         }
