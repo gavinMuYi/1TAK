@@ -56,7 +56,7 @@
                 iconCompMap: iconCompMap,
                 nowEdit: {},
                 comps: [],
-                cusCompHash: 'Vv_customerComp_' + createHash(4),
+                cusCompHash: createHash(4),
                 config_data_data_bak: {},
                 config_data_eventHandlers_bak: {}
             }
@@ -145,7 +145,7 @@
                 };
                 data.config !== undefined
                     ? (dragCompData.config = data.config)
-                    : (dragCompData.config = { hash: this.iconCompMap[data.id] + '_' + createHash(4) });
+                    : (dragCompData.config = { hash: createHash(4) });
                 data.index !== undefined && this.comps.splice(data.index, 1);
                 this.comps.push(dragCompData);
                 this.editComponent(dragCompData);
