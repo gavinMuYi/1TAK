@@ -1,6 +1,6 @@
 <template>
     <div class="factory-component">
-        <div id="ballId">drag</div>
+        <!-- <div id="ballId">drag</div> -->
         <div class="top-bar">
             <div class="pro-title">
                 Vv Page<span class="iconfont icon-yezhu"></span>
