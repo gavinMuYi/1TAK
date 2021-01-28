@@ -41,31 +41,33 @@
                             @click.stop="doSelectComp(key)">{{key}}</div>
                     </div>
                 </div>
-                <div class="config-comp event-system" v-for="key in Object.keys(currentEdit.config.data.data)" :key="key">
-                    <span v-show="key === currentComp">
-                        <div class="config-comp vv-title" v-if="Object.keys(currentEdit.config.data.data[key]).length">组件接口:</div>
-                        <div class="config-comp" v-for="datakey in Object.keys(currentEdit.config.data.data[key])" :key="datakey">
-                            <span class="config-comp-title">{{ datakey }}</span>
-                            <input v-model="currentEdit.config.data.data[key][datakey]" />
-                        </div>
-                        <div class="config-comp vv-title" v-if="hasEvent(key)">事件处理:</div>
-                        <div class="config-comp" v-for="eventKey in Object.keys(currentEdit.config.data.eventHandlers)" :key="eventKey">
-                            <div v-if="eventKey.indexOf(key) > -1">
-                                <div class="config-comp">
-                                    <span class="config-comp-title">事件名: </span>
-                                    <span>{{ currentEdit.config.data.eventHandlers[eventKey].label }}</span>
-                                </div>
-                                <div class="config-comp">
-                                    <span class="config-comp-title">事件参数: </span>
-                                    <span>{{ currentEdit.config.data.eventHandlers[eventKey].params }}</span>
-                                </div>
-                                <div class="config-comp">
-                                    <div class="config-comp">事件处理器: <span class="btn" @click="currentEdit.config.data.eventHandlers[eventKey].handler = loaclHandler[eventKey]">更新</span></div>
-                                    <textarea v-model="loaclHandler[eventKey]" />
+                <div class="event-system">
+                    <div class="config-comp" v-for="key in Object.keys(currentEdit.config.data.data)" :key="key">
+                        <span v-show="key === currentComp">
+                            <div class="config-comp vv-title" v-if="Object.keys(currentEdit.config.data.data[key]).length">组件接口:</div>
+                            <div class="config-comp" v-for="datakey in Object.keys(currentEdit.config.data.data[key])" :key="datakey">
+                                <span class="config-comp-title">{{ datakey }}</span>
+                                <input v-model="currentEdit.config.data.data[key][datakey]" />
+                            </div>
+                            <div class="config-comp vv-title" v-if="hasEvent(key)">事件处理:</div>
+                            <div class="config-comp" v-for="eventKey in Object.keys(currentEdit.config.data.eventHandlers)" :key="eventKey">
+                                <div v-if="eventKey.indexOf(key) > -1">
+                                    <div class="config-comp">
+                                        <span class="config-comp-title">事件名: </span>
+                                        <span>{{ currentEdit.config.data.eventHandlers[eventKey].label }}</span>
+                                    </div>
+                                    <div class="config-comp">
+                                        <span class="config-comp-title">事件参数: </span>
+                                        <span>{{ currentEdit.config.data.eventHandlers[eventKey].params }}</span>
+                                    </div>
+                                    <div class="config-comp">
+                                        <div class="config-comp">事件处理器: <span class="btn" @click="currentEdit.config.data.eventHandlers[eventKey].handler = loaclHandler[eventKey]">更新</span></div>
+                                        <textarea v-model="loaclHandler[eventKey]" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </span>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
