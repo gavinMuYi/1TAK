@@ -56,10 +56,6 @@
                         <div class="cus-comp">
                         {
                             this.comps.map((comp, index) => {
-                                var props = {};
-                                Object.keys(that._renderCusComp.config.data.data[comp.config.hash]).forEach(key => {
-                                    props[key] = that._renderCusComp.config.data.data[comp.config.hash][key]
-                                });
                                 var configEventHandlers = that._renderCusComp.config.data.eventHandlers;
                                 var eventhandlers = {};
                                 Object.keys(configEventHandlers).forEach(funcKey => {
@@ -85,7 +81,7 @@
                                                 attrs: {
                                                     id: comp.config.hash
                                                 },
-                                                props: props,
+                                                props: this[comp.config.hash],
                                                 on: {
                                                     ...eventhandlers
                                                 }
