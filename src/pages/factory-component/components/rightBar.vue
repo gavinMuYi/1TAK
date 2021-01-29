@@ -50,7 +50,7 @@
                                 <input v-model="cusComp.config.data.data[key][datakey]" @change="emitChange()" />
                             </div>
                             <div class="config-comp vv-title" v-if="hasEvent(key)">事件处理:</div>
-                            <div class="config-comp" v-for="eventKey in Object.keys(cusComp.config.data.eventHandlers)" :key="eventKey">
+                            <div class="config-comp" v-for="(eventKey, eventIndex) in Object.keys(cusComp.config.data.eventHandlers)" :key="eventKey">
                                 <div v-if="eventKey.indexOf(key) > -1">
                                     <div class="config-comp">
                                         <span class="config-comp-title">事件名: </span>
@@ -61,8 +61,8 @@
                                         <span>{{ cusComp.config.data.eventHandlers[eventKey].params }}</span>
                                     </div>
                                     <div class="config-comp">
-                                        <div class="config-comp">事件处理器: <span class="btn" @click="cusComp.config.data.eventHandlers[eventKey].handler = loaclHandler[eventKey];emitChange()">更新</span></div>
-                                        <textarea v-model="loaclHandler[eventKey]" />
+                                        <div class="config-comp">事件处理器: <span class="btn" @click="emitEvent(eventKey, eventIndex)">更新</span></div>
+                                        <ide-textarea :code="loaclHandler[eventKey]" ref="eventIDE" />
                                     </div>
                                 </div>
                             </div>
@@ -76,9 +76,13 @@
 
 <script>
     import { unitCompIcons } from '../config.js';
+    import IdeTextarea from '../../../components/ideTextarea';
 
     export default {
         name: 'RightBar',
+        components: {
+            IdeTextarea
+        },
         props: {
             nowEdit: {
                 type: Object,
@@ -131,6 +135,10 @@
             }
         },
         methods: {
+            emitEvent (eventKey, eventIndex) {
+                this.cusComp.config.data.eventHandlers[eventKey].handler = this.$refs.eventIDE[eventIndex].getValue();
+                this.emitChange();
+            },
             emitChange () {
                 this.$emit('updateParams', this.currentEdit);
             },
@@ -267,10 +275,6 @@
                     float: right;
                     margin-right: 12px;
                     box-shadow: 3px 1px 1px #888888;
-                }
-                textarea {
-                    width: 260px;
-                    height: 150px;
                 }
                 .config-comp-title {
                     display: inline-block;
