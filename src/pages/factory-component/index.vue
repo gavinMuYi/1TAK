@@ -24,7 +24,7 @@
                     <draw-board :comps="comps" @editComponent="editComponent" @editContent="editContent" :cusComp="cusComp" :key="refresh" :preview="preview" />
                 </div>
             </div>
-            <right-bar :nowEdit="nowEdit" @updateParams="updateParams"/>
+            <right-bar :nowEdit="nowEdit" @updateParams="updateParams" :cusComp="cusComp" />
         </div>
     </div>
 </template>
@@ -113,6 +113,7 @@
                 });
             },
             updateParams (comps) {
+                this.refreshWorkSpace();
                 if (comps.content) {
                     this.config_data_data_bak = comps.config.data.data;
                     this.config_data_eventHandlers_bak = comps.config.data.eventHandlers;
