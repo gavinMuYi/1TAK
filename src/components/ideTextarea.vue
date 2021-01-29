@@ -27,20 +27,13 @@
             }
         },
         mounted () {
-            let mime = 'JavaScript'
+            let mime = 'javascript'
             let editor = CodeMirror.fromTextArea(this.$refs.mycode, {
                 mode: mime,
                 indentWithTabs: true,
                 smartIndent: true,
                 lineNumbers: true,
-                matchBrackets: true,
-                extraKeys: {'Ctrl': 'autocomplete'},
-                hintOptions: {
-                    tables: {
-                        users: ['name', 'score', 'birthDate'],
-                        countries: ['name', 'population', 'size']
-                    }
-                }
+                matchBrackets: true
             });
             this.IDE = editor;
             editor.on('cursorActivity', function () {
