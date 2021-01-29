@@ -6,11 +6,11 @@
                 Vv Page<span class="iconfont icon-yezhu"></span>
             </div>
             <div class="actions">
-                <span @click="mode = !mode">
+                <span @click="mode = !mode;refreshWorkSpace();">
                     <span class="iconfont icon-xunhuan"></span>
                     {{ mode ? '拖动布局' : '积木布局' }}
                 </span>
-                <span @click="preview = !preview">
+                <span @click="preview = !preview;refreshWorkSpace();">
                     <span class="iconfont icon-xunhuan"></span>
                     {{ preview ? '预览' : '配置' }}态
                 </span>
@@ -91,6 +91,14 @@
                 }
             }
         },
+        watch: {
+            nowEdit: {
+                handler (val) {
+                    this.refreshWorkSpace();
+                },
+                deep: true
+            }
+        },
         mounted () {
             this.$set(this, 'nowEdit', this.cusComp);
             // suspensionBall('ballId', 'https://www.baidu.com');
@@ -99,6 +107,11 @@
             save () {
                 console.log(this.cusComp);
             },
+            refreshWorkSpace () {
+                this.$nextTick(() => {
+                    this.refresh++;
+                });
+            },
             updateParams (comps) {
                 if (comps.content) {
                     this.config_data_data_bak = comps.config.data.data;
@@ -106,9 +119,7 @@
                 }
             },
             getCompsEvents (comps) {
-                this.$nextTick(() => {
-                    this.refresh++;
-                });
+                this.refreshWorkSpace();
                 let events = {};
                 comps.forEach(comp => {
                     cmps[comp.name].event && cmps[comp.name].event.forEach(func => {
@@ -123,9 +134,7 @@
                 return events;
             },
             getCompsProps (comps) {
-                this.$nextTick(() => {
-                    this.refresh++;
-                });
+                this.refreshWorkSpace();
                 let props = {};
                 comps.forEach(comp => {
                     this.$set(props, comp.config.hash, {});

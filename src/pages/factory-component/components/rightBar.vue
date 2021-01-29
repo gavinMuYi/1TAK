@@ -112,13 +112,19 @@
             }
         },
         watch: {
+            nowEdit: {
+                handler (val) {
+                    val.content && Object.keys(val.config.data.data).length === 1 &&
+                        Object.keys(val.config.data.data).forEach((key, index) => {
+                            if (!index) {
+                                this.currentComp = key;
+                            }
+                    });
+                },
+                deep: true
+            },
             currentEdit: {
                 handler (val) {
-                    val.content && Object.keys(val.config.data.data).forEach((key, index) => {
-                        if (!index) {
-                            this.currentComp = key;
-                        }
-                    })
                     this.$emit('updateParams', val);
                 },
                 deep: true
