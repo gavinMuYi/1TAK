@@ -9,9 +9,11 @@
     let CodeMirror = require('codemirror/lib/codemirror');
     require('codemirror/addon/edit/matchbrackets');
     require('codemirror/addon/selection/active-line');
-    require('codemirror/mode/sql/sql');
     require('codemirror/addon/hint/show-hint');
     require('codemirror/addon/hint/sql-hint');
+    require('codemirror/mode/javascript/javascript.js');
+    require('codemirror/mode/vue/vue.js');
+    require('codemirror/mode/css/css.js');
 
     export default {
         name: 'IdeTextarea',
