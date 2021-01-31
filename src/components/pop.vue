@@ -45,9 +45,11 @@
         methods: {
             rightClick (ev) {
                 if (ev.button === 2) {
-                    let box = ev.target.getBoundingClientRect();
-                    this.$refs.selfPop.style.top = `${box.y + box.height}px`;
-                    this.$refs.selfPop.style.left = `${box.x + box.width}px`;
+                    // let box = ev.target.getBoundingClientRect();
+                    // this.$refs.selfPop.style.top = `${box.y + box.height}px`;
+                    // this.$refs.selfPop.style.left = `${box.x + box.width}px`;
+                    this.$refs.selfPop.style.top = `${ev.clientY}px`;
+                    this.$refs.selfPop.style.left = `${ev.clientX}px`;
                     this.show = true;
                 }
                 ev.preventDefault();
