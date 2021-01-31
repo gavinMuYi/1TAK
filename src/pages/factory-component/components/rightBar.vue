@@ -128,12 +128,6 @@
                 deep: true
             }
         },
-        mounted () {
-            let that = this;
-            window.onclick = function () {
-                that.showSelectComp = false;
-            }
-        },
         methods: {
             emitEvent (eventKey, eventIndex) {
                 this.cusComp.config.data.eventHandlers[eventKey].handler = this.$refs.eventIDE[eventIndex].getValue();

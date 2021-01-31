@@ -1,5 +1,6 @@
 <template>
     <div class="draw-board" @click="editContent">
+        <pop ref="morePop">dddd</pop>
         <cus-comp :comps="cusComp.comps" @editComponent="editComponent" />
     </div>
 </template>
@@ -7,6 +8,7 @@
 <script>
     import Vue from 'vue';
     import clone from 'clone';
+    import pop from '../../../components/pop';
     // 注册单位组件
     const requireComponent = require.context('../../../unit-components', false, /\w+\.(vue|js)$/);
     var cmps = {};
@@ -17,6 +19,9 @@
 
     export default {
         name: 'DrawBoard',
+        components: {
+            pop
+        },
         props: {
             cusComp: {
                 type: Object,
@@ -52,6 +57,12 @@
                             }
                         });
                     });
+                    var directives = [];
+                    !that.preview && directives.push({
+                        name: 'pop',
+                        arg: 'morePop',
+                        modifiers: { rightClick: true }
+                    });
                     return (
                         <div class="cus-comp">
                         {
@@ -75,6 +86,7 @@
                                             display: 'inline-block',
                                             width: '100%'
                                         }}
+                                        {...{ directives }}
                                         draggable={abs && !that.preview}
                                         onDrop={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
                                         onDragover={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
