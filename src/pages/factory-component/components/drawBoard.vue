@@ -64,14 +64,17 @@
                                 var abs = !(String(comp.y + comp.x) === 'NaN');
                                 return (
                                     <div
-                                        class={['comp-box', {'config-box': !that.preview}]}
+                                        class={['comp-box', {'config-box': abs && !that.preview}, {'stc-box': !abs && !that.preview}]}
                                         key={comp.id + comp.x + comp.y + index}
                                         id={comp.config.hash + '-box'}
                                         style={abs ? {
                                             position: 'absolute',
                                             top: comp.y + 'px',
                                             left: comp.x + 'px'
-                                        } : {}}
+                                        } : {
+                                            display: 'inline-block',
+                                            width: '100%'
+                                        }}
                                         draggable={abs && !that.preview}
                                         onDrop={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
                                         onDragover={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
@@ -162,6 +165,14 @@
                     border: 2px solid #333;
                     border-radius: 3px;
                 }
+            }
+        }
+        .stc-box {
+            &:hover {
+                box-sizing: border-box;
+                padding: 5px;
+                border: 2px solid #333;
+                border-radius: 3px;
             }
         }
     }
