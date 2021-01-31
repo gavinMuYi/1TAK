@@ -61,17 +61,18 @@
                                 Object.keys(configEventHandlers).forEach(funcKey => {
                                     funcKey.indexOf(comp.config.hash) > -1 && (eventhandlers[configEventHandlers[funcKey].name] = this[configEventHandlers[funcKey].name + comp.config.hash]);
                                 });
+                                var abs = !(String(comp.y + comp.x) === 'NaN');
                                 return (
                                     <div
                                         class={['comp-box', {'config-box': !that.preview}]}
                                         key={comp.id + comp.x + comp.y + index}
                                         id={comp.config.hash + '-box'}
-                                        style={{
+                                        style={abs ? {
                                             position: 'absolute',
                                             top: comp.y + 'px',
                                             left: comp.x + 'px'
-                                        }}
-                                        draggable={!that.preview}
+                                        } : {}}
+                                        draggable={abs && !that.preview}
                                         onDrop={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
                                         onDragover={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
                                         onDragstart={ev => { if (that.preview) { return; } this.move(ev, comp, index); }}
@@ -115,6 +116,8 @@
                         ev.dataTransfer.setData('DragComp', JSON.stringify({
                             id: comp.id,
                             config: comp.config,
+                            x: comp.x,
+                            y: comp.y,
                             index: index
                         }));
                     },

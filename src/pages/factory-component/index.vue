@@ -6,9 +6,9 @@
                 Vv Page<span class="iconfont icon-yezhu"></span>
             </div>
             <div class="actions">
-                <span @click="mode = !mode;refreshWorkSpace();">
+                <span @click="abs = !abs;refreshWorkSpace();">
                     <span class="iconfont icon-xunhuan"></span>
-                    {{ mode ? '拖动布局' : '积木布局' }}
+                    {{ abs ? '拖动' : '积木' }}
                 </span>
                 <span @click="preview = !preview;refreshWorkSpace();">
                     <span class="iconfont icon-xunhuan"></span>
@@ -52,7 +52,7 @@
         },
         data () {
             return {
-                mode: true,
+                abs: true,
                 preview: false,
                 refresh: 0,
                 iconCompMap: iconCompMap,
@@ -149,11 +149,13 @@
             drop (ev) {
                 ev.preventDefault();
                 var data = JSON.parse(ev.dataTransfer.getData('DragComp'));
+                var domabs = (data.x + data.y) || (data.x + data.y === 0);
+                debugger;
                 var dragCompData = {
                     ...data,
                     id: data.id,
-                    x: ev.clientX - this.$refs.drawSpace.offsetLeft,
-                    y: ev.clientY - this.$refs.drawSpace.offsetTop,
+                    x: this.abs || domabs ? ev.clientX - this.$refs.drawSpace.offsetLeft : undefined,
+                    y: this.abs || domabs ? ev.clientY - this.$refs.drawSpace.offsetTop : undefined,
                     name: this.iconCompMap[data.id]
                 };
                 data.config !== undefined
@@ -199,6 +201,7 @@
     .top-bar {
         height: 100px;
         background: #f7f8fa;
+        // background: #0c0c0c;
         border-bottom: 1px solid #ededed;
         box-sizing: border-box;
         .pro-title {
@@ -233,6 +236,10 @@
             }
         }
     }
+    // .left-bar,
+    // .right-bar {
+    //     background: #0c0c0c;
+    // }
     .work-space {
         height: ~'calc(100% - 100px)';
         font-size: 0px;
