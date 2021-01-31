@@ -150,7 +150,6 @@
                 ev.preventDefault();
                 var data = JSON.parse(ev.dataTransfer.getData('DragComp'));
                 var domabs = (data.x + data.y) || (data.x + data.y === 0);
-                debugger;
                 var dragCompData = {
                     ...data,
                     id: data.id,
