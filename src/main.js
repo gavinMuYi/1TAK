@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
+import 'default-passive-events';
 import '@/assets/system-icons/iconfont.css';
 
 Vue.config.productionTip = false;
