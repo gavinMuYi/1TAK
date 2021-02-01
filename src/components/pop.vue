@@ -69,6 +69,7 @@
 
 <style lang="less">
     .pop {
+        z-index: 1000;
         position: fixed;
         background: #FFF;
         border: 1px solid #ededed;

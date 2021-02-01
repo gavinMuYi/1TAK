@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="Vv_input">
         <input :placeholder="placeholder" :value="value" @input="input"/>
     </div>
 </template>
@@ -31,5 +31,28 @@
 </script>
 
 <style lang="less">
-
+    .Vv_input {
+        position: relative;
+        display: inline-block;
+        height: 40px;
+        box-sizing: border-box;
+        padding: 2px 8px;
+        border: 1px solid #dadee7;
+        border-radius: 2px;
+        transition: border-color .25s;
+        input {
+            position: relative;
+            display: block;
+            width: 100%;
+            line-height: inherit;
+            height: 34px;
+            padding: 7px 0;
+            color: #1e2330;
+            outline: none;
+            border: 0 none;
+            background: none;
+            box-sizing: border-box;
+            width: 100%;
+        }
+    }
 </style>
