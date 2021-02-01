@@ -24,8 +24,8 @@
             <div class="config-comp">
                 <span class="config-comp-title vv-title">组件样式: </span>
                 <span class="btn btn-style" @click="changeStyle">调整</span>
+                <styleEditor />
             </div>
-            <div id="stylePanel"></div>
             <div class="config-comp" v-if="currentEdit.content">
                 <span class="config-comp-title vv-title">容器暴露接口: </span>
                 <span>{{ currentEdit.config.data.props }}</span>
@@ -82,11 +82,13 @@
 <script>
     import { unitCompIcons } from '../config.js';
     import IdeTextarea from '../../../components/ideTextarea';
+    import StyleEditor from '../../../components/styleEditor';
 
     export default {
         name: 'RightBar',
         components: {
-            IdeTextarea
+            IdeTextarea,
+            StyleEditor
         },
         props: {
             nowEdit: {
@@ -194,15 +196,6 @@
 </script>
 
 <style lang="less">
-    #stylePanel {
-        position: fixed;
-        width: 100%;
-        height: 500px;
-        left: 0;
-        bottom: 0;
-        background: #0c0c15bd;
-        z-index: 10000;
-    }
     .event-box {
         &:before {
             content: '';
