@@ -1,7 +1,7 @@
 <template>
     <div class="draw-board" @click="editContent">
         <pop ref="morePop">dddd</pop>
-        <cus-comp :comps="cusComp.comps" @editComponent="editComponent" @styleEl="styleEl" />
+        <cus-comp :comps="cusComp.comps" @editComponent="editComponent" />
     </div>
 </template>
 
@@ -64,7 +64,7 @@
                         modifiers: { rightClick: true }
                     });
                     return (
-                        <div class="cus-comp">
+                        <div class="cus-comp" id={that.cusComp.config.hash}>
                         {
                             this.comps.map((comp, index) => {
                                 var configEventHandlers = that._renderCusComp.config.data.eventHandlers;
@@ -138,11 +138,7 @@
                     },
                     editComponent (ev, comp) {
                         if (that.preview) { return; }
-                        this.styleEl(ev);
                         this.$emit('editComponent', comp);
-                    },
-                    styleEl (ev) {
-                        this.$emit('styleEl', ev.target);
                     }
                 }
             });
@@ -151,12 +147,8 @@
             editComponent (comp) {
                 this.$emit('editComponent', comp);
             },
-            styleEl (el) {
-                this.$emit('styleEl', el);
-            },
             editContent (ev) {
                 if (this.preview) { return; }
-                this.$emit('styleEl', ev.target);
                 this.$emit('editContent');
             }
         }

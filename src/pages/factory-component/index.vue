@@ -24,7 +24,6 @@
                     <draw-board
                         :comps="comps"
                         @editComponent="editComponent"
-                        @styleEl="styleEl"
                         @editContent="editContent"
                         :cusComp="cusComp"
                         :key="refresh"
@@ -67,8 +66,7 @@
                 comps: [],
                 cusCompHash: createHash(4),
                 config_data_data_bak: {},
-                config_data_eventHandlers_bak: {},
-                currentEl: null
+                config_data_eventHandlers_bak: {}
             }
         },
         computed: {
@@ -109,15 +107,11 @@
         },
         mounted () {
             this.$set(this, 'nowEdit', this.cusComp);
-            this.currentEl = document.getElementsByClassName('cus-comp')[0];
             // suspensionBall('ballId', 'https://www.baidu.com');
         },
         methods: {
             save () {
                 console.log(this.cusComp);
-            },
-            styleEl (el) {
-                this.currentEl = el;
             },
             refreshWorkSpace () {
                 this.$nextTick(() => {
@@ -175,9 +169,6 @@
                 data.index !== undefined && this.comps.splice(data.index, 1);
                 this.comps.push(dragCompData);
                 this.editComponent(dragCompData);
-                this.$nextTick(() => {
-                    this.currentEl = document.getElementById(dragCompData.config.hash + '-box');
-                });
             },
             editComponent (e) {
                 this.$set(this, 'nowEdit', e);
