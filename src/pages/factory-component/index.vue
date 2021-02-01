@@ -8,7 +8,7 @@
             <div class="actions">
                 <span @click="abs = !abs;refreshWorkSpace();">
                     <span class="iconfont icon-xunhuan"></span>
-                    {{ abs ? '拖动' : '积木' }}
+                    {{ abs ? '拖动' : '排列' }}
                 </span>
                 <span @click="preview = !preview;refreshWorkSpace();">
                     <span class="iconfont icon-xunhuan"></span>

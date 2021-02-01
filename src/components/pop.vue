@@ -70,5 +70,10 @@
 <style lang="less">
     .pop {
         position: fixed;
+        background: #FFF;
+        border: 1px solid #ededed;
+        border-radius: 3px;
+        padding: 10px;
+        box-shadow: 2px 4px 10px 0 rgba(30, 35, 48, 0.08);
     }
 </style>
