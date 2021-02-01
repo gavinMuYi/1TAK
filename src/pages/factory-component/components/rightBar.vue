@@ -24,7 +24,7 @@
             <div class="config-comp">
                 <span class="config-comp-title vv-title">组件样式: </span>
                 <span class="btn btn-style" @click="changeStyle">调整</span>
-                <styleEditor />
+                <styleEditor ref="styleEditor"/>
             </div>
             <div class="config-comp" v-if="currentEdit.content">
                 <span class="config-comp-title vv-title">容器暴露接口: </span>
@@ -151,9 +151,12 @@
                 return res;
             },
             changeStyle () {
-                let stylePanel = document.getElementById('stylePanel');
-                let currentEL = document.getElementById(this.currentEdit.config.hash).cloneNode(true);
-                stylePanel.appendChild(currentEL);
+                this.$refs.styleEditor.open();
+                this.$nextTick(() => {
+                    let stylePanel = document.getElementById('stylePanelContent');
+                    let currentEL = document.getElementById(this.currentEdit.config.hash).cloneNode(true);
+                    stylePanel.appendChild(currentEL);
+                })
             },
             // doSelectComp (key) {
             //     this.showSelectComp = !this.showSelectComp;
