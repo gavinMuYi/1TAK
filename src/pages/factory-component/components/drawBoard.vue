@@ -1,7 +1,7 @@
 <template>
     <div class="draw-board" @click="editContent">
         <pop ref="morePop">dddd</pop>
-        <cus-comp :comps="cusComp.comps" @editComponent="editComponent" />
+        <cus-comp :comps="cusComp.comps" @editComponent="editComponent" @styleEl="styleEl" />
     </div>
 </template>
 
@@ -137,9 +137,12 @@
                         }));
                     },
                     editComponent (ev, comp) {
-                        console.log(ev.target);
                         if (that.preview) { return; }
+                        this.styleEl(ev);
                         this.$emit('editComponent', comp);
+                    },
+                    styleEl (ev) {
+                        this.$emit('styleEl', ev.target);
                     }
                 }
             });
@@ -148,8 +151,12 @@
             editComponent (comp) {
                 this.$emit('editComponent', comp);
             },
-            editContent () {
+            styleEl (el) {
+                this.$emit('styleEl', el);
+            },
+            editContent (ev) {
                 if (this.preview) { return; }
+                this.$emit('styleEl', ev.target);
                 this.$emit('editContent');
             }
         }

@@ -21,7 +21,14 @@
             <left-bar />
             <div class="space-content">
                 <div class="component-draw-space" ref="drawSpace" @drop="drop" @dragover="ev => {ev.preventDefault()}">
-                    <draw-board :comps="comps" @editComponent="editComponent" @editContent="editContent" :cusComp="cusComp" :key="refresh" :preview="preview" />
+                    <draw-board
+                        :comps="comps"
+                        @editComponent="editComponent"
+                        @styleEl="styleEl"
+                        @editContent="editContent"
+                        :cusComp="cusComp"
+                        :key="refresh"
+                        :preview="preview" />
                 </div>
             </div>
             <right-bar :nowEdit="nowEdit" @updateParams="updateParams" :cusComp="cusComp" />
@@ -60,7 +67,8 @@
                 comps: [],
                 cusCompHash: createHash(4),
                 config_data_data_bak: {},
-                config_data_eventHandlers_bak: {}
+                config_data_eventHandlers_bak: {},
+                currentEl: null
             }
         },
         computed: {
@@ -101,11 +109,15 @@
         },
         mounted () {
             this.$set(this, 'nowEdit', this.cusComp);
+            this.currentEl = document.getElementsByClassName('cus-comp')[0];
             // suspensionBall('ballId', 'https://www.baidu.com');
         },
         methods: {
             save () {
                 console.log(this.cusComp);
+            },
+            styleEl (el) {
+                this.currentEl = el;
             },
             refreshWorkSpace () {
                 this.$nextTick(() => {
@@ -163,6 +175,9 @@
                 data.index !== undefined && this.comps.splice(data.index, 1);
                 this.comps.push(dragCompData);
                 this.editComponent(dragCompData);
+                this.$nextTick(() => {
+                    this.currentEl = document.getElementById(dragCompData.config.hash + '-box');
+                });
             },
             editComponent (e) {
                 this.$set(this, 'nowEdit', e);
