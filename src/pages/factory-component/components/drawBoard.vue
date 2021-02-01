@@ -91,7 +91,7 @@
                                         onDrop={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
                                         onDragover={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
                                         onDragstart={ev => { if (that.preview) { return; } this.move(ev, comp, index); }}
-                                        onClick={ev => { ev.stopPropagation(); this.editComponent(comp); }}>
+                                        onClick={ev => { ev.stopPropagation(); this.editComponent(ev, comp); }}>
                                         {
                                             h(comp.name, {
                                                 attrs: {
@@ -136,7 +136,8 @@
                             index: index
                         }));
                     },
-                    editComponent (comp) {
+                    editComponent (ev, comp) {
+                        console.log(ev.target);
                         if (that.preview) { return; }
                         this.$emit('editComponent', comp);
                     }

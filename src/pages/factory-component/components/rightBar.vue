@@ -21,6 +21,10 @@
                 <span class="config-comp-title vv-title">Y轴: </span>
                 <input v-model="currentEdit.y" @keydown="moveDom($event, 'y')" /> px
             </div>
+            <div class="config-comp">
+                <span class="config-comp-title vv-title">组件样式: </span>
+                <span class="btn btn-style">调整</span>
+            </div>
             <div class="config-comp" v-if="currentEdit.content">
                 <span class="config-comp-title vv-title">容器暴露接口: </span>
                 <span>{{ currentEdit.config.data.props }}</span>
@@ -268,7 +272,14 @@
                     background: #ededed;
                     float: right;
                     margin-right: 12px;
-                    box-shadow: 3px 1px 1px #888888;
+                    box-shadow: 3px 2px 2px 0 rgb(30 35 48 / 25%);
+                    border: 1px solid #ededed;
+                }
+                .btn-style {
+                    float: none;
+                    width: 50px;
+                    display: inline-block;
+                    text-align: center;
                 }
                 .config-comp-title {
                     display: inline-block;
