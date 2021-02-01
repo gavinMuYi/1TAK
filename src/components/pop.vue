@@ -5,6 +5,16 @@
 </template>
 <script>
     import Vue from 'vue';
+    Vue.directive('pop', {
+        bind: function (el, binding, vnode) {
+            // 就近取pop
+            let target = vnode.context.$parent.$refs[binding.arg] || window.pops[binding.arg];
+            if (!target) {
+                return;
+            }
+            binding.modifiers.rightClick && el.addEventListener('contextmenu', target.rightClick);
+        }
+    });
     export default {
         name: 'pop',
         data () {
@@ -13,20 +23,12 @@
             }
         },
         created () {
+            // window上存一份用来跨级取pop
             let name = this.$vnode.data.ref;
             if (!window.pops) {
                 window['pops'] = {}
             }
             name && (window.pops[name] = this);
-            Vue.directive('pop', {
-                bind: function (el, binding) {
-                    let target = window.pops[binding.arg];
-                    if (!target) {
-                        return;
-                    }
-                    binding.modifiers.rightClick && el.addEventListener('contextmenu', window.pops[binding.arg].rightClick);
-                }
-            });
         },
         mounted () {
             let that = this;
