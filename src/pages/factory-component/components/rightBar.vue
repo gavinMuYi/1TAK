@@ -158,11 +158,15 @@
                     stylePanel.appendChild(currentEL);
                     const DFS = {
                         do (root) {
+                            var regEx = /\s+/g;
                             if ((!root.childNodes.length && (root.nodeType !== 3) && (root.nodeName !== 'SCRIPT')) ||
                             (root.childNodes.length === 1 && root.childNodes[0].nodeType === 3)) {
                                 return {
-                                    key: root,
-                                    type: 'leaf'
+                                    dom: root,
+                                    type: 'leaf',
+                                    class: '.' + root.className.replace(regEx, '.'),
+                                    id: '#' + root.id,
+                                    tagName: root.tagName.toLowerCase()
                                 };
                             } else {
                                 let children = [];
@@ -175,14 +179,18 @@
                                     }
                                 }
                                 return {
-                                    key: root,
+                                    dom: root,
                                     type: 'father',
+                                    class: '.' + root.className.replace(regEx, '.'),
+                                    id: '#' + root.id,
+                                    tagName: root.tagName.toLowerCase(),
                                     children: children
                                 };
                             }
                         }
                     }
                     console.log(DFS.do(currentEL));
+                    // DFS.do(currentEL).dom.style.background = 'red';
                     console.log(currentEL);
                 })
             },
