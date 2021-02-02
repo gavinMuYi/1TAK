@@ -156,6 +156,34 @@
                     let stylePanel = document.getElementById('stylePanelPreview');
                     let currentEL = document.getElementById(this.currentEdit.config.hash).cloneNode(true);
                     stylePanel.appendChild(currentEL);
+                    const DFS = {
+                        do (root) {
+                            if ((!root.childNodes.length && (root.nodeType !== 3) && (root.nodeName !== 'SCRIPT')) ||
+                            (root.childNodes.length === 1 && root.childNodes[0].nodeType === 3)) {
+                                return {
+                                    key: root,
+                                    type: 'leaf'
+                                };
+                            } else {
+                                let children = [];
+                                for (let i = 0; i < root.childNodes.length; i++) {
+                                    var node = root.childNodes[i];
+                                    // 过滤 text 节点、script 节点
+                                    if ((node.nodeType !== 3) && (node.nodeName !== 'SCRIPT')) {
+                                        var child = this.do(node);
+                                        children.push(child);
+                                    }
+                                }
+                                return {
+                                    key: root,
+                                    type: 'father',
+                                    children: children
+                                };
+                            }
+                        }
+                    }
+                    console.log(DFS.do(currentEL));
+                    console.log(currentEL);
                 })
             },
             // doSelectComp (key) {

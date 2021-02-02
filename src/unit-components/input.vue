@@ -1,6 +1,13 @@
 <template>
     <div class="Vv_input">
         <input :placeholder="placeholder" :value="value" @input="input"/>
+        <div>
+        </div>
+        <div>
+            <div>
+                111
+            </div>
+        </div>
     </div>
 </template>
 
