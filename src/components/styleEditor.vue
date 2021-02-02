@@ -5,21 +5,21 @@
             <div class="paper" ref="paper">
                 <div id="stylePanelPreview" v-if="show"></div>
             </div>
-            <div class="dom-tree">{{ currentTree }}
+            <div class="dom-tree">
+                <dom-tree :data="currentTree"/>
             </div>
-            <div class="style-edit-bar">
-                <tree-item :data="[{children: [{children : []}]}]"/></div>
+            <div class="style-edit-bar"></div>
         </div>
     </div>
 </template>
 
 <script>
-    import TreeItem from './tree-item';
+    import DomTree from './dom-tree';
 
     export default {
         name: 'StyleEditor',
         components: {
-            TreeItem
+            DomTree
         },
         props: {
             nowEdit: {
@@ -48,14 +48,16 @@
                 });
             },
             getTree (root) {
-                var regEx = /\s+/g;
+                // id: root.id ? ('#' + root.id) : '',
+                // class: root.className ? ('.' + root.className.replace(regEx, '.')) : '',
+                // var regEx = /\s+/g;
                 if ((!root.childNodes.length && (root.nodeType !== 3) && (root.nodeName !== 'SCRIPT')) ||
                 (root.childNodes.length === 1 && root.childNodes[0].nodeType === 3)) {
                     return {
                         dom: root,
                         type: 'leaf',
-                        class: root.className ? ('.' + root.className.replace(regEx, '.')) : '',
-                        id: root.id ? ('#' + root.id) : '',
+                        class: root.className,
+                        id: root.id,
                         tagName: root.tagName.toLowerCase()
                     };
                 } else {
@@ -71,8 +73,8 @@
                     return {
                         dom: root,
                         type: 'father',
-                        class: root.className ? ('.' + root.className.replace(regEx, '.')) : '',
-                        id: root.id ? ('#' + root.id) : '',
+                        class: root.className,
+                        id: root.id,
                         tagName: root.tagName.toLowerCase(),
                         children: children
                     };
