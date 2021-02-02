@@ -21,7 +21,7 @@
                 <span class="config-comp-title vv-title">Y轴: </span>
                 <input v-model="currentEdit.y" @keydown="moveDom($event, 'y')" /> px
             </div>
-            <div class="config-comp">
+            <div class="config-comp" v-if="!currentEdit.content">
                 <span class="config-comp-title vv-title">组件样式: </span>
                 <span class="btn btn-style" @click="changeStyle">调整</span>
                 <styleEditor ref="styleEditor"/>
@@ -153,7 +153,7 @@
             changeStyle () {
                 this.$refs.styleEditor.open();
                 this.$nextTick(() => {
-                    let stylePanel = document.getElementById('stylePanelContent');
+                    let stylePanel = document.getElementById('stylePanelPreview');
                     let currentEL = document.getElementById(this.currentEdit.config.hash).cloneNode(true);
                     stylePanel.appendChild(currentEL);
                 })

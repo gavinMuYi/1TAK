@@ -83,8 +83,7 @@
                                             top: comp.y + 'px',
                                             left: comp.x + 'px'
                                         } : {
-                                            display: 'inline-block',
-                                            width: '100%'
+                                            display: 'inline-block'
                                         }}
                                         {...{ directives }}
                                         draggable={abs && !that.preview}
@@ -100,6 +99,9 @@
                                                 props: this[comp.config.hash],
                                                 on: {
                                                     ...eventhandlers
+                                                },
+                                                style: {
+                                                    display: 'inline-block'
                                                 }
                                             })
                                         }
