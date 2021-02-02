@@ -5,7 +5,7 @@
             <div class="paper" ref="paper">
                 <div id="stylePanelPreview" v-if="show"></div>
             </div>
-            <div class="dom-tree"></div>
+            <div class="dom-tree">{{ currentTree }}</div>
             <div class="style-edit-bar"></div>
         </div>
     </div>
@@ -24,7 +24,8 @@
         },
         data () {
             return {
-                show: false
+                show: false,
+                currentTree: null
             }
         },
         methods: {
@@ -35,8 +36,7 @@
                     this.$refs.paper.scrollLeft = 5000 - 400;
                     this.$nextTick(() => {
                         var currentEL = document.getElementById('stylePanelPreview').childNodes[0];
-                        console.log(this.getTree(currentEL));
-                        console.log(currentEL);
+                        this.currentTree = [this.getTree(currentEL)];
                     });
                 });
             },
