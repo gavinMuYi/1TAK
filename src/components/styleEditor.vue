@@ -2,7 +2,7 @@
     <div id="stylePanel" v-if="show">
         <div id="stylePanelOther" @click="show = false"></div>
         <div id="stylePanelContent">
-            <div class="paper">
+            <div class="paper" ref="paper">
                 <div id="stylePanelPreview"></div>
             </div>
         </div>
@@ -20,6 +20,10 @@
         methods: {
             open () {
                 this.show = true;
+                this.$nextTick(() => {
+                    this.$refs.paper.scrollTop = 5000 - 300;
+                    this.$refs.paper.scrollLeft = 5000 - 250;
+                });
             }
         }
     }
@@ -46,15 +50,15 @@
             height: 500px;
             position: fixed;
             width: 100%;
-            height: 500px;
+            height: 700px;
             left: 0;
             bottom: 0;
             border-top: 1px solid #ededed;
-            background: #FFF;
+            background: #333333e8;
             padding: 20px;
             box-sizing: border-box;
             .paper {
-                width: 40%;
+                width: 550px;
                 height: 100%;
                 display: inline-block;
                 border: 1px solid #ededed;
@@ -62,14 +66,15 @@
                 position: relative;
                 overflow: auto;
                 box-sizing: border-box;
+                background: #FFF;
                 padding: 30px;
                 #stylePanelPreview {
                     display: flex;
                     display: -webkit-flex;
                     align-items:center;
                     justify-content:center;
-                    width: 1000px;
-                    height: 1000px;
+                    width: 10000px;
+                    height: 10000px;
                 }
             }
         }
