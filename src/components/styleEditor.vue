@@ -1,8 +1,8 @@
 <template>
-    <div id="stylePanel" v-if="show">
-        <div id="stylePanelOther" @click="show = false"></div>
-        <div id="stylePanelContent">
-            <div class="paper" ref="paper">
+    <div id="stylePanel" :class="show ? 'style-panel-open' : 'style-panel-close'">
+        <div id="stylePanelOther" @click="show = false" v-if="show"></div>
+        <div id="stylePanelContent" :class="show ? 'style-content-open' : 'style-content-close'">
+            <div class="paper" ref="paper" v-if="show">
                 <div id="stylePanelPreview"></div>
             </div>
         </div>
@@ -30,6 +30,14 @@
 </script>
 
 <style lang="less">
+    .style-panel-open {
+        opacity: 1;
+    }
+    #stylePanel.style-panel-close {
+        opacity: 0;
+        height: 0;
+        overflow: hidden;
+    }
     #stylePanel {
         position: fixed;
         width: 100%;
@@ -37,6 +45,7 @@
         left: 0;
         bottom: 0;
         z-index: 10000;
+        transition: opacity 1s;
         #stylePanelOther {
             height: ~'calc(100% - 500px)';
             position: fixed;
@@ -46,8 +55,11 @@
             top: 0;
             background: #ededed00;
         }
+        #stylePanelContent.style-content-close {
+            height: 0;
+        }
         #stylePanelContent {
-            height: 500px;
+            transition: height 1s;
             position: fixed;
             width: 100%;
             height: 700px;
