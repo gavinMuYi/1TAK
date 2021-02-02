@@ -5,15 +5,22 @@
             <div class="paper" ref="paper">
                 <div id="stylePanelPreview" v-if="show"></div>
             </div>
-            <div class="dom-tree">{{ currentTree }}</div>
-            <div class="style-edit-bar"></div>
+            <div class="dom-tree">{{ currentTree }}
+            </div>
+            <div class="style-edit-bar">
+                <tree-item :data="[{children: [{children : []}]}]"/></div>
         </div>
     </div>
 </template>
 
 <script>
+    import TreeItem from './tree-item';
+
     export default {
         name: 'StyleEditor',
+        components: {
+            TreeItem
+        },
         props: {
             nowEdit: {
                 type: Object,
