@@ -24,7 +24,7 @@
             <div class="config-comp" v-if="!currentEdit.content">
                 <span class="config-comp-title vv-title">组件样式: </span>
                 <span class="btn btn-style" @click="changeStyle">调整</span>
-                <styleEditor ref="styleEditor"/>
+                <styleEditor ref="styleEditor" :nowEdit="currentEdit" />
             </div>
             <div class="config-comp" v-if="currentEdit.content">
                 <span class="config-comp-title vv-title">容器暴露接口: </span>
@@ -156,42 +156,6 @@
                     let stylePanel = document.getElementById('stylePanelPreview');
                     let currentEL = document.getElementById(this.currentEdit.config.hash).cloneNode(true);
                     stylePanel.appendChild(currentEL);
-                    const DFS = {
-                        do (root) {
-                            var regEx = /\s+/g;
-                            if ((!root.childNodes.length && (root.nodeType !== 3) && (root.nodeName !== 'SCRIPT')) ||
-                            (root.childNodes.length === 1 && root.childNodes[0].nodeType === 3)) {
-                                return {
-                                    dom: root,
-                                    type: 'leaf',
-                                    class: '.' + root.className.replace(regEx, '.'),
-                                    id: '#' + root.id,
-                                    tagName: root.tagName.toLowerCase()
-                                };
-                            } else {
-                                let children = [];
-                                for (let i = 0; i < root.childNodes.length; i++) {
-                                    var node = root.childNodes[i];
-                                    // 过滤 text 节点、script 节点
-                                    if ((node.nodeType !== 3) && (node.nodeName !== 'SCRIPT')) {
-                                        var child = this.do(node);
-                                        children.push(child);
-                                    }
-                                }
-                                return {
-                                    dom: root,
-                                    type: 'father',
-                                    class: '.' + root.className.replace(regEx, '.'),
-                                    id: '#' + root.id,
-                                    tagName: root.tagName.toLowerCase(),
-                                    children: children
-                                };
-                            }
-                        }
-                    }
-                    console.log(DFS.do(currentEL));
-                    // DFS.do(currentEL).dom.style.background = 'red';
-                    console.log(currentEL);
                 })
             },
             // doSelectComp (key) {

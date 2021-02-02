@@ -14,6 +14,14 @@
 <script>
     export default {
         name: 'StyleEditor',
+        props: {
+            nowEdit: {
+                type: Object,
+                default: () => {
+                    return {}
+                }
+            }
+        },
         data () {
             return {
                 show: false
@@ -25,7 +33,43 @@
                 this.$nextTick(() => {
                     this.$refs.paper.scrollTop = 5000 - 290;
                     this.$refs.paper.scrollLeft = 5000 - 400;
+                    this.$nextTick(() => {
+                        var currentEL = document.getElementById('stylePanelPreview').childNodes[0];
+                        console.log(this.getTree(currentEL));
+                        console.log(currentEL);
+                    });
                 });
+            },
+            getTree (root) {
+                var regEx = /\s+/g;
+                if ((!root.childNodes.length && (root.nodeType !== 3) && (root.nodeName !== 'SCRIPT')) ||
+                (root.childNodes.length === 1 && root.childNodes[0].nodeType === 3)) {
+                    return {
+                        dom: root,
+                        type: 'leaf',
+                        class: root.className ? ('.' + root.className.replace(regEx, '.')) : '',
+                        id: root.id ? ('#' + root.id) : '',
+                        tagName: root.tagName.toLowerCase()
+                    };
+                } else {
+                    let children = [];
+                    for (let i = 0; i < root.childNodes.length; i++) {
+                        var node = root.childNodes[i];
+                        // 过滤 text 节点、script 节点
+                        if ((node.nodeType !== 3) && (node.nodeName !== 'SCRIPT')) {
+                            var child = this.getTree(node);
+                            children.push(child);
+                        }
+                    }
+                    return {
+                        dom: root,
+                        type: 'father',
+                        class: root.className ? ('.' + root.className.replace(regEx, '.')) : '',
+                        id: root.id ? ('#' + root.id) : '',
+                        tagName: root.tagName.toLowerCase(),
+                        children: children
+                    };
+                }
             }
         }
     }
