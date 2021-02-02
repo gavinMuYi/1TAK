@@ -276,7 +276,8 @@
             &:before {
                 content: '';
                 position: absolute;
-                background: #ededed40;
+                background: #333333e8;
+                z-index: 10000;
                 width: 100%;
                 height: 100%;
                 &:hover {
