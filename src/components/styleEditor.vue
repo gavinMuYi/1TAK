@@ -58,7 +58,6 @@
                 height: 100%;
                 display: inline-block;
                 border: 1px solid #ededed;
-                box-shadow: 3px 2px 2px 0 rgb(30 35 48 / 25%);
                 border-radius: 5px;
                 position: relative;
                 overflow: auto;
