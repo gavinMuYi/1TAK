@@ -2,9 +2,11 @@
     <div id="stylePanel" :class="show ? 'style-panel-open' : 'style-panel-close'">
         <div id="stylePanelOther" @click="show = false" v-if="show"></div>
         <div id="stylePanelContent" :class="show ? 'style-content-open' : 'style-content-close'">
-            <div class="paper" ref="paper" v-if="show">
-                <div id="stylePanelPreview"></div>
+            <div class="paper" ref="paper">
+                <div id="stylePanelPreview" v-if="show"></div>
             </div>
+            <div class="dom-tree"></div>
+            <div class="style-edit-bar"></div>
         </div>
     </div>
 </template>
@@ -21,8 +23,8 @@
             open () {
                 this.show = true;
                 this.$nextTick(() => {
-                    this.$refs.paper.scrollTop = 5000 - 300;
-                    this.$refs.paper.scrollLeft = 5000 - 250;
+                    this.$refs.paper.scrollTop = 5000 - 290;
+                    this.$refs.paper.scrollLeft = 5000 - 400;
                 });
             }
         }
@@ -67,10 +69,10 @@
             bottom: 0;
             border-top: 1px solid #ededed;
             background: #333333e8;
-            padding: 20px;
+            padding: 30px 20px;
             box-sizing: border-box;
             .paper {
-                width: 550px;
+                width: 850px;
                 height: 100%;
                 display: inline-block;
                 border: 1px solid #ededed;
@@ -88,6 +90,31 @@
                     width: 10000px;
                     height: 10000px;
                 }
+            }
+            .dom-tree {
+                border-radius: 5px;
+                display: inline-block;
+                width: ~'calc(100% - 1280px)';
+                height: 100%;
+                padding: 30px 10px;
+                vertical-align: top;
+                box-sizing: border-box;
+                border: 1px solid #333;
+                background: #333;
+                margin: 0 10px;
+                overflow: auto;
+            }
+            .style-edit-bar {
+                border-radius: 5px;
+                display: inline-block;
+                width: 400px;
+                height: 100%;
+                padding: 10px 10px;
+                vertical-align: top;
+                box-sizing: border-box;
+                border: 1px solid #333;
+                background: #FFF;
+                overflow: auto;
             }
         }
     }
