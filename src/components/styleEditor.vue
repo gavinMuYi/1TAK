@@ -86,7 +86,7 @@
                 }
             },
             editStyle (dom, name) {
-                console.log(dom, name);
+                console.log(dom, name, dom.dom.style);
             }
         }
     }
