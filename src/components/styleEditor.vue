@@ -6,7 +6,7 @@
                 <div id="stylePanelPreview" v-if="show"></div>
             </div>
             <div class="dom-tree">
-                <dom-tree :data="currentTree"/>
+                <dom-tree :data="currentTree" @editStyle="editStyle" />
             </div>
             <div class="style-edit-bar"></div>
         </div>
@@ -30,6 +30,14 @@
             }
         },
         data () {
+            // function add_css(str_css){
+            // var style=document.createElement("style");
+            // style.type="text/css";
+            // style.id="styleEditorPreview";
+            // style.innerHTML=str_css;
+            // document.getElementsByTagName("head").item(0).appendChild(style);
+            // }
+            // add_css("div{color:red}")
             return {
                 show: false,
                 currentTree: null
@@ -48,9 +56,6 @@
                 });
             },
             getTree (root) {
-                // id: root.id ? ('#' + root.id) : '',
-                // class: root.className ? ('.' + root.className.replace(regEx, '.')) : '',
-                // var regEx = /\s+/g;
                 if ((!root.childNodes.length && (root.nodeType !== 3) && (root.nodeName !== 'SCRIPT')) ||
                 (root.childNodes.length === 1 && root.childNodes[0].nodeType === 3)) {
                     return {
@@ -79,6 +84,9 @@
                         children: children
                     };
                 }
+            },
+            editStyle (dom, name) {
+                console.log(dom, name);
             }
         }
     }
