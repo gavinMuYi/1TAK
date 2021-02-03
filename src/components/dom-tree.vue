@@ -35,7 +35,7 @@
             select (select) {
                 if (select) {
                     this.tempBackground = this.data[0].dom.style.background;
-                    this.data[0].dom.style.background = '#6377dc';
+                    this.data[0].dom.style.background = '#6377dcad';
                 } else {
                     this.data[0].dom.style.background = this.tempBackground;
                 }

@@ -6,15 +6,30 @@
                 Vv Page<span class="iconfont icon-yezhu"></span>
             </div>
             <div class="actions">
-                <span @click="abs = !abs;refreshWorkSpace();">
-                    <span class="iconfont icon-xunhuan"></span>
-                    {{ abs ? '拖动' : '排列' }}
+                <span>
+                    <span class="iconfont icon-yuming"></span>
+                    页面信息
                 </span>
                 <span @click="preview = !preview;refreshWorkSpace();">
-                    <span class="iconfont icon-xunhuan"></span>
+                    <span class="iconfont icon-qiehuan1"></span>
                     {{ preview ? '预览' : '配置' }}态
                 </span>
-                <span class="iconfont icon-baocun_mian" @click="save"></span>
+                <span @click="abs = !abs;refreshWorkSpace();">
+                    <span class="iconfont icon-moxingzuzhuang"></span>
+                    {{ abs ? '拖动' : '排列' }}
+                </span>
+                <span>
+                    <span class="iconfont icon-shangyibu"></span>
+                    撤销
+                </span>
+                <span>
+                    <span class="iconfont icon-liuchengtuh5-29"></span>
+                    重做
+                </span>
+                <span @click="save" class="iconLast">
+                    <span class="iconfont icon-baocun_mian"></span>
+                    保存
+                </span>
             </div>
         </div>
         <div :class="['work-space', {'preview': preview}]">
@@ -229,15 +244,20 @@
             float: right;
             color: #333;
             font-weight: 700;
+            .iconfont {
+                padding-left: 5px;
+            }
             .icon-baocun_mian {
-                font-size: 24px;
+                font-size: 20px;
                 line-height: 100px;
                 color: #333;
                 font-weight: 400;
-                padding-left: 10px;
-                margin-right: 30px;
+                padding-left: 5px;
                 position: relative;
                 top: 2px;
+            }
+            .iconLast {
+                margin-right: 30px;
             }
         }
     }
