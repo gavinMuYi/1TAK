@@ -1,7 +1,7 @@
 <template>
     <div v-if="data" class="style-dom-tree">
-        <div class="tag">
-            <span @click="show = !show" v-if="data[0].children && data[0].children.length" class="arrow">~</span>
+        <div class="tag" @click="show = !show">
+            <span v-if="data[0].children && data[0].children.length" class="arrow">~</span>
             &lt;{{data[0].tagName}}
             <span class="attr" v-if="data[0].id">&nbsp;id="<span class="value">{{data[0].id}}</span>"</span>
             <span class="attr" v-if="data[0].class">&nbsp;class="<span class="value">{{data[0].class}}</span>"</span>&gt;
