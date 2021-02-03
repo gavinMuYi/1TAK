@@ -37,6 +37,7 @@
     .style-dom-tree {
         .tag {
             color: #ff77e1;
+            white-space: nowrap;
             .arrow {
                 color: #FFFFFF;
             }
