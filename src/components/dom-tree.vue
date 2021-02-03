@@ -1,7 +1,7 @@
 <template>
     <div v-if="data" class="style-dom-tree">
-        <div class="tag" @click="show = !show">
-            <span v-if="data[0].children && data[0].children.length" class="arrow">~</span>
+        <div class="tag" @mouseover="select(true)" @mouseout="select(false)">
+            <span v-if="data[0].children && data[0].children.length" class="arrow" @click="show = !show">~</span>
             &lt;{{data[0].tagName}}
             <span class="attr" v-if="data[0].id">&nbsp;id="<span class="value">{{data[0].id}}</span>"</span>
             <span class="attr" v-if="data[0].class">&nbsp;class="<span class="value">{{data[0].class}}</span>"</span>&gt;
@@ -27,7 +27,18 @@
         },
         data () {
             return {
-                show: false
+                show: false,
+                tempBackground: ''
+            }
+        },
+        methods: {
+            select (select) {
+                if (select) {
+                    this.tempBackground = this.data[0].dom.style.background;
+                    this.data[0].dom.style.background = '#6377dc';
+                } else {
+                    this.data[0].dom.style.background = this.tempBackground;
+                }
             }
         }
     }
