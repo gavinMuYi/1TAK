@@ -15,6 +15,7 @@
 
 <script>
     import DomTree from './dom-tree';
+    import { styleCompConfig } from './styleEditor.config.js';
 
     export default {
         name: 'StyleEditor',
@@ -40,7 +41,8 @@
             // add_css("div{color:red}")
             return {
                 show: false,
-                currentTree: null
+                currentTree: null,
+                styleCompConfig
             }
         },
         methods: {
