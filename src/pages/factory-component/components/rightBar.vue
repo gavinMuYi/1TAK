@@ -34,18 +34,6 @@
                 <div class="config-comp" v-if="!currentEdit.content">
                     <span class="config-comp-title vv-title">组件配置: </span>
                 </div>
-                <!-- <div class="comp-select" v-if="Object.keys(currentEdit.config.data.data).length">
-                    <div class="compname box-trigger" @click.stop="showSelectComp = !showSelectComp;">
-                        {{ currentComp }}
-                        <span class="open">now</span>
-                    </div>
-                    <div class="select-pop" v-if="showSelectComp">
-                        <div
-                            v-for="key in Object.keys(currentEdit.config.data.data)"
-                            :key="key + 'select'" :value="key"
-                            @click.stop="doSelectComp(key)">{{key}}</div>
-                    </div>
-                </div> -->
                 <div class="event-system">
                     <div class="config-comp" v-for="key in Object.keys(cusComp.config.data.data)" :key="key">
                         <span v-if="key === currentEdit.config.hash">
@@ -111,8 +99,7 @@
                     unit: '单位组件',
                     combination: '组合组件',
                     nestification: '嵌套组件'
-                },
-                showSelectComp: false
+                }
             }
         },
         computed: {
@@ -158,23 +145,6 @@
                     stylePanel.appendChild(currentEL);
                 })
             },
-            // doSelectComp (key) {
-            //     this.showSelectComp = !this.showSelectComp;
-            //     this.currentComp = key;
-            //     let time = 0;
-            //     let that = this;
-            //     let heightLight = function () {
-            //         document.getElementById(that.currentComp).setAttribute('class', 'event-box');
-            //         setTimeout(() => {
-            //             document.getElementById(that.currentComp).classList.remove('event-box');
-            //             time++;
-            //             setTimeout(() => {
-            //                 time < 5 && heightLight();
-            //             }, (100 - time * 15))
-            //         }, (300 - time * 55));
-            //     };
-            //     heightLight();
-            // },
             getType (id) {
                 let res = '';
                 this.unitCompIcons.forEach(item => {
@@ -228,41 +198,6 @@
             border-left: 1px solid #ededed;
             border-bottom: 1px solid #ededed;
         }
-        // .comp-select {
-        //     position: relative;
-        //     margin-bottom: 15px;
-        //     .box-trigger {
-        //         border: 1px solid #ededed;
-        //         border-radius: 3px;
-        //         height: 30px;
-        //         padding: 0 10px;
-        //         line-height: 30px;
-        //         width: 250px;
-        //         box-sizing: border-box;
-        //         font-weight: 400;
-        //         .open {
-        //             float: right;
-        //             font-weight: 700;
-        //         }
-        //     }
-        //     .select-pop {
-        //         margin-top: 2px;
-        //         box-sizing: border-box;
-        //         position: absolute;
-        //         border: 1px solid #ededed;
-        //         border-radius: 3px;
-        //         width: 250px;
-        //         background: #FFF;
-        //         div {
-        //             height: 30px;
-        //             line-height: 30px;
-        //             padding: 0 10px;
-        //             &:hover {
-        //                 background: #ededed;
-        //             }
-        //         }
-        //     }
-        // }
         .compname {
             color: #333;
             font-weight: 700;

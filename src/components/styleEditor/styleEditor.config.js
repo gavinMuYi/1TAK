@@ -1,8 +1,8 @@
 exports.styleCompConfig = [{
     key: 'align-content',
     label: '垂直对齐',
-    component: 'select',
-    options: ['stretch', 'center', 'flex-start', 'flex-end', 'space-between', 'space-around', 'initial', 'inherit'],
+    component: 'SingleSelect',
+    options: ['normal', 'stretch', 'center', 'flex-start', 'flex-end', 'space-between', 'space-around', 'initial', 'inherit'],
     tip: `<div class="article-body">
     <div class="article-intro" id="content">
     

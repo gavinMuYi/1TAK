@@ -16,8 +16,7 @@
                     <div>{{ rule.label }}</div>
                     <div class="key-info">{{ rule.key }}</div>
                 </span>
-                <span>{{ rule.component }}</span>
-                <span>value: {{ currentStyle[rule.key] }}</span>
+                <component :is="rule.component" :options="rule.options" v-model="currentStyle[rule.key]"></component>
             </div>
         </div>
         <div v-show="!domName">从左侧选择一个节点</div>
@@ -26,13 +25,15 @@
 
 <script>
     import pop from '../pop';
+    import SingleSelect from './components/single-select';
     import { styleCompConfig } from './styleEditor.config.js';
     import clone from 'clone';
 
     export default {
         name: 'StyleBar',
         components: {
-            pop
+            pop,
+            SingleSelect
         },
         props: {
             domName: {
