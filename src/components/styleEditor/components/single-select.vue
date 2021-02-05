@@ -1,5 +1,5 @@
 <template>
-    <div class="single-select">
+    <div :class="['single-select', {'active-select': showSelectComp}]">
         <div class="trigger-name box-trigger" @click.stop="showSelectComp = !showSelectComp;">
             {{ currentComp }}
             <span class="open iconfont icon-xiala1"></span>
@@ -59,7 +59,6 @@
 <style lang="less">
     .single-select {
         position: relative;
-        margin-bottom: 15px;
         display: inline-block;
         .trigger-name {
             color: #333;
@@ -86,7 +85,7 @@
             position: absolute;
             border: 1px solid #ededed;
             border-radius: 3px;
-            width: 250px;
+            width: 200px;
             background: #FFF;
             div {
                 height: 30px;
@@ -96,6 +95,11 @@
                     background: #ededed;
                 }
             }
+        }
+    }
+    .active-select {
+        .box-trigger .open {
+            color: #333;
         }
     }
 </style>
