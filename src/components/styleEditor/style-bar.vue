@@ -12,8 +12,9 @@
                 v-for="(rule, index) in styleCompConfig"
                 :key="rule.key"
                 @mouseover="infoIndex = index">
-                <span class="style-item-left" v-pop:cssInfo.hover.delay>
-                    {{ rule.label || rule.key }}:
+                <span class="style-item-left rule-left" v-pop:cssInfo.hover.delay>
+                    <div>{{ rule.label }}</div>
+                    <div class="key-info">{{ rule.key }}</div>
                 </span>
                 <span>{{ rule.component }}</span>
                 <span>value: {{ currentStyle[rule.key] }}</span>
@@ -73,7 +74,8 @@
         width: 570px;
         height: 500px;
         overflow: auto;
-        margin-left: -350px;
+        margin-top: 5px;
+        margin-left: -300px;
         padding: 10px 20px;
         .article-body h2 {
             margin: 10px 0;
@@ -198,6 +200,24 @@
                 margin-right: 5px;
                 color: #191f1e;
                 font-weight: 700;
+                vertical-align: middle;
+                .key-info {
+                    font-size: 12px;
+                    color: #a4a9af;
+                    font-weight: 400;
+                }
+            }
+            .rule-left {
+                position: relative;
+                margin-right: 20px;
+                &:after {
+                    content: ':';
+                    position: absolute;
+                    right: -12px;
+                    top: 2px;
+                    font-size: 20px;
+                    font-weight: 500;
+                }
             }
         }
     }

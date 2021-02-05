@@ -1,5 +1,5 @@
 <template>
-    <div :class="['pop', clazz]" v-show="show" ref="selfPop" @mouseenter="hover = true" @mouseleave="hover = false">
+    <div :class="['pop', clazz]" v-show="show" ref="selfPop" @mouseenter.stop="hover = true" @mouseleave.stop="hover = false">
         <slot></slot>
     </div>
 </template>
@@ -14,8 +14,8 @@
             }
             binding.modifiers.rightClick && el.addEventListener('contextmenu', target.rightClick);
             if (binding.modifiers.hover) {
-                el.addEventListener('mouseover', function (e) { target.handleHover(e, true, binding.modifiers.delay) });
-                el.addEventListener('mouseout', function (e) { target.handleHover(e, false, binding.modifiers.delay) });
+                el.addEventListener('mouseenter', function (e) { target.handleHover(e, true, binding.modifiers.delay) });
+                el.addEventListener('mouseleave', function (e) { target.handleHover(e, false, binding.modifiers.delay) });
             }
         }
     });
@@ -69,9 +69,6 @@
         methods: {
             rightClick (ev) {
                 if (ev.button === 2) {
-                    // let box = ev.target.getBoundingClientRect();
-                    // this.$refs.selfPop.style.top = `${box.y + box.height}px`;
-                    // this.$refs.selfPop.style.left = `${box.x + box.width}px`;
                     this.$refs.selfPop.style.top = `${ev.clientY}px`;
                     this.$refs.selfPop.style.left = `${ev.clientX}px`;
                     this.show = true;
@@ -81,8 +78,9 @@
             },
             handleHover (ev, mos, delay) {
                 if (mos) {
-                    this.$refs.selfPop.style.top = `${ev.clientY}px`;
-                    this.$refs.selfPop.style.left = `${ev.clientX}px`;
+                    let box = ev.target.getBoundingClientRect();
+                    this.$refs.selfPop.style.top = `${box.y + box.height}px`;
+                    this.$refs.selfPop.style.left = `${box.x + box.width / 2}px`;
                     this.show = true;
                 } else {
                     if (delay) {
