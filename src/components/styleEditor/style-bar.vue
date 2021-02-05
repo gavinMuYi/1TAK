@@ -1,6 +1,6 @@
 <template>
     <div class="style-bar">
-        <div v-if="domName">
+        <div v-show="domName">
             <pop ref="cssInfo" clazz="cssInfo-pop">
                 <div v-html="styleCompConfig[0].tip"></div>
             </pop>
@@ -11,7 +11,7 @@
             {{ domStyle }}
             <span v-pop:cssInfo.hover.delay>sss</span>
         </div>
-        <div v-else>从左侧选择一个节点</div>
+        <div v-show="!domName">从左侧选择一个节点</div>
     </div>
 </template>
 

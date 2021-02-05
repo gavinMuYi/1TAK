@@ -66,7 +66,7 @@
                 this.domName = '';
                 this.domStyle = {};
                 this.currentTree = null;
-                this.show = false
+                this.show = false;
             },
             getTree (root) {
                 if ((!root.childNodes.length && (root.nodeType !== 3) && (root.nodeName !== 'SCRIPT')) ||
