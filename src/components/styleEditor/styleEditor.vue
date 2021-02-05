@@ -179,7 +179,7 @@
             .dom-tree {
                 border-radius: 5px;
                 display: inline-block;
-                width: ~'calc(100% - 1200px)';
+                width: ~'calc(100% - 1250px)';
                 height: 100%;
                 padding: 30px 10px;
                 vertical-align: top;
@@ -192,7 +192,7 @@
             .style-edit-bar {
                 border-radius: 5px;
                 display: inline-block;
-                width: 320px;
+                width: 370px;
                 height: 100%;
                 padding: 20px 10px;
                 vertical-align: top;

@@ -87,6 +87,7 @@
             border-radius: 3px;
             width: 200px;
             background: #FFF;
+            z-index: 1000;
             div {
                 height: 30px;
                 line-height: 30px;

@@ -10,7 +10,7 @@
             </div>
             <div class="style-item"
                 v-for="(rule, index) in styleCompConfig"
-                :key="rule.key"
+                :key="rule.key + Math.random()"
                 @mouseover="infoIndex = index">
                 <span class="style-item-left rule-left">
                     <div>{{ rule.label }}<span v-pop:cssInfo.hover.delay class="iconfont icon-switch"></span></div>
