@@ -12,8 +12,8 @@
                 v-for="(rule, index) in styleCompConfig"
                 :key="rule.key"
                 @mouseover="infoIndex = index">
-                <span class="style-item-left rule-left" v-pop:cssInfo.hover.delay>
-                    <div>{{ rule.label }}</div>
+                <span class="style-item-left rule-left">
+                    <div>{{ rule.label }}<span v-pop:cssInfo.hover.delay class="iconfont icon-switch"></span></div>
                     <div class="key-info">{{ rule.key }}</div>
                 </span>
                 <component :is="rule.component" :options="rule.options" v-model="currentStyle[rule.key]"></component>

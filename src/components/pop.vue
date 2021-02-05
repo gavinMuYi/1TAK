@@ -90,7 +90,7 @@
                             } else {
                                 this.closePop();
                             }
-                        }, 1000);
+                        }, 200);
                     } else {
                         this.closePop();
                     }
