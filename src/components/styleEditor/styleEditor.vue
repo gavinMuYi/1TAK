@@ -8,19 +8,22 @@
             <div class="dom-tree">
                 <dom-tree :data="currentTree" @editStyle="editStyle" />
             </div>
-            <div class="style-edit-bar"></div>
+            <div class="style-edit-bar">
+                <styleBar />
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     import DomTree from './dom-tree';
-    import { styleCompConfig } from './styleEditor.config.js';
+    import StyleBar from './style-bar';
 
     export default {
         name: 'StyleEditor',
         components: {
-            DomTree
+            DomTree,
+            StyleBar
         },
         props: {
             nowEdit: {
@@ -41,8 +44,7 @@
             // add_css("div{color:red}")
             return {
                 show: false,
-                currentTree: null,
-                styleCompConfig
+                currentTree: null
             }
         },
         methods: {

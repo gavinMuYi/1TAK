@@ -82,7 +82,7 @@
 <script>
     import { unitCompIcons } from '../config.js';
     import IdeTextarea from '../../../components/ideTextarea';
-    import StyleEditor from '../../../components/styleEditor';
+    import StyleEditor from '../../../components/styleEditor/styleEditor';
 
     export default {
         name: 'RightBar',

@@ -1,5 +1,5 @@
 <template>
-    <div class="pop" v-show="show" ref="selfPop">
+    <div :class="['pop', clazz]" v-show="show" ref="selfPop" @mouseenter="hover = true" @mouseleave="hover = false">
         <slot></slot>
     </div>
 </template>
@@ -13,13 +13,35 @@
                 return;
             }
             binding.modifiers.rightClick && el.addEventListener('contextmenu', target.rightClick);
+            if (binding.modifiers.hover) {
+                el.addEventListener('mouseover', function (e) { target.handleHover(e, true, binding.modifiers.delay) });
+                el.addEventListener('mouseout', function (e) { target.handleHover(e, false, binding.modifiers.delay) });
+            }
         }
     });
     export default {
         name: 'pop',
+        props: {
+            clazz: {
+                type: String,
+                default: ''
+            }
+        },
         data () {
             return {
-                show: false
+                show: false,
+                hover: false,
+                waitToClose: false
+            }
+        },
+        watch: {
+            hover: {
+                handler (val) {
+                    if (this.waitToClose && !val) {
+                        this.waitToClose = false;
+                        this.closePop();
+                    }
+                }
             }
         },
         created () {
@@ -57,6 +79,25 @@
                 ev.preventDefault();
                 return false;
             },
+            handleHover (ev, mos, delay) {
+                if (mos) {
+                    this.$refs.selfPop.style.top = `${ev.clientY}px`;
+                    this.$refs.selfPop.style.left = `${ev.clientX}px`;
+                    this.show = true;
+                } else {
+                    if (delay) {
+                        setTimeout(() => {
+                            if (this.hover) {
+                                this.waitToClose = true;
+                            } else {
+                                this.closePop();
+                            }
+                        }, 1000);
+                    } else {
+                        this.closePop();
+                    }
+                }
+            },
             closePop () {
                 this.show = false;
             }
@@ -69,7 +110,7 @@
 
 <style lang="less">
     .pop {
-        z-index: 1000;
+        z-index: 100000;
         position: fixed;
         background: #FFF;
         border: 1px solid #ededed;
