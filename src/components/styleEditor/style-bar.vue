@@ -1,13 +1,17 @@
 <template>
     <div class="style-bar">
-        <pop ref="cssInfo" clazz="cssInfo-pop">
-            <div v-html="styleCompConfig[0].tip"></div>
-        </pop>
-        <div class="style-item">
-            <span class="style-item-left">DOM: </span>
-            <span>{{ domName }}</span>
+        <div v-if="domName">
+            <pop ref="cssInfo" clazz="cssInfo-pop">
+                <div v-html="styleCompConfig[0].tip"></div>
+            </pop>
+            <div class="style-item">
+                <span class="style-item-left">DOM: </span>
+                <span>{{ domName }}</span>
+            </div>
+            {{ domStyle }}
+            <span v-pop:cssInfo.hover.delay>sss</span>
         </div>
-        <span v-pop:cssInfo.hover.delay>sss</span>
+        <div v-else>从左侧选择一个节点</div>
     </div>
 </template>
 
@@ -24,6 +28,12 @@
             domName: {
                 type: String,
                 default: ''
+            },
+            domStyle: {
+                type: Object,
+                default: () => {
+                    return {}
+                }
             }
         },
         data () {
