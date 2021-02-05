@@ -8,7 +8,7 @@
                 <span class="style-item-left">DOM: </span>
                 <span>{{ domName }}</span>
             </div>
-            {{ domStyle }}
+            {{ currentStyle }}
             <span v-pop:cssInfo.hover.delay>sss</span>
         </div>
         <div v-show="!domName">从左侧选择一个节点</div>
@@ -18,6 +18,7 @@
 <script>
     import pop from '../pop';
     import { styleCompConfig } from './styleEditor.config.js';
+    import clone from 'clone';
 
     export default {
         name: 'StyleBar',
@@ -36,9 +37,23 @@
                 }
             }
         },
+        watch: {
+            domStyle: {
+                handler (val) {
+                    this.currentStyle = clone(val);
+                },
+                deep: true
+            }
+        },
         data () {
             return {
-                styleCompConfig
+                styleCompConfig,
+                currentStyle: clone(this.domStyle)
+            }
+        },
+        methods: {
+            change () {
+                this.$emit('diffChangeStyle', this.currentStyle);
             }
         }
     }

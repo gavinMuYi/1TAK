@@ -9,7 +9,7 @@
                 <dom-tree :data="currentTree" @editStyle="editStyle" v-if="show" />
             </div>
             <div class="style-edit-bar">
-                <styleBar :domName="domName" :domStyle="domStyle"/>
+                <styleBar :domName="domName" :domStyle="domStyle" @change="diffChangeStyle"/>
             </div>
         </div>
     </div>
@@ -35,14 +35,6 @@
             }
         },
         data () {
-            // function add_css(str_css){
-            // var style=document.createElement("style");
-            // style.type="text/css";
-            // style.id="styleEditorPreview";
-            // style.innerHTML=str_css;
-            // document.getElementsByTagName("head").item(0).appendChild(style);
-            // }
-            // add_css("div{color:red}")
             return {
                 show: false,
                 currentTree: null,
@@ -105,6 +97,20 @@
                 styleCompConfig.forEach(rule => {
                     this.$set(this.domStyle, rule.key, dom.dom.style[rule.key] || comstyle[rule.key]);
                 });
+            },
+            diffChangeStyle (newStyle) {
+                // domName
+                // domStyle
+                // newStyle
+                // create style dom
+                // function add_css(str_css){
+                // var style=document.createElement("style");
+                // style.type="text/css";
+                // style.id="styleEditorPreview";
+                // style.innerHTML=str_css;
+                // document.getElementsByTagName("head").item(0).appendChild(style);
+                // }
+                // add_css("div{color:red}")
             }
         }
     }
