@@ -3,6 +3,10 @@
         <pop ref="cssInfo" clazz="cssInfo-pop">
             <div v-html="styleCompConfig[0].tip"></div>
         </pop>
+        <div class="style-item">
+            <span class="style-item-left">DOM: </span>
+            <span>{{ domName }}</span>
+        </div>
         <span v-pop:cssInfo.hover.delay>sss</span>
     </div>
 </template>
@@ -15,6 +19,12 @@
         name: 'StyleBar',
         components: {
             pop
+        },
+        props: {
+            domName: {
+                type: String,
+                default: ''
+            }
         },
         data () {
             return {
@@ -146,5 +156,15 @@
             vertical-align: top;
         }
     }
-    .style-bar {}
+    .style-bar {
+        .style-item {
+            margin-bottom: 10px;
+            .style-item-left {
+                display: inline-block;
+                margin-right: 5px;
+                color: #191f1e;
+                font-weight: 700;
+            }
+        }
+    }
 </style>

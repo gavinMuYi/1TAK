@@ -1,15 +1,15 @@
 <template>
     <div id="stylePanel" :class="show ? 'style-panel-open' : 'style-panel-close'">
-        <div id="stylePanelOther" @click="show = false" v-if="show"></div>
+        <div id="stylePanelOther" @click="close" v-if="show"></div>
         <div id="stylePanelContent" :class="show ? 'style-content-open' : 'style-content-close'">
             <div class="paper" ref="paper">
                 <div id="stylePanelPreview" v-if="show"></div>
             </div>
             <div class="dom-tree">
-                <dom-tree :data="currentTree" @editStyle="editStyle" />
+                <dom-tree :data="currentTree" @editStyle="editStyle" v-if="show" />
             </div>
             <div class="style-edit-bar">
-                <styleBar />
+                <styleBar :domName="domName" :domStyle="domStyle"/>
             </div>
         </div>
     </div>
@@ -44,7 +44,9 @@
             // add_css("div{color:red}")
             return {
                 show: false,
-                currentTree: null
+                currentTree: null,
+                domName: '',
+                domStyle: {}
             }
         },
         methods: {
@@ -58,6 +60,12 @@
                         this.currentTree = [this.getTree(currentEL)];
                     });
                 });
+            },
+            close () {
+                this.domName = '';
+                this.domStyle = {};
+                this.currentTree = null;
+                this.show = false
             },
             getTree (root) {
                 if ((!root.childNodes.length && (root.nodeType !== 3) && (root.nodeName !== 'SCRIPT')) ||
@@ -90,6 +98,8 @@
                 }
             },
             editStyle (dom, name) {
+                this.domName = name;
+                this.domStyle = dom.dom.style;
                 console.log(dom, name, dom.dom.style);
             }
         }
@@ -174,7 +184,7 @@
                 display: inline-block;
                 width: 400px;
                 height: 100%;
-                padding: 10px 10px;
+                padding: 20px 10px;
                 vertical-align: top;
                 box-sizing: border-box;
                 border: 1px solid #333;
