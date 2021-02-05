@@ -2,14 +2,22 @@
     <div class="style-bar">
         <div v-show="domName">
             <pop ref="cssInfo" clazz="cssInfo-pop">
-                <div v-html="styleCompConfig[0].tip"></div>
+                <div v-html="styleCompConfig[infoIndex].tip"></div>
             </pop>
             <div class="style-item">
                 <span class="style-item-left">DOM: </span>
                 <span>{{ domName }}</span>
             </div>
-            {{ currentStyle }}
-            <span v-pop:cssInfo.hover.delay>sss</span>
+            <div class="style-item"
+                v-for="(rule, index) in styleCompConfig"
+                :key="rule.key"
+                @mouseover="infoIndex = index">
+                <span class="style-item-left" v-pop:cssInfo.hover.delay>
+                    {{ rule.label || rule.key }}:
+                </span>
+                <span>{{ rule.component }}</span>
+                <span>value: {{ currentStyle[rule.key] }}</span>
+            </div>
         </div>
         <div v-show="!domName">从左侧选择一个节点</div>
     </div>
@@ -48,7 +56,8 @@
         data () {
             return {
                 styleCompConfig,
-                currentStyle: clone(this.domStyle)
+                currentStyle: clone(this.domStyle),
+                infoIndex: 0
             }
         },
         methods: {
@@ -64,7 +73,7 @@
         width: 570px;
         height: 500px;
         overflow: auto;
-        margin-left: -250px;
+        margin-left: -350px;
         padding: 10px 20px;
         .article-body h2 {
             margin: 10px 0;
