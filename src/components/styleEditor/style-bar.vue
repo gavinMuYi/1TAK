@@ -196,7 +196,7 @@
     }
     .style-bar {
         .style-item {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             .style-item-left {
                 display: inline-block;
                 margin-right: 5px;

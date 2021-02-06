@@ -71,7 +71,7 @@
             height: 30px;
             padding: 0 10px;
             line-height: 30px;
-            width: 200px;
+            width: 185px;
             box-sizing: border-box;
             font-weight: 400;
             .open {
@@ -86,7 +86,7 @@
             position: absolute;
             border: 1px solid #ededed;
             border-radius: 3px;
-            width: 200px;
+            width: 185px;
             background: #FFF;
             z-index: 1000;
             div {

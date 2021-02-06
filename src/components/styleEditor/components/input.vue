@@ -41,7 +41,7 @@
         position: relative;
         display: inline-block;
         height: 30px;
-        width: 200px;
+        width: 185px;
         box-sizing: border-box;
         padding: 2px 8px;
         border: 1px solid #ededed;
