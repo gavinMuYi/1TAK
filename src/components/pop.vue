@@ -54,9 +54,9 @@
         },
         mounted () {
             let that = this;
-            window.onclick = function () {
-                that.closePop();
-            };
+            document.addEventListener('click', (e) => {
+                if (!that.$el.contains(e.target)) that.closePop();
+            });
             this.$nextTick(() => {
                 const body = document.querySelector('body');
                 if (body.append) {
@@ -116,6 +116,9 @@
                         const windowHeight = document.documentElement.clientHeight;
                         const rightOver = popWidth + startLeft > windowWidth;
                         const bottomOver = popHeight + startTop > windowHeight;
+                        if (startLeft + startTop === 0) {
+                            return;
+                        }
                         if (rightOver) {
                             this.$refs.selfPop.style.right = '0px';
                         } else {

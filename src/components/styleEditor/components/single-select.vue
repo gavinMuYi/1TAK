@@ -1,6 +1,6 @@
 <template>
     <div :class="['single-select', {'active-select': showSelectComp}]">
-        <div class="trigger-name box-trigger" @click.stop="showSelectComp = !showSelectComp;">
+        <div class="trigger-name box-trigger" @click.stop="showChange">
             {{ currentVal || '空'}}
             <span class="open iconfont icon-xiala1"></span>
         </div>
@@ -43,15 +43,18 @@
         },
         mounted () {
             let that = this;
-            window.onclick = function () {
-                that.showSelectComp = false;
-            };
+            document.addEventListener('click', (e) => {
+                if (!that.$el.contains(e.target)) that.showSelectComp = false;
+            });
         },
         methods: {
             doSelectComp (item) {
-                this.showSelectComp = !this.showSelectComp;
+                this.showChange();
                 this.currentVal = item;
                 this.$emit('input', this.currentVal);
+            },
+            showChange () {
+                this.showSelectComp = !this.showSelectComp;
             }
         }
     }
