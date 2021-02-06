@@ -78,9 +78,29 @@
             },
             handleHover (ev, mos, delay) {
                 if (mos) {
-                    let box = ev.target.getBoundingClientRect();
-                    this.$refs.selfPop.style.top = `${box.y + box.height}px`;
-                    this.$refs.selfPop.style.left = `${box.x + box.width / 2}px`;
+                    this.$refs.selfPop.style.left = 'auto';
+                    this.$refs.selfPop.style.right = 'auto';
+                    this.$refs.selfPop.style.top = 'auto';
+                    this.$refs.selfPop.style.bottom = 'auto';
+                    const box = ev.target.getBoundingClientRect();
+                    const popWidth = Number(getComputedStyle(this.$refs.selfPop).width.replace('px', ''));
+                    const popHeight = Number(getComputedStyle(this.$refs.selfPop).height.replace('px', ''));
+                    const startLeft = box.x + box.width / 2;
+                    const startTop = box.y + box.height;
+                    const windowWidth = document.documentElement.clientWidth;
+                    const windowHeight = document.documentElement.clientHeight;
+                    const rightOver = popWidth + startLeft > windowWidth;
+                    const bottomOver = popHeight + startTop > windowHeight;
+                    if (rightOver) {
+                        this.$refs.selfPop.style.right = '0px';
+                    } else {
+                        this.$refs.selfPop.style.left = `${startLeft}px`;
+                    }
+                    if (bottomOver) {
+                        this.$refs.selfPop.style.bottom = '0px';
+                    } else {
+                        this.$refs.selfPop.style.top = `${startTop}px`;
+                    }
                     this.show = true;
                 } else {
                     if (delay) {

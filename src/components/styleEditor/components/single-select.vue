@@ -42,8 +42,9 @@
             }
         },
         mounted () {
+            let that = this;
             window.onclick = function () {
-                this.showSelectComp = false;
+                that.showSelectComp = false;
             };
         },
         methods: {

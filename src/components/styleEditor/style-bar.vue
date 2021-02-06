@@ -10,10 +10,9 @@
             </div>
             <div class="style-item"
                 v-for="(rule, index) in styleCompConfig"
-                :key="rule.key + Math.random()"
-                @mouseover="infoIndex = index">
+                :key="rule.key + Math.random()">
                 <span class="style-item-left rule-left">
-                    <div>{{ rule.label }}<span v-pop:cssInfo.hover.delay class="iconfont icon-switch"></span></div>
+                    <div>{{ rule.label }}<span v-pop:cssInfo.hover.delay class="iconfont icon-switch" @mouseover="infoIndex = index"></span></div>
                     <div class="key-info">{{ rule.key }}</div>
                 </span>
                 <component :is="rule.component" :options="rule.options" v-model="currentStyle[rule.key]"></component>
@@ -72,12 +71,11 @@
 
 <style lang="less">
     .cssInfo-pop {
-        width: 570px;
-        height: 500px;
+        width: 610px;
+        height: 520px;
         overflow: auto;
-        margin-top: 5px;
-        margin-left: -300px;
         padding: 10px 20px;
+        box-sizing: border-box;
         .article-body h2 {
             margin: 10px 0;
             font-size: 20px;
