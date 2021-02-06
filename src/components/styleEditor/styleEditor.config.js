@@ -160,8 +160,8 @@ align-content: stretch|center|flex-start|flex-end|space-between|space-around|ini
 }, {
     key: 'align-items',
     label: '居中对齐各项',
-    component: '',
-    options: [],
+    component: 'SingleSelect',
+        options: ['normal', 'stretch', 'center', 'flex-start', 'flex-end', 'baseline', 'initial', 'inherit'],
         tip: `<div class="article-body">
 		
 			<div class="article-intro" id="content">
@@ -312,8 +312,8 @@ align-items: stretch|center|flex-start|flex-end|baseline|initial|inherit;</div><
 }, {
     key: 'align-self',
     label: '居中对齐某项',
-    component: '',
-    options: [],
+    component: 'SingleSelect',
+        options: ['auto', 'stretch', 'center', 'flex-start', 'flex-end', 'baseline', 'initial', 'inherit'],
         tip: `<div class="article-body">
 		
 			<div class="article-intro" id="content">
@@ -464,11 +464,105 @@ align-self: auto|stretch|center|flex-start|flex-end|baseline|initial|inherit;</d
 		</div>
 `
 }, {
-    key: '',
-    label: '',
-    component: '',
-    options: [],
-    tip: ``
+    key: 'all',
+    label: '还原初始值',
+        component: 'SingleSelect',
+        options: ['none', 'initial', 'inherit', 'unset'],
+        tip: `<div class=""article-body"">
+		
+			<div class=""article-intro"" id=""content"">
+			
+			<h1>CSS all 属性</h1>
+<div class=""example"">
+<h3>实例</h3>
+<p>修改所有元素或其父元素的属性为初始值：</p>
+<div class=""example_code"">  
+    <span class=""highELE"">div
+	</span>{<br>&nbsp;&nbsp;&nbsp; <span class=""highATT"">background-color:</span><span class=""highVAL""> yellow;</span><br>&nbsp;&nbsp;&nbsp; 
+	<span class=""highATT"">color:</span><span class=""highVAL""> red;</span><br>&nbsp;&nbsp;&nbsp; <span class=""highATT"">all:</span><span class=""highVAL""> initial;</span><br>}
+</div><br>
+<a target=""_blank"" href=""/try/tryit.php?filename=trycss3_all"" class=""tryitbtn"">尝试一下 »</a>
+</div>
+<hr>
+<h2>定义和使用</h2>
+<p>
+all 属性用于重置所有属性，除了 unicode-bidi 和 direction。</p>
+<table class=""tecspec"">
+  <tbody><tr>
+    <th style=""width:25%"">默认值:</th>
+    <td style=""width:75%"">none</td>
+  </tr>
+	<tr>
+    <th>继承:</th>
+    <td>无</td>
+  </tr>
+	<tr>
+    <th>动画:</th>
+    <td>no。 <a href=""css-animatable.html"">阅读 <em>animatable</em></a>
+	</td>
+  </tr>
+	<tr>
+    <th>版本:</th>
+    <td>CSS3</td>
+  </tr>
+	<tr>
+    <th>JavaScript 语法:</th>
+    <td><i>object</i>.style.all=""initial""</td>
+  </tr>
+</tbody></table>
+<hr>
+<h2>浏览器支持</h2>
+<p>The numbers in the table specify the first browser version that fully supports the property.</p>
+<p>表格中的数字表示支持该属性的浏览器最低版本号。</p>
+<table class=""browserref"">
+  <tbody><tr>
+    <th style=""width:20%;font-size:16px;text-align:left"">属性</th>
+    <th style=""width:13%"" class=""bsChrome"" title=""Chrome""></th>
+    <th style=""width:14%"" class=""bsEdge"" title=""Edge""></th>
+    <th style=""width:14%"" class=""bsIE"" title=""Internet Explorer""></th>
+    <th style=""width:13%"" class=""bsFirefox"" title=""Firefox""></th>
+    <th style=""width:13%"" class=""bsSafari"" title=""Safari""></th>
+    <th style=""width:13%"" class=""bsOpera"" title=""Opera""></th>                
+  </tr>
+  <tr>
+    <td style=""text-align:left"">all</td>
+    <td>37.0</td>
+    <td><span class=""deprecated"">不支持</span></td>    
+    <td><span class=""deprecated"">不支持</span></td>
+    <td>27.0</td>
+    <td><span class=""deprecated"">不支持</span></td>
+    <td>24.0</td>
+  </tr>
+</tbody></table>
+<hr>
+<h2>CSS 语法</h2>
+
+<pre class=""prettyprint prettyprinted"" style=""""><span class=""pln"">all</span><span class=""pun"">:</span><span class=""pln""> initial</span><span class=""pun"">|</span><span class=""pln"">inherit</span><span class=""pun"">|</span><span class=""pln"">unset</span><span class=""pun"">;</span></pre>
+<hr>
+<h2>属性值</h2>
+<table class=""reference"">
+  <tbody><tr>
+    <th style=""width:22%"">值</th>
+    <th>描述</th>
+  </tr>
+	<tr>
+    <td>initial</td>
+    <td>修改所有元素属性或父元素的值为其初始化值</td>
+    </tr>
+	<tr>
+    <td>inherit</td>
+    <td>修改所有元素属性或父元素的值为其父元素的值</td>
+    </tr>
+	<tr>
+    <td>unset</td>
+    <td>修改所有元素属性或父元素的值为其父元素的值(如果有继承)或其初始值</td>
+    </tr>
+  </tbody></table>			<!-- 其他扩展 -->
+						
+			</div>
+			
+		</div>
+`
 }, {
     key: '',
     label: '',

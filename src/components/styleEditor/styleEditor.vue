@@ -95,7 +95,7 @@
                 this.domStyle = {};
                 let comstyle = getComputedStyle(dom.dom);
                 styleCompConfig.forEach(rule => {
-                    this.$set(this.domStyle, rule.key, dom.dom.style[rule.key] || comstyle[rule.key]);
+                    this.$set(this.domStyle, rule.key, dom.dom.style[rule.key] || comstyle[rule.key] || 'none');
                 });
             },
             diffChangeStyle (newStyle) {
