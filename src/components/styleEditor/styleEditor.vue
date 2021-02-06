@@ -6,7 +6,7 @@
                 <div id="stylePanelPreview" v-if="show"></div>
             </div>
             <div class="dom-tree">
-                <dom-tree :data="currentTree" @editStyle="editStyle" v-if="show" />
+                <dom-tree :data="currentTree" @editStyle="editStyle" v-if="show" ref="domTree" />
             </div>
             <div class="style-edit-bar">
                 <styleBar :domName="domName" :domStyle="domStyle" @change="diffChangeStyle"/>
@@ -51,6 +51,9 @@
                     this.$nextTick(() => {
                         var currentEL = document.getElementById('stylePanelPreview').childNodes[0];
                         this.currentTree = [this.getTree(currentEL)];
+                        this.$nextTick(() => {
+                            this.$refs.domTree.editStyle('', '');
+                        });
                     });
                 });
             },
