@@ -69,8 +69,29 @@
         methods: {
             rightClick (ev) {
                 if (ev.button === 2) {
-                    this.$refs.selfPop.style.top = `${ev.clientY}px`;
-                    this.$refs.selfPop.style.left = `${ev.clientX}px`;
+                    this.$refs.selfPop.style.left = 'auto';
+                    this.$refs.selfPop.style.right = 'auto';
+                    this.$refs.selfPop.style.top = 'auto';
+                    this.$refs.selfPop.style.bottom = 'auto';
+                    this.show = false;
+                    const popWidth = Number(getComputedStyle(this.$refs.selfPop).width.replace('px', ''));
+                    const popHeight = Number(getComputedStyle(this.$refs.selfPop).height.replace('px', ''));
+                    const startLeft = ev.clientX;
+                    const startTop = ev.clientY;
+                    const windowWidth = document.documentElement.clientWidth;
+                    const windowHeight = document.documentElement.clientHeight;
+                    const rightOver = popWidth + startLeft > windowWidth;
+                    const bottomOver = popHeight + startTop > windowHeight;
+                    if (rightOver) {
+                        this.$refs.selfPop.style.right = '0px';
+                    } else {
+                        this.$refs.selfPop.style.left = `${ev.clientX}px`;
+                    }
+                    if (bottomOver) {
+                        this.$refs.selfPop.style.bottom = '0px';
+                    } else {
+                        this.$refs.selfPop.style.top = `${ev.clientY}px`;
+                    }
                     this.show = true;
                 }
                 ev.preventDefault();
