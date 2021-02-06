@@ -18,7 +18,7 @@
 <script>
     import DomTree from './dom-tree';
     import StyleBar from './style-bar';
-    import { styleCompConfig } from './styleEditor.config.js';
+    import cssConfigJSON from './cssConfig.json';
 
     export default {
         name: 'StyleEditor',
@@ -94,7 +94,7 @@
                 this.domName = name;
                 this.domStyle = {};
                 let comstyle = getComputedStyle(dom.dom);
-                styleCompConfig.forEach(rule => {
+                cssConfigJSON.css.forEach(rule => {
                     this.$set(this.domStyle, rule.key, dom.dom.style[rule.key] || comstyle[rule.key] || 'none');
                 });
             },

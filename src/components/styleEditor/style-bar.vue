@@ -2,14 +2,14 @@
     <div class="style-bar">
         <div v-show="domName">
             <pop ref="cssInfo" clazz="cssInfo-pop">
-                <div v-html="styleCompConfig[infoIndex].tip"></div>
+                <div v-html="cssConfigJSON[infoIndex].tip"></div>
             </pop>
             <div class="style-item">
                 <span class="style-item-left">DOM: </span>
                 <span>{{ domName }}</span>
             </div>
             <div class="style-item"
-                v-for="(rule, index) in styleCompConfig"
+                v-for="(rule, index) in cssConfigJSON"
                 :key="rule.key + Math.random()">
                 <span class="style-item-left rule-left">
                     <div>{{ rule.label }}<span v-pop:cssInfo.hover.delay class="iconfont icon-switch" @mouseover="infoIndex = index"></span></div>
@@ -26,7 +26,7 @@
 <script>
     import pop from '../pop';
     import SingleSelect from './components/single-select';
-    import { styleCompConfig } from './styleEditor.config.js';
+    import cssConfigJSON from './cssConfig.json';
     import clone from 'clone';
 
     export default {
@@ -57,7 +57,7 @@
         },
         data () {
             return {
-                styleCompConfig,
+                cssConfigJSON: cssConfigJSON.css,
                 currentStyle: clone(this.domStyle),
                 infoIndex: 0
             }
