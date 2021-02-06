@@ -69,61 +69,65 @@
         methods: {
             rightClick (ev) {
                 if (ev.button === 2) {
-                    this.$refs.selfPop.style.left = 'auto';
-                    this.$refs.selfPop.style.right = 'auto';
-                    this.$refs.selfPop.style.top = 'auto';
-                    this.$refs.selfPop.style.bottom = 'auto';
                     this.show = false;
-                    const popWidth = Number(getComputedStyle(this.$refs.selfPop).width.replace('px', ''));
-                    const popHeight = Number(getComputedStyle(this.$refs.selfPop).height.replace('px', ''));
-                    const startLeft = ev.clientX;
-                    const startTop = ev.clientY;
-                    const windowWidth = document.documentElement.clientWidth;
-                    const windowHeight = document.documentElement.clientHeight;
-                    const rightOver = popWidth + startLeft > windowWidth;
-                    const bottomOver = popHeight + startTop > windowHeight;
-                    if (rightOver) {
-                        this.$refs.selfPop.style.right = '0px';
-                    } else {
-                        this.$refs.selfPop.style.left = `${ev.clientX}px`;
-                    }
-                    if (bottomOver) {
-                        this.$refs.selfPop.style.bottom = '0px';
-                    } else {
-                        this.$refs.selfPop.style.top = `${ev.clientY}px`;
-                    }
-                    this.show = true;
+                    this.$nextTick(() => {
+                        this.$refs.selfPop.style.left = 'auto';
+                        this.$refs.selfPop.style.right = 'auto';
+                        this.$refs.selfPop.style.top = 'auto';
+                        this.$refs.selfPop.style.bottom = 'auto';
+                        const popWidth = Number(getComputedStyle(this.$refs.selfPop).width.replace('px', ''));
+                        const popHeight = Number(getComputedStyle(this.$refs.selfPop).height.replace('px', ''));
+                        const startLeft = ev.clientX;
+                        const startTop = ev.clientY;
+                        const windowWidth = document.documentElement.clientWidth;
+                        const windowHeight = document.documentElement.clientHeight;
+                        const rightOver = popWidth + startLeft > windowWidth;
+                        const bottomOver = popHeight + startTop > windowHeight;
+                        if (rightOver) {
+                            this.$refs.selfPop.style.right = '0px';
+                        } else {
+                            this.$refs.selfPop.style.left = `${ev.clientX}px`;
+                        }
+                        if (bottomOver) {
+                            this.$refs.selfPop.style.bottom = '0px';
+                        } else {
+                            this.$refs.selfPop.style.top = `${ev.clientY}px`;
+                        }
+                        this.show = true;
+                    });
                 }
                 ev.preventDefault();
                 return false;
             },
             handleHover (ev, mos, delay) {
                 if (mos) {
-                    this.$refs.selfPop.style.left = 'auto';
-                    this.$refs.selfPop.style.right = 'auto';
-                    this.$refs.selfPop.style.top = 'auto';
-                    this.$refs.selfPop.style.bottom = 'auto';
                     this.show = false;
-                    const box = ev.target.getBoundingClientRect();
-                    const popWidth = Number(getComputedStyle(this.$refs.selfPop).width.replace('px', ''));
-                    const popHeight = Number(getComputedStyle(this.$refs.selfPop).height.replace('px', ''));
-                    const startLeft = box.x + box.width / 2;
-                    const startTop = box.y + box.height;
-                    const windowWidth = document.documentElement.clientWidth;
-                    const windowHeight = document.documentElement.clientHeight;
-                    const rightOver = popWidth + startLeft > windowWidth;
-                    const bottomOver = popHeight + startTop > windowHeight;
-                    if (rightOver) {
-                        this.$refs.selfPop.style.right = '0px';
-                    } else {
-                        this.$refs.selfPop.style.left = `${startLeft}px`;
-                    }
-                    if (bottomOver) {
-                        this.$refs.selfPop.style.bottom = '0px';
-                    } else {
-                        this.$refs.selfPop.style.top = `${startTop}px`;
-                    }
-                    this.show = true;
+                    this.$nextTick(() => {
+                        this.$refs.selfPop.style.left = 'auto';
+                        this.$refs.selfPop.style.right = 'auto';
+                        this.$refs.selfPop.style.top = 'auto';
+                        this.$refs.selfPop.style.bottom = 'auto';
+                        const box = ev.target.getBoundingClientRect();
+                        const popWidth = Number(getComputedStyle(this.$refs.selfPop).width.replace('px', ''));
+                        const popHeight = Number(getComputedStyle(this.$refs.selfPop).height.replace('px', ''));
+                        const startLeft = box.x + box.width / 2;
+                        const startTop = box.y + box.height;
+                        const windowWidth = document.documentElement.clientWidth;
+                        const windowHeight = document.documentElement.clientHeight;
+                        const rightOver = popWidth + startLeft > windowWidth;
+                        const bottomOver = popHeight + startTop > windowHeight;
+                        if (rightOver) {
+                            this.$refs.selfPop.style.right = '0px';
+                        } else {
+                            this.$refs.selfPop.style.left = `${startLeft}px`;
+                        }
+                        if (bottomOver) {
+                            this.$refs.selfPop.style.bottom = '0px';
+                        } else {
+                            this.$refs.selfPop.style.top = `${startTop}px`;
+                        }
+                        this.show = true;
+                    });
                 } else {
                     if (delay) {
                         setTimeout(() => {
