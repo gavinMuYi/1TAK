@@ -1,7 +1,7 @@
 <template>
     <div :class="['single-select', {'active-select': showSelectComp}]">
         <div class="trigger-name box-trigger" @click.stop="showSelectComp = !showSelectComp;">
-            {{ currentComp }}
+            {{ currentVal || '空'}}
             <span class="open iconfont icon-xiala1"></span>
         </div>
         <div class="select-pop" v-if="showSelectComp">
@@ -33,12 +33,12 @@
         data () {
             return {
                 showSelectComp: false,
-                currentComp: clone(this.value)
+                currentVal: clone(this.value)
             }
         },
         watch: {
             value (val) {
-                this.currentComp = val;
+                this.currentVal = val;
             }
         },
         mounted () {
@@ -50,8 +50,8 @@
         methods: {
             doSelectComp (item) {
                 this.showSelectComp = !this.showSelectComp;
-                this.currentComp = item;
-                this.$emit('input', this.currentComp);
+                this.currentVal = item;
+                this.$emit('input', this.currentVal);
             }
         }
     }

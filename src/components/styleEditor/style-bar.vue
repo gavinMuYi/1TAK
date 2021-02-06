@@ -26,6 +26,7 @@
 <script>
     import pop from '../pop';
     import SingleSelect from './components/single-select';
+    import Input from './components/input';
     import cssConfigJSON from './cssConfig.json';
     import clone from 'clone';
 
@@ -33,6 +34,7 @@
         name: 'StyleBar',
         components: {
             pop,
+            Input,
             SingleSelect
         },
         props: {
