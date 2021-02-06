@@ -82,6 +82,7 @@
                     this.$refs.selfPop.style.right = 'auto';
                     this.$refs.selfPop.style.top = 'auto';
                     this.$refs.selfPop.style.bottom = 'auto';
+                    this.show = false;
                     const box = ev.target.getBoundingClientRect();
                     const popWidth = Number(getComputedStyle(this.$refs.selfPop).width.replace('px', ''));
                     const popHeight = Number(getComputedStyle(this.$refs.selfPop).height.replace('px', ''));
