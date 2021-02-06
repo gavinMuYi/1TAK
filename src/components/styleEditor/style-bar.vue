@@ -15,8 +15,9 @@
                     <div>{{ rule.label }}<span v-pop:cssInfo.hover.delay class="iconfont icon-switch" @mouseover="infoIndex = index"></span></div>
                     <div class="key-info">{{ rule.key }}</div>
                 </span>
-                <component :is="rule.component" :options="rule.options" v-model="currentStyle[rule.key]" :key="rule.key + Math.random()"></component>
-                {{currentStyle[rule.key]}}
+                <span class="style-rule-component">
+                    <component :is="rule.component" :options="rule.options" v-model="currentStyle[rule.key]" :key="rule.key + Math.random()"></component>
+                </span>
             </div>
         </div>
         <div v-show="!domName">从左侧选择一个节点</div>
@@ -208,6 +209,9 @@
                     color: #a4a9af;
                     font-weight: 400;
                 }
+            }
+            .style-rule-component {
+                float: right;
             }
             .rule-left {
                 position: relative;
