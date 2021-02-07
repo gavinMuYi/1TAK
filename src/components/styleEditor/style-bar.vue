@@ -204,13 +204,25 @@
         .style-title {
             padding-bottom: 20px;
             margin-bottom: 20px;
-            border-bottom: 1px solid #ededed;
             position: absolute;
             width: 350px;
             padding-top: 20px;
             top: 31px;
             z-index: 10000;
             background: #FFF;
+            border-bottom: 1px solid #ededed;
+            &:before{
+                content:"";
+                position:absolute;
+                box-sizing:border-box;
+                border-bottom: 1px solid #ededed;
+                transform-origin: bottom center;
+                transform:rotateZ(55deg) scale(1);
+                left: 135px;
+                top: -17px;
+                width: 77px;
+                height: 50px;
+            }
         }
         .style-item {
             margin-bottom: 15px;
