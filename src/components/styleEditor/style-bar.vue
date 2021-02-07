@@ -30,6 +30,7 @@
     import pop from '../pop';
     import SingleSelect from './components/single-select';
     import Input from './components/input';
+    import Color from './components/color';
     import cssConfigJSON from './cssConfig.json';
     import clone from 'clone';
 
@@ -38,6 +39,7 @@
         components: {
             pop,
             Input,
+            Color,
             SingleSelect
         },
         props: {
