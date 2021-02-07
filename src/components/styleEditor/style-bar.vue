@@ -207,7 +207,7 @@
             padding-bottom: 20px;
             margin-bottom: 20px;
             position: absolute;
-            width: 350px;
+            width: 355px;
             padding-top: 20px;
             top: 31px;
             z-index: 10000;
