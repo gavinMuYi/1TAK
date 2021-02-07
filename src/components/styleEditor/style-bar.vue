@@ -4,10 +4,12 @@
             <pop ref="cssInfo" clazz="cssInfo-pop">
                 <div v-html="cssConfigJSON[infoIndex].tip"></div>
             </pop>
-            <div class="style-item">
+            <div class="style-item style-title">
                 <span class="style-item-left">DOM: </span>
                 <span>{{ domName }}</span>
+                <span class="btn style-item-btn">更新</span>
             </div>
+            <div class="rule-items-br"></div>
             <div class="style-item"
                 v-for="(rule, index) in cssConfigJSON"
                 :key="rule.key + Math.random()">
@@ -196,6 +198,20 @@
         }
     }
     .style-bar {
+        .rule-items-br {
+            margin-top: 70px;
+        }
+        .style-title {
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ededed;
+            position: absolute;
+            width: 350px;
+            padding-top: 20px;
+            top: 31px;
+            z-index: 10000;
+            background: #FFF;
+        }
         .style-item {
             margin-bottom: 15px;
             .style-item-left {
@@ -212,6 +228,12 @@
             }
             .style-rule-component {
                 float: right;
+            }
+            .style-item-btn {
+                float: right;
+                width: 50px;
+                display: inline-block;
+                text-align: center;
             }
             .rule-left {
                 position: relative;
