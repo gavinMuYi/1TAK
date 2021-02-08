@@ -219,11 +219,11 @@
                 box-sizing:border-box;
                 border-bottom: 1px solid #ededed;
                 transform-origin: bottom center;
-                transform:rotateZ(55deg) scale(1);
-                left: 135px;
+                transform:rotateZ(90deg) scale(1);
+                left: 235px;
                 top: -17px;
-                width: 77px;
-                height: 50px;
+                width: 47px;
+                height: 49px;
             }
         }
         .style-item {
