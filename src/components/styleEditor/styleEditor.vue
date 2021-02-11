@@ -63,6 +63,8 @@
                 this.domStyle = {};
                 this.currentTree = null;
                 this.show = false;
+                var oldStyle = document.getElementById('styleEditorPreview');
+                oldStyle && oldStyle.remove();
             },
             getTree (root) {
                 if ((!root.childNodes.length && (root.nodeType !== 3) && (root.nodeName !== 'SCRIPT')) ||
