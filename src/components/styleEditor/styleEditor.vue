@@ -117,6 +117,8 @@
                 this.createStyle();
             },
             createStyle () {
+                var oldStyle = document.getElementById('styleEditorPreview');
+                oldStyle && oldStyle.remove();
                 let styleStr = '';
                 Object.keys(this.style).forEach(key => {
                     let cssStr = '';
