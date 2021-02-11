@@ -1,6 +1,6 @@
 <template>
     <div class="input">
-        <input :placeholder="placeholder" :value="currentVal" @input="input"/>
+        <input :placeholder="placeholder" :value="currentVal" @change="change" />
     </div>
 </template>
 
@@ -29,8 +29,9 @@
             }
         },
         methods: {
-            input () {
-                this.$emit('input', this.currentVal)
+            change (e) {
+                this.currentVal = e.target.value;
+                this.$emit('input', e.target.value);
             }
         }
     }

@@ -1,6 +1,6 @@
 <template>
     <div v-if="data" class="style-dom-tree">
-        <div class="tag" @mouseover="hover(true)" @mouseout="hover(false)" @click="editStyle('', '')">
+        <div class="tag" @mouseover="hover(true)" @mouseout="hover(false)" @click="editStyle('', '', '', '', level)">
             <span v-if="data[0].children && data[0].children.length" class="arrow" @click.stop="show = !show">~</span>
             &lt;{{data[0].tagName}}
             <span class="attr" v-if="data[0].id">&nbsp;id="<span class="value">{{data[0].id}}</span>"</span>
@@ -8,13 +8,14 @@
         </div>
         <div v-show="show">
             <div v-if="data[0].children && data[0].children.length" class="tree-level">
-                <dom-tree v-for="item in data[0].children" :key="item.tagName + Math.random()" :data="[item]" @editStyle="editStyle" />
+                <dom-tree v-for="item in data[0].children" :key="item.tagName + Math.random()" :level="level + 1" :data="[item]" @editStyle="editStyle" />
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import cssConfigJSON from './cssConfig.json';
     export default {
         name: 'DomTree',
         props: {
@@ -23,29 +24,52 @@
                 default: () => {
                     return []
                 }
+            },
+            level: {
+                type: Number,
+                default: 0
             }
         },
         data () {
             return {
                 show: false,
-                tempBackground: ''
+                tempBackground: '',
+                comstyle: null,
+                domStyle: {}
             }
         },
         methods: {
             hover (select) {
                 if (select) {
+                    this.comstyle = getComputedStyle(this.data[0].dom);
+                    this.domStyle = {};
+                    let dom = this.data[0];
+                    cssConfigJSON.css.forEach(rule => {
+                        this.$set(this.domStyle, rule.key, dom.dom.style[rule.key] || this.comstyle[rule.key]);
+                    });
+
+                    // editStyle (dom, name, comstyle) {
+                    //     this.domStyle = {};
+                    //     cssConfigJSON.css.forEach(rule => {
+                    //         this.$set(this.domStyle, rule.key, dom.dom.style[rule.key] || comstyle[rule.key]);
+                    //     });
+                    // }
+
                     this.tempBackground = this.data[0].dom.style.background;
                     this.data[0].dom.style.background = '#6377dcad';
                 } else {
                     this.data[0].dom.style.background = this.tempBackground;
                 }
             },
-            editStyle (e, name) {
+            editStyle (e, name, domStyle, comstyle, level) {
                 var tag = this.data[0].tagName
                 var id = this.data[0].id ? ('#' + this.data[0].id) : '';
                 var regEx = /\s+/g;
                 var className = this.data[0].class ? ('.' + this.data[0].class.replace(regEx, '.')) : '';
-                this.$emit('editStyle', e || this.data[0], (id || className || tag) + (name ? ' ' : '') + name);
+                let dom = e || this.data[0];
+                let localcomstyle = !this.level ? getComputedStyle(dom.dom) : this.comstyle;
+                let localname = (id || className || tag) + (name ? ' ' : '') + name;
+                this.$emit('editStyle', dom, localname, level > this.level ? domStyle : this.domStyle, level > this.level ? comstyle : localcomstyle, this.level);
             }
         }
     }

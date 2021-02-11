@@ -60,6 +60,12 @@
                     this.currentStyle = clone(val);
                 },
                 deep: true
+            },
+            currentStyle: {
+                handler (val) {
+                    this.$emit('change', val);
+                },
+                deep: true
             }
         },
         data () {

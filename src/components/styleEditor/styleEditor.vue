@@ -39,7 +39,8 @@
                 show: false,
                 currentTree: null,
                 domName: '',
-                domStyle: {}
+                domStyle: {},
+                style: {}
             }
         },
         methods: {
@@ -52,7 +53,7 @@
                         var currentEL = document.getElementById('stylePanelPreview').childNodes[0];
                         this.currentTree = [this.getTree(currentEL)];
                         this.$nextTick(() => {
-                            this.$refs.domTree.editStyle('', '');
+                            this.$refs.domTree.editStyle('', '', '', '', 0);
                         });
                     });
                 });
@@ -93,27 +94,45 @@
                     };
                 }
             },
-            editStyle (dom, name) {
+            editStyle (dom, name, domStyle, comstyle) {
+                let cssLength = Object.keys(domStyle).length;
                 this.domName = name;
                 this.domStyle = {};
-                let comstyle = getComputedStyle(dom.dom);
                 cssConfigJSON.css.forEach(rule => {
-                    this.$set(this.domStyle, rule.key, dom.dom.style[rule.key] || comstyle[rule.key]);
+                    let css = dom.dom.style[rule.key] || (cssLength ? domStyle[rule.key] : comstyle[rule.key]);
+                    if (rule.key === 'background-color') {
+                        css = cssLength ? domStyle[rule.key] : comstyle[rule.key];
+                    }
+                    this.$set(this.domStyle, rule.key, css);
                 });
             },
             diffChangeStyle (newStyle) {
-                // domName
-                // domStyle
-                // newStyle
-                // create style dom
-                // function add_css(str_css){
-                // var style=document.createElement("style");
-                // style.type="text/css";
-                // style.id="styleEditorPreview";
-                // style.innerHTML=str_css;
-                // document.getElementsByTagName("head").item(0).appendChild(style);
-                // }
-                // add_css("div{color:red}")
+                let cssStyle = {};
+                cssConfigJSON.css.forEach(rule => {
+                    if (this.domStyle[rule.key] !== newStyle[rule.key]) {
+                        cssStyle[rule.key] = newStyle[rule.key];
+                    }
+                });
+                this.style['#stylePanelPreview ' + this.domName] = cssStyle;
+                this.createStyle();
+            },
+            createStyle () {
+                let styleStr = '';
+                Object.keys(this.style).forEach(key => {
+                    let cssStr = '';
+                    Object.keys(this.style[key]).forEach(css => {
+                        cssStr += `${css}: ${this.style[key][css]}`;
+                    })
+                    styleStr += `${key} {${cssStr}}`
+                });
+                var addcss = function (strcss) {
+                    var style = document.createElement('style');
+                    style.type = 'text/css';
+                    style.id = 'styleEditorPreview';
+                    style.innerHTML = strcss;
+                    document.getElementsByTagName('head').item(0).appendChild(style);
+                }
+                addcss(styleStr);
             }
         }
     }

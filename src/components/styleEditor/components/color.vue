@@ -1,5 +1,5 @@
 <template>
-    <div class="style-color">{{value}}
+    <div class="style-color">
         <ColorPicker
             v-model="currentVal"
             :enableAlpha="true"
@@ -35,7 +35,18 @@
 </script>
 
 <style lang="less">
-    .style-color {}
+    .style-color {
+        .h-colorpicker {
+            width: 185px;
+            .h-colorpicker-show {
+                border-radius: 3px;
+                width: 185px;
+                .h-colorpicker-color-bg {
+                    width: 179px;
+                }
+            }
+        }
+    }
     .h-dropdown {
         z-index: 100000;
         .h-colorpicker-panel-footer {
