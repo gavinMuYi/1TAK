@@ -1,12 +1,13 @@
 <template>
     <div class="factory-component">
         <!-- <div id="ballId">drag</div> -->
+        <pre class="globel-data" v-if="globelData">{{cusComp}}</pre>
         <div class="top-bar">
             <div class="pro-title">
                 Vv Page<span class="iconfont icon-yezhu"></span>
             </div>
             <div class="actions">
-                <span>
+                <span @click="globelData = !globelData">
                     <span class="iconfont icon-yuming"></span>
                     页面信息
                 </span>
@@ -74,6 +75,7 @@
         },
         data () {
             return {
+                globelData: false,
                 abs: true,
                 preview: false,
                 refresh: 0,
@@ -256,6 +258,18 @@
         top: 50%;
         left: 50%;
         transform: translate3d(-50%, -50%, 0);
+    }
+    .globel-data {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: #333333e8;
+        color: #FFF;
+        width: 400px;
+        max-height: 800px;
+        overflow: auto;
+        margin: 0;
+        z-index: 1000000;
     }
     .top-bar {
         height: 100px;
