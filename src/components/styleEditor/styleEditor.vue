@@ -109,7 +109,7 @@
                 this.domStyle = {};
                 cssConfigJSON.css.forEach(rule => {
                     let css = dom.dom.style[rule.key] || (cssLength ? domStyle[rule.key] : comstyle[rule.key]);
-                    if (rule.key === 'background-color') {
+                    if (rule.key.indexOf('background') > -1) {
                         css = cssLength ? domStyle[rule.key] : comstyle[rule.key];
                     }
                     this.$set(this.domStyle, rule.key, css);
