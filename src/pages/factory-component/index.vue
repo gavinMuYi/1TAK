@@ -18,11 +18,11 @@
                     <span class="iconfont icon-moxingzuzhuang"></span>
                     {{ abs ? '拖动' : '排列' }}
                 </span>
-                <span>
+                <span @click="back" :class="{'disable-action': !snapshot_flag}">
                     <span class="iconfont icon-shangyibu"></span>
                     撤销
                 </span>
-                <span>
+                <span @click="redo" :class="{'disable-action': snapshot_flag === snapshot.length - 1 || !snapshot.length}">
                     <span class="iconfont icon-liuchengtuh5-29"></span>
                     重做
                 </span>
@@ -51,6 +51,7 @@
 </template>
 
 <script>
+    import clone from 'clone';
     import LeftBar from './components/leftBar';
     import RightBar from './components/rightBar';
     import DrawBoard from './components/drawBoard';
@@ -81,7 +82,9 @@
                 comps: [],
                 cusCompHash: createHash(4),
                 config_data_data_bak: {},
-                config_data_eventHandlers_bak: {}
+                config_data_eventHandlers_bak: {},
+                snapshot: [],
+                snapshot_flag: 0
             }
         },
         computed: {
@@ -105,7 +108,7 @@
                         }
                     },
                     comps: this.comps
-                }
+                };
             }
         },
         watch: {
@@ -126,8 +129,48 @@
             },
             refreshWorkSpace () {
                 this.$nextTick(() => {
+                    if (this.snapshot_flag === this.snapshot.length - 1 || !this.snapshot.length) {
+                        if (!this.snapshot[0]) {
+                            this.snapshot.push(clone(this.cusComp));
+                            this.snapshot_flag = 0;
+                        } else {
+                            if (JSON.stringify(this.snapshot[this.snapshot.length - 1]) !== JSON.stringify(this.cusComp)) {
+                                this.snapshot.push(clone(this.cusComp));
+                                this.snapshot_flag++;
+                            }
+                        }
+                    } else if (this.snapshot_flag < this.snapshot.length - 1) {
+                        if (
+                            JSON.stringify(this.snapshot[this.snapshot_flag + 1]) !== JSON.stringify(this.cusComp) &&
+                            JSON.stringify(this.snapshot[this.snapshot_flag]) !== JSON.stringify(this.cusComp)
+                        ) {
+                            this.snapshot = this.snapshot.slice(0, this.snapshot_flag + 1);
+                            if (JSON.stringify(this.snapshot[this.snapshot.length - 1]) !== JSON.stringify(this.cusComp)) {
+                                this.snapshot.push(clone(this.cusComp));
+                                this.snapshot_flag++;
+                            }
+                        }
+                    }
                     this.refresh++;
                 });
+            },
+            back () {
+                if (!this.snapshot_flag) {
+                    return;
+                }
+                this.snapshot_flag--;
+                this.updateParams(clone(this.snapshot[this.snapshot_flag]));
+                this.$set(this, 'comps', clone(this.snapshot[this.snapshot_flag].comps));
+                this.refreshWorkSpace();
+            },
+            redo () {
+                if (this.snapshot_flag === this.snapshot.length - 1 || !this.snapshot.length) {
+                    return;
+                }
+                this.snapshot_flag++;
+                this.updateParams(clone(this.snapshot[this.snapshot_flag]));
+                this.$set(this, 'comps', clone(this.snapshot[this.snapshot_flag].comps));
+                this.refreshWorkSpace();
             },
             updateParams (comps) {
                 this.refreshWorkSpace();
@@ -220,6 +263,12 @@
         // background: #0c0c0c;
         border-bottom: 1px solid #ededed;
         box-sizing: border-box;
+        .disable-action {
+            color: #cabcbc;
+            &:hover {
+                cursor: not-allowed;
+            }
+        }
         .pro-title {
             line-height: 100px;
             font-size: 32px;
