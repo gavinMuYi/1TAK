@@ -40,7 +40,8 @@
                 currentTree: null,
                 domName: '',
                 domStyle: {},
-                style: {}
+                style: {},
+                cacheStyle: {}
             }
         },
         methods: {
@@ -107,11 +108,17 @@
                     }
                     this.$set(this.domStyle, rule.key, css);
                 });
+                if (!this.cacheStyle[this.domName]) {
+                    this.cacheStyle[this.domName] = this.domStyle;
+                }
             },
             diffChangeStyle (newStyle) {
                 let cssStyle = {};
+                if (!newStyle || !this.cacheStyle[this.domName]) {
+                    return;
+                }
                 cssConfigJSON.css.forEach(rule => {
-                    if (this.domStyle[rule.key] !== newStyle[rule.key]) {
+                    if (this.cacheStyle[this.domName][rule.key] !== newStyle[rule.key]) {
                         cssStyle[rule.key] = newStyle[rule.key];
                     }
                 });
@@ -125,7 +132,7 @@
                 Object.keys(this.style).forEach(key => {
                     let cssStr = '';
                     Object.keys(this.style[key]).forEach(css => {
-                        cssStr += `${css}: ${this.style[key][css]}`;
+                        cssStr += `${css}: ${this.style[key][css]};`;
                     })
                     styleStr += `${key} {${cssStr}}`
                 });
