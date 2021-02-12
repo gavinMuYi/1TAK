@@ -19,6 +19,7 @@
     import DomTree from './dom-tree';
     import StyleBar from './style-bar';
     import cssConfigJSON from './cssConfig.json';
+    import { addCss } from '../../utils/common.js';
 
     export default {
         name: 'StyleEditor',
@@ -136,14 +137,7 @@
                     })
                     styleStr += `${key} {${cssStr}}`
                 });
-                var addcss = function (strcss) {
-                    var style = document.createElement('style');
-                    style.type = 'text/css';
-                    style.id = 'styleEditorPreview';
-                    style.innerHTML = strcss;
-                    document.getElementsByTagName('head').item(0).appendChild(style);
-                }
-                addcss(styleStr);
+                addCss(styleStr);
             }
         }
     }
