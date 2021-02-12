@@ -24,7 +24,7 @@
             <div class="config-comp" v-if="!currentEdit.content">
                 <span class="config-comp-title vv-title">组件样式: </span>
                 <span class="btn btn-style" @click="changeStyle">调整</span>
-                <styleEditor ref="styleEditor" :nowEdit="currentEdit" />
+                <styleEditor ref="styleEditor" :nowEdit="currentEdit" @update="updateStyle" />
             </div>
             <div class="config-comp" v-if="currentEdit.content">
                 <span class="config-comp-title vv-title">容器暴露接口: </span>
@@ -123,6 +123,10 @@
             }
         },
         methods: {
+            updateStyle (val) {
+                this.$set(this.currentEdit.config, 'style', val);
+                this.$emit('updateParams', this.currentEdit);
+            },
             emitEvent (eventKey, eventIndex) {
                 this.cusComp.config.data.eventHandlers[eventKey].handler = this.$refs.eventIDE[eventIndex].getValue();
                 this.emitChange();

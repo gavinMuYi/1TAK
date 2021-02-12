@@ -7,7 +7,7 @@
             <div class="style-item style-title">
                 <span class="style-item-left">DOM: </span>
                 <span>{{ domName }}</span>
-                <span class="btn style-item-btn">更新</span>
+                <span class="btn style-item-btn" @click="update">更新</span>
             </div>
             <div class="rule-items-br"></div>
             <div class="style-item"
@@ -78,6 +78,9 @@
         methods: {
             change () {
                 this.$emit('diffChangeStyle', this.currentStyle);
+            },
+            update () {
+                this.$emit('update');
             }
         }
     }
@@ -227,9 +230,9 @@
                 transform-origin: bottom center;
                 transform:rotateZ(90deg) scale(1);
                 left: 235px;
-                top: -17px;
+                top: 10px;
                 width: 47px;
-                height: 49px;
+                height: 19px;
             }
         }
         .style-item {

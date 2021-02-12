@@ -9,7 +9,7 @@
                 <dom-tree :data="currentTree" @editStyle="editStyle" v-if="show" ref="domTree" />
             </div>
             <div class="style-edit-bar">
-                <styleBar :domName="domName" :domStyle="domStyle" @change="diffChangeStyle"/>
+                <styleBar :domName="domName" :domStyle="domStyle" @change="diffChangeStyle" @update="update" />
             </div>
         </div>
     </div>
@@ -42,6 +42,7 @@
                 domName: '',
                 domStyle: {},
                 style: {},
+                global_style: {},
                 cacheStyle: {}
             }
         },
@@ -67,6 +68,10 @@
                 this.show = false;
                 var oldStyle = document.getElementById('styleEditorPreview');
                 oldStyle && oldStyle.remove();
+            },
+            update () {
+                this.$emit('update', this.global_style);
+                this.close();
             },
             getTree (root) {
                 if ((!root.childNodes.length && (root.nodeType !== 3) && (root.nodeName !== 'SCRIPT')) ||
@@ -124,6 +129,7 @@
                     }
                 });
                 this.style['#stylePanelPreview ' + this.domName] = cssStyle;
+                this.global_style[this.domName] = cssStyle;
                 this.createStyle();
             },
             createStyle () {
@@ -137,7 +143,7 @@
                     })
                     styleStr += `${key} {${cssStr}}`
                 });
-                addCss(styleStr);
+                addCss(styleStr, 'styleEditorPreview');
             }
         }
     }

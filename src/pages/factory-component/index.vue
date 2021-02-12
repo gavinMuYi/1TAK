@@ -91,10 +91,6 @@
                     type: 'combination',
                     config: {
                         hash: this.cusCompHash,
-                        style: {
-                            width: '100%',
-                            height: '100%'
-                        },
                         data: {
                             props: {},
                             data: {

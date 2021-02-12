@@ -9,6 +9,7 @@
     import Vue from 'vue';
     import clone from 'clone';
     import pop from '../../../components/pop';
+    import { addCss } from '../../../utils/common.js';
     // 注册单位组件
     const requireComponent = require.context('../../../unit-components', false, /\w+\.(vue|js)$/);
     var cmps = {};
@@ -42,6 +43,20 @@
         },
         created () {
             let that = this;
+            var oldStyle = document.getElementById('compStyle');
+            oldStyle && oldStyle.remove();
+            let styleStr = '';
+            this._renderCusComp.comps.forEach(comp => {
+                comp.config.style && Object.keys(comp.config.style).forEach(key => {
+                    let cssStr = '';
+                    Object.keys(comp.config.style[key]).forEach(css => {
+                        cssStr += `${css}: ${comp.config.style[key][css]};`;
+                    })
+                    styleStr += `${key} {${cssStr}}`
+                });
+            });
+            console.log(styleStr);
+            addCss(styleStr, 'compStyle');
             Vue.component('cus-comp', {
                 render (h) {
                     this.eventhandlers = {};

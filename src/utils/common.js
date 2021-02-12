@@ -6,10 +6,10 @@ var createHash = function (hashLength) {
     return hash;
 };
 
-var addCss = function (strcss) {
+var addCss = function (strcss, id) {
     var style = document.createElement('style');
     style.type = 'text/css';
-    style.id = 'styleEditorPreview';
+    style.id = id;
     style.innerHTML = strcss;
     document.getElementsByTagName('head').item(0).appendChild(style);
 };
