@@ -145,7 +145,9 @@
                 this.$refs.styleEditor.open();
                 this.$nextTick(() => {
                     let stylePanel = document.getElementById('stylePanelPreview');
-                    let currentEL = document.getElementById(this.currentEdit.config.hash).cloneNode(true);
+                    // 从外层盒子开始改变
+                    let currentEL = document.getElementById(this.currentEdit.config.hash + '-box').cloneNode(true);
+                    currentEL.style.position = 'static';
                     stylePanel.appendChild(currentEL);
                 })
             },

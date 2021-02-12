@@ -70,9 +70,18 @@
         },
         data () {
             return {
-                cssConfigJSON: cssConfigJSON.css,
                 currentStyle: clone(this.domStyle),
                 infoIndex: 0
+            }
+        },
+        computed: {
+            cssConfigJSON () {
+                if (this.domName.length === 9) {
+                    return cssConfigJSON.css.filter(rule => {
+                        return ['position', 'left', 'top', 'right', 'bottom'].indexOf(rule.key) < 0;
+                    });
+                }
+                return cssConfigJSON.css;
             }
         },
         methods: {
