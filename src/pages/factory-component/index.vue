@@ -303,6 +303,7 @@
             float: right;
             color: #333;
             font-weight: 700;
+            user-select:none;
             .iconfont {
                 padding-left: 5px;
             }
