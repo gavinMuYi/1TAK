@@ -1,7 +1,17 @@
 <template>
     <div class="draw-board" @click="editContent">
-        <pop ref="morePop">dddd</pop>
-        <cus-comp :comps="cusComp.comps" @editComponent="editComponent" />
+        <pop ref="morePop" clazz="right-action-pop">
+            <template>
+                <div
+                    class="sys-pop-action-btn"
+                    v-for="item in popOptions"
+                    :key="item.key"
+                    @click="action(item.key)">
+                    {{ item.label }}
+                </div>
+            </template>
+        </pop>
+        <cus-comp :comps="cusComp.comps" @editComponent="editComponent" @rightClick="handleRightClick" />
     </div>
 </template>
 
@@ -36,9 +46,34 @@
                 default: false
             }
         },
+        data () {
+            return {
+                currentRightEl: null
+            }
+        },
         computed: {
             _renderCusComp () {
                 return clone(this.cusComp);
+            },
+            popOptions () {
+                var defaultOptions = [{
+                    label: '复制',
+                    key: 'copy'
+                }, {
+                    label: '删除',
+                    key: 'delete'
+                }];
+                if (!this.currentRightEl) {
+                    return defaultOptions;
+                }
+                var abs = !(String(this.currentRightEl.y + this.currentRightEl.x) === 'NaN');
+                return abs ? defaultOptions : defaultOptions.concat([{
+                    label: '上移',
+                    key: 'pre'
+                }, {
+                    label: '下移',
+                    key: 'next'
+                }]);
             }
         },
         created () {
@@ -55,7 +90,6 @@
                     styleStr += `${key} {${cssStr}}`
                 });
             });
-            console.log(styleStr);
             addCss(styleStr, 'compStyle');
             Vue.component('cus-comp', {
                 render (h) {
@@ -102,6 +136,7 @@
                                         }}
                                         {...{ directives }}
                                         draggable={abs && !that.preview}
+                                        onContextmenu={ev => { if (ev.button === 2) { this.$emit('rightClick', comp) } }}
                                         onDrop={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
                                         onDragover={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
                                         onDragstart={ev => { if (that.preview) { return; } this.move(ev, comp, index); }}
@@ -161,18 +196,37 @@
             });
         },
         methods: {
+            action (key) {
+
+            },
             editComponent (comp) {
                 this.$emit('editComponent', comp);
             },
             editContent (ev) {
                 if (this.preview) { return; }
                 this.$emit('editContent');
+            },
+            handleRightClick (e) {
+                this.currentRightEl = e;
             }
         }
     }
 </script>
 
 <style lang="less">
+    .right-action-pop {
+        padding: 4px 0px!important;
+        .sys-pop-action-btn {
+            color: #333;
+            font-size: 13px;
+            width: 60px;
+            text-align: center;
+            padding: 4px;
+            &:hover {
+                background: #dadee7da;
+            }
+        }
+    }
     .draw-board {
         height: 100%;
         display: flex;
