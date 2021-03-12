@@ -210,7 +210,14 @@
                 return props;
             },
             changeInline (prehash, hash) {
-                console.log('changeInline', prehash, hash);
+                let preId = 0;
+                let id = 0;
+                this.comps.forEach((item, i) => {
+                    item.config.hash === prehash && (preId = i);
+                    item.config.hash === hash && (id = i);
+                });
+                let item = this.comps.splice(preId, 1);
+                this.comps.splice(id, 0, item[0]);
             },
             drop (ev) {
                 ev.preventDefault();
