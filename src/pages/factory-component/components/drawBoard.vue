@@ -124,7 +124,7 @@
                                         {...{ directives }}
                                         draggable={!that.preview}
                                         onContextmenu={ev => { if (ev.button === 2) { this.$emit('rightClick', comp) } }}
-                                        onDrop={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
+                                        onDrop={ev => { if (that.preview) { return; } if (!abs) { this.moveInline(ev); } ev.stopPropagation(); ev.preventDefault(); }}
                                         onDragover={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
                                         onDragstart={ev => { if (that.preview) { return; } this.move(ev, comp, index); }}
                                         onClick={ev => { ev.stopPropagation(); this.editComponent(ev, comp); }}>
@@ -167,6 +167,19 @@
                 },
                 methods: {
                     move (ev, comp, index) {
+                        if (comp.x === undefined && comp.y === undefined) {
+                            ev.dataTransfer.setData('lineComp', JSON.stringify({
+                                id: comp.id,
+                                config: comp.config,
+                                x: comp.x,
+                                y: comp.y,
+                                index: index
+                            }));
+                        } else {
+                            ev.dataTransfer.setData('lineComp', JSON.stringify({
+                                id: ''
+                            }));
+                        }
                         ev.dataTransfer.setData('DragComp', JSON.stringify({
                             id: comp.id,
                             config: comp.config,
@@ -174,6 +187,16 @@
                             y: comp.y,
                             index: index
                         }));
+                    },
+                    moveInline (ev) {
+                        ev.preventDefault();
+                        if (!ev.dataTransfer.getData('lineComp')) {
+                            return;
+                        }
+                        var data = JSON.parse(ev.dataTransfer.getData('lineComp'));
+                        if (data.id) {
+                            console.log(ev);
+                        }
                     },
                     editComponent (ev, comp) {
                         if (that.preview) { return; }

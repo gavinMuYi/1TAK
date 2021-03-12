@@ -222,6 +222,7 @@
                 if (data.config && data.config.hash && !domabs) {
                     dragCompData.x = undefined;
                     dragCompData.y = undefined;
+                    return;
                 }
                 data.config !== undefined
                     ? (dragCompData.config = data.config)
