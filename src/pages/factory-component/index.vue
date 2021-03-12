@@ -219,6 +219,10 @@
                     y: this.abs || domabs ? ev.clientY - this.$refs.drawSpace.offsetTop : undefined,
                     name: this.iconCompMap[data.id]
                 };
+                if (data.config && data.config.hash && !domabs) {
+                    dragCompData.x = undefined;
+                    dragCompData.y = undefined;
+                }
                 data.config !== undefined
                     ? (dragCompData.config = data.config)
                     : (dragCompData.config = { hash: createHash(4) });

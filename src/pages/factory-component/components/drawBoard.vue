@@ -135,7 +135,7 @@
                                             display: 'inline-block'
                                         }}
                                         {...{ directives }}
-                                        draggable={abs && !that.preview}
+                                        draggable={!that.preview}
                                         onContextmenu={ev => { if (ev.button === 2) { this.$emit('rightClick', comp) } }}
                                         onDrop={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
                                         onDragover={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
