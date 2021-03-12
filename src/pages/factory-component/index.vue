@@ -134,6 +134,7 @@
             action (action, hash) {
                 let copyHash = createHash(4);
                 let copyItem = {};
+                let configString = '';
                 switch (action) {
                 case 'delete':
                     this.comps.forEach((item, i) => {
@@ -150,7 +151,9 @@
                     this.comps.forEach((item, i) => {
                         if (item.config.hash === hash) {
                             copyItem = clone(item);
-                            copyItem.config.hash = copyHash;
+                            configString = JSON.stringify(copyItem.config);
+                            configString.replace(new RegExp(hash, 'gm'), copyHash);
+                            copyItem.config = JSON.parse(configString);
                             this.comps.push(copyItem);
                         }
                     });
