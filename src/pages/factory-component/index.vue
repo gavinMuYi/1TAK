@@ -41,6 +41,7 @@
                         :comps="comps"
                         @editComponent="editComponent"
                         @editContent="editContent"
+                        @changeInline="changeInline"
                         :cusComp="cusComp"
                         :key="refresh"
                         :preview="preview" />
@@ -207,6 +208,9 @@
                     }
                 });
                 return props;
+            },
+            changeInline (prehash, hash) {
+                console.log('changeInline', prehash, hash);
             },
             drop (ev) {
                 ev.preventDefault();

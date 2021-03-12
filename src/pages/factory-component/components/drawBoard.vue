@@ -11,7 +11,7 @@
                 </div>
             </template>
         </pop>
-        <cus-comp :comps="cusComp.comps" @editComponent="editComponent" @rightClick="handleRightClick" />
+        <cus-comp :comps="cusComp.comps" @editComponent="editComponent" @rightClick="handleRightClick" @changeInline="changeInline" />
     </div>
 </template>
 
@@ -201,7 +201,7 @@
                                     cla === 'flag-sup-$-comp-box' && (index = i - 1)
                                 });
                             });
-                            console.log(data.config.hash + '放在' + ev.path[index].id + '前');
+                            this.$emit('changeInline', data.config.hash, ev.path[index].id);
                         }
                     },
                     editComponent (ev, comp) {
@@ -224,6 +224,9 @@
             },
             handleRightClick (e) {
                 this.currentRightEl = e;
+            },
+            changeInline (prehash, hash) {
+                this.$emit('changeInline', prehash, hash);
             }
         }
     }
