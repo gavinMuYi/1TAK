@@ -11,7 +11,8 @@
                 </div>
             </template>
         </pop>
-        <cus-comp :comps="cusComp.comps" @editComponent="editComponent" @rightClick="handleRightClick" @changeInline="changeInline" />
+        <pop ref="namePop">ID: {{ nameHashTip }}</pop>
+        <cus-comp :comps="cusComp.comps" @editComponent="editComponent" @rightClick="handleRightClick" @changeInline="changeInline" @nameHover="nameHover" />
     </div>
 </template>
 
@@ -55,7 +56,8 @@
                 }, {
                     label: '删除',
                     key: 'delete'
-                }]
+                }],
+                nameHashTip: ''
             }
         },
         computed: {
@@ -99,6 +101,11 @@
                         arg: 'morePop',
                         modifiers: { rightClick: true }
                     });
+                    !that.preview && directives.push({
+                        name: 'pop',
+                        arg: 'namePop',
+                        modifiers: { hover: true }
+                    });
                     return (
                         <div class="cus-comp" id={that.cusComp.config.hash}>
                         {
@@ -123,7 +130,8 @@
                                         }}
                                         {...{ directives }}
                                         draggable={!that.preview}
-                                        onContextmenu={ev => { if (ev.button === 2) { this.$emit('rightClick', comp) } }}
+                                        onMouseover={ev => { if (that.preview) { return; } this.$emit('nameHover', comp.config.hash); }}
+                                        onContextmenu={ev => { if (that.preview) { return; } if (ev.button === 2) { this.$emit('rightClick', comp) } }}
                                         onDrop={ev => { if (that.preview) { return; } if (!abs) { this.moveInline(ev); } ev.stopPropagation(); ev.preventDefault(); }}
                                         onDragover={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
                                         onDragstart={ev => { if (that.preview) { return; } this.move(ev, comp, index); }}
@@ -214,6 +222,9 @@
         methods: {
             action (key) {
 
+            },
+            nameHover (hash) {
+                this.nameHashTip = hash;
             },
             editComponent (comp) {
                 this.$emit('editComponent', comp);
