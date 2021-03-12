@@ -48,32 +48,19 @@
         },
         data () {
             return {
-                currentRightEl: null
-            }
-        },
-        computed: {
-            _renderCusComp () {
-                return clone(this.cusComp);
-            },
-            popOptions () {
-                var defaultOptions = [{
+                currentRightEl: null,
+                popOptions: [{
                     label: '复制',
                     key: 'copy'
                 }, {
                     label: '删除',
                     key: 'delete'
-                }];
-                if (!this.currentRightEl) {
-                    return defaultOptions;
-                }
-                var abs = !(String(this.currentRightEl.y + this.currentRightEl.x) === 'NaN');
-                return abs ? defaultOptions : defaultOptions.concat([{
-                    label: '上移',
-                    key: 'pre'
-                }, {
-                    label: '下移',
-                    key: 'next'
-                }]);
+                }]
+            }
+        },
+        computed: {
+            _renderCusComp () {
+                return clone(this.cusComp);
             }
         },
         created () {
