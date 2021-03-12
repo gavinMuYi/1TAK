@@ -111,7 +111,7 @@
                                 var abs = !(String(comp.y + comp.x) === 'NaN');
                                 return (
                                     <div
-                                        class={['comp-box', {'config-box': abs && !that.preview}, {'stc-box': !abs && !that.preview}]}
+                                        class={['flag-sup-$-comp-box', 'comp-box', {'config-box': abs && !that.preview}, {'stc-box': !abs && !that.preview}]}
                                         key={comp.id + comp.x + comp.y + index}
                                         id={comp.config.hash + '-box'}
                                         style={abs ? {
@@ -195,7 +195,13 @@
                         }
                         var data = JSON.parse(ev.dataTransfer.getData('lineComp'));
                         if (data.id) {
-                            console.log(ev);
+                            let index = 0;
+                            ev.path.forEach((item, i) => {
+                                item.classList && item.classList.forEach((cla, c) => {
+                                    cla === 'flag-sup-$-comp-box' && (index = i - 1)
+                                });
+                            });
+                            console.log(data.config.hash + '放在' + ev.path[index].id + '前');
                         }
                     },
                     editComponent (ev, comp) {
