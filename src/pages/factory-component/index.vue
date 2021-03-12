@@ -132,6 +132,8 @@
                 console.log(this.cusComp);
             },
             action (action, hash) {
+                let copyHash = createHash(4);
+                let copyItem = {};
                 switch (action) {
                 case 'delete':
                     this.comps.forEach((item, i) => {
@@ -145,6 +147,19 @@
                     });
                     break;
                 case 'copy':
+                    this.comps.forEach((item, i) => {
+                        if (item.config.hash === hash) {
+                            copyItem = clone(item);
+                            copyItem.config.hash = copyHash;
+                            this.comps.push(copyItem);
+                        }
+                    });
+                    Object.keys(this.config_data_data_bak).forEach(key => {
+                        key.indexOf(hash) > -1 && (this.config_data_data_bak[copyHash] = clone(this.config_data_data_bak[key]));
+                    });
+                    Object.keys(this.config_data_eventHandlers_bak).forEach(key => {
+                        key.indexOf(hash) > -1 && (this.config_data_data_bak[key.replace(hash, copyHash)] = clone(this.config_data_data_bak[key]));
+                    });
                     break;
                 }
             },
