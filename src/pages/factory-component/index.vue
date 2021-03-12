@@ -42,6 +42,7 @@
                         @editComponent="editComponent"
                         @editContent="editContent"
                         @changeInline="changeInline"
+                        @action="action"
                         :cusComp="cusComp"
                         :key="refresh"
                         :preview="preview" />
@@ -129,6 +130,23 @@
         methods: {
             save () {
                 console.log(this.cusComp);
+            },
+            action (action, hash) {
+                switch (action) {
+                case 'delete':
+                    this.comps.forEach((item, i) => {
+                        item.config.hash === hash && this.comps.splice(i, 1);
+                    });
+                    Object.keys(this.config_data_data_bak).forEach(key => {
+                        key.indexOf(hash) > -1 && (delete this.config_data_data_bak[key]);
+                    });
+                    Object.keys(this.config_data_eventHandlers_bak).forEach(key => {
+                        key.indexOf(hash) > -1 && (delete this.config_data_data_bak[key]);
+                    });
+                    break;
+                case 'copy':
+                    break;
+                }
             },
             refreshWorkSpace () {
                 this.$nextTick(() => {

@@ -220,8 +220,8 @@
             });
         },
         methods: {
-            action (key) {
-
+            action (action) {
+                this.$emit('action', action, this.currentRightEl.config.hash);
             },
             nameHover (hash) {
                 this.nameHashTip = hash;
