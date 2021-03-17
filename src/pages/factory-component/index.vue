@@ -61,7 +61,7 @@
     import { iconCompMap } from './config.js';
     import { createHash } from '../../utils/common.js';
     // import { suspensionBall } from '../../utils/drag-ball.js';
-    const requireComponent = require.context('../../unit-components', false, /\w+\.(vue|js)$/);
+    const requireComponent = require.context('../../G-HTML', false, /\w+\.(vue|js)$/);
     var cmps = {};
     requireComponent.keys().map(fileName => {
         let cmp = requireComponent(fileName).default

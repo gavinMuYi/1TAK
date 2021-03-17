@@ -22,7 +22,7 @@
     import pop from '../../../components/pop';
     import { addCss } from '../../../utils/common.js';
     // 注册单位组件
-    const requireComponent = require.context('../../../unit-components', false, /\w+\.(vue|js)$/);
+    const requireComponent = require.context('../../../G-HTML', false, /\w+\.(vue|js)$/);
     var cmps = {};
     requireComponent.keys().map(fileName => {
         let cmp = requireComponent(fileName).default
