@@ -291,6 +291,7 @@
 <style lang="less">
 .factory-component {
     height: 100%;
+    overflow: hidden;
     #ballId {
         background: #333;
         color: white;
