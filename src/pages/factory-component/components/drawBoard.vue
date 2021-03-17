@@ -137,6 +137,19 @@
                                         onDragstart={ev => { if (that.preview) { return; } this.move(ev, comp, index); }}
                                         onClick={ev => { ev.stopPropagation(); this.editComponent(ev, comp); }}>
                                         {
+                                            // [1, 2].map(x => {
+                                            //     return (
+                                            //         h(comp.name, {
+                                            //             attrs: {
+                                            //                 id: comp.config.hash
+                                            //             },
+                                            //             props: this[comp.config.hash],
+                                            //             on: {
+                                            //                 ...eventhandlers
+                                            //             }
+                                            //         })
+                                            //     )
+                                            // })
                                             h(comp.name, {
                                                 attrs: {
                                                     id: comp.config.hash
@@ -144,9 +157,6 @@
                                                 props: this[comp.config.hash],
                                                 on: {
                                                     ...eventhandlers
-                                                },
-                                                style: {
-                                                    display: 'inline-block'
                                                 }
                                             })
                                         }
