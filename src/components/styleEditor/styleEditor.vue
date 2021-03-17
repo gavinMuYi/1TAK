@@ -186,7 +186,7 @@
             left: 0;
             bottom: 0;
             border-top: 1px solid #ededed;
-            background: #333333e8;
+            background: #0c0c0ce8;
             padding: 30px 20px;
             box-sizing: border-box;
             .paper {

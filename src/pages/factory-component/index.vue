@@ -315,7 +315,7 @@
         position: fixed;
         top: 0;
         left: 0;
-        background: #333333e8;
+        background: #0c0c0ce8;
         color: #FFF;
         width: 400px;
         max-height: 800px;
@@ -408,7 +408,7 @@
             &:before {
                 content: '';
                 position: absolute;
-                background: #333333e8;
+                background: #0c0c0ce8;
                 z-index: 10000;
                 width: 100%;
                 height: 100%;
