@@ -1,6 +1,6 @@
 exports.iconCompMap = {
-    'icon-shurukuang': 'Vv_INPUT',
-    'icon-wenzi': 'Vv_TEXT'
+    'icon-shurukuang': 'G_INPUT',
+    'icon-wenzi': 'G_TEXT'
 };
 
 exports.unitCompIcons = [{

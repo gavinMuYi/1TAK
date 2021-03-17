@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        name: 'Vv_TEXT',
+        name: 'G_TEXT',
         props: {
             value: {
                 type: String,

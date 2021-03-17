@@ -1,12 +1,12 @@
 <template>
-    <div class="Vv_input">
+    <div class="G_input">
         <input :placeholder="placeholder" :value="value" @input="input"/>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'Vv_INPUT',
+        name: 'G_INPUT',
         event: [{
             name: 'input',
             label: '输入框input事件',
@@ -31,7 +31,7 @@
 </script>
 
 <style lang="less">
-    .Vv_input {
+    .G_input {
         position: relative;
         display: inline-block;
         height: 40px;
