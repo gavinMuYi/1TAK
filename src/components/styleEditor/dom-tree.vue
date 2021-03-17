@@ -4,7 +4,7 @@
             <span v-if="data[0].children && data[0].children.length" class="arrow" @click.stop="show = !show">~</span>
             &lt;{{data[0].tagName}}
             <span class="attr" v-if="data[0].id">&nbsp;id="<span class="value">{{data[0].id}}</span>"</span>
-            <span class="attr" v-if="data[0].class">&nbsp;class="<span class="value">{{data[0].class}}</span>"</span>&gt;
+            <span class="attr" v-if="data[0].class">&nbsp;class="<span class="value">{{data[0].class}}</span>"</span><span>&gt;</span>
         </div>
         <div v-show="show">
             <div v-if="data[0].children && data[0].children.length" class="tree-level">
@@ -90,6 +90,9 @@
                 }
             }
             &:hover {
+                * {
+                    background: #6377dc;
+                }
                 background: #6377dc;
             }
         }
