@@ -118,7 +118,27 @@
                                 var abs = !(String(comp.y + comp.x) === 'NaN');
                                 var localProps = {};
                                 this[comp.config.hash] && Object.keys(cmps[comp.name].props).forEach(item => {
-                                    localProps[item] = typeof cmps[comp.name].props[item].type() === 'object' ? JSON.parse(this[comp.config.hash][item]) : this[comp.config.hash][item];
+                                    localProps[item] = null;
+                                    switch (typeof cmps[comp.name].props[item].type()) {
+                                    case 'object':
+                                        localProps[item] = JSON.parse(this[comp.config.hash][item]);
+                                        break;
+                                    case 'function':
+                                        /* eslint-disable */
+                                        var resFunc = new Function('return ' + this[comp.config.hash][item]).call(this);
+                                        /* eslint-enable */
+                                        localProps[item] = resFunc.bind(this._self);
+                                        break;
+                                    case 'number':
+                                        localProps[item] = Number(this[comp.config.hash][item]);
+                                        break;
+                                    case 'boolean':
+                                        localProps[item] = JSON.parse(this[comp.config.hash][item]);
+                                        break;
+                                    default:
+                                        localProps[item] = this[comp.config.hash][item];
+                                        break;
+                                    }
                                 });
                                 return (
                                     <div
