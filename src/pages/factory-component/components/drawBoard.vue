@@ -88,10 +88,14 @@
                         Object.keys(configEventHandlers).forEach(funcKey => {
                             if (funcKey.indexOf(comp.config.hash) > -1) {
                                 var funcStr = configEventHandlers[funcKey].handler;
-                                /* eslint-disable */
-                                var resFunc = new Function('return ' + funcStr).call(this);
-                                /* eslint-enable */
-                                this[configEventHandlers[funcKey].name + comp.config.hash] = resFunc.bind(this._self);
+                                try {
+                                    /* eslint-disable */
+                                    var resFunc = new Function('return ' + funcStr).call(this);
+                                    /* eslint-enable */
+                                    this[configEventHandlers[funcKey].name + comp.config.hash] = resFunc.bind(this._self);
+                                } catch (e) {
+                                    this[configEventHandlers[funcKey].name + comp.config.hash] = () => {};
+                                }
                             }
                         });
                     });
@@ -121,19 +125,31 @@
                                     localProps[item] = null;
                                     switch (typeof cmps[comp.name].props[item].type()) {
                                     case 'object':
-                                        localProps[item] = JSON.parse(this[comp.config.hash][item]);
+                                        try {
+                                            localProps[item] = JSON.parse(this[comp.config.hash][item]);
+                                        } catch (e) {
+                                            localProps[item] = null
+                                        }
                                         break;
                                     case 'function':
-                                        /* eslint-disable */
-                                        var resFunc = new Function('return ' + this[comp.config.hash][item]).call(this);
-                                        /* eslint-enable */
-                                        localProps[item] = resFunc.bind(this._self);
+                                        try {
+                                            /* eslint-disable */
+                                            var resFunc = new Function('return ' + this[comp.config.hash][item]).call(this);
+                                            /* eslint-enable */
+                                            localProps[item] = resFunc.bind(this._self);
+                                        } catch (e) {
+                                            localProps[item] = () => {};
+                                        }
                                         break;
                                     case 'number':
                                         localProps[item] = Number(this[comp.config.hash][item]);
                                         break;
                                     case 'boolean':
-                                        localProps[item] = JSON.parse(this[comp.config.hash][item]);
+                                        try {
+                                            localProps[item] = JSON.parse(this[comp.config.hash][item]);
+                                        } catch (e) {
+                                            localProps[item] = null
+                                        }
                                         break;
                                     default:
                                         localProps[item] = this[comp.config.hash][item];
