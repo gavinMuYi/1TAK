@@ -38,9 +38,9 @@
                     <div class="config-comp" v-for="key in Object.keys(cusComp.config.data.data)" :key="key">
                         <span v-if="key === currentEdit.config.hash">
                             <div class="config-comp vv-title" v-if="Object.keys(cusComp.config.data.data[key]).length">组件接口:</div>
-                            <div class="config-comp" v-for="datakey in Object.keys(cusComp.config.data.data[key])" :key="datakey">
-                                <span class="config-comp-title">{{ datakey }}</span>
-                                <input v-model="cusComp.config.data.data[key][datakey]" @change="emitChange()" />
+                            <div class="config-comp props-item" v-for="datakey in Object.keys(cusComp.config.data.data[key])" :key="datakey">
+                                <span class="config-comp-title" :title="datakey">{{ datakey }}</span>
+                                <textarea v-model="cusComp.config.data.data[key][datakey]" @change="emitChange()" />
                             </div>
                             <div class="config-comp vv-title" v-if="hasEvent(key)">事件处理:</div>
                             <div class="config-comp" v-for="(eventKey, eventIndex) in Object.keys(cusComp.config.data.eventHandlers)" :key="eventKey">
@@ -214,6 +214,15 @@
             height: ~'calc(100% - 30px)';
             box-sizing: border-box;
             padding: 20px 10px 0 20px;
+            .props-item {
+                .config-comp-title {
+                    width: 50px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    vertical-align: top;
+                }
+            }
             .config-comp {
                 margin-bottom: 10px;
                 .btn {
