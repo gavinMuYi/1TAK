@@ -152,7 +152,7 @@
                         if (item.config.hash === hash) {
                             copyItem = clone(item);
                             configString = JSON.stringify(copyItem.config);
-                            configString.replace(new RegExp(hash, 'gm'), copyHash);
+                            configString = configString.replace(new RegExp(hash, 'gm'), copyHash);
                             copyItem.config = JSON.parse(configString);
                             this.comps.push(copyItem);
                         }
