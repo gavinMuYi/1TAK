@@ -90,6 +90,9 @@
                 }
             }
             &:hover {
+                * {
+                    background: #6377dc;
+                }
                 background: #6377dc;
             }
         }
