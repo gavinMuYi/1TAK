@@ -116,6 +116,10 @@
                                     funcKey.indexOf(comp.config.hash) > -1 && (eventhandlers[configEventHandlers[funcKey].name] = this[configEventHandlers[funcKey].name + comp.config.hash]);
                                 });
                                 var abs = !(String(comp.y + comp.x) === 'NaN');
+                                var localProps = {};
+                                this[comp.config.hash] && Object.keys(cmps[comp.name].props).forEach(item => {
+                                    localProps[item] = typeof cmps[comp.name].props[item].type() === 'object' ? JSON.parse(this[comp.config.hash][item]) : this[comp.config.hash][item];
+                                });
                                 return (
                                     <div
                                         class={['flag-sup-$-comp-box', 'comp-box', {'config-box': abs && !that.preview}, {'stc-box': !abs && !that.preview}]}
@@ -154,7 +158,7 @@
                                                 attrs: {
                                                     id: comp.config.hash
                                                 },
-                                                props: this[comp.config.hash],
+                                                props: localProps,
                                                 on: {
                                                     ...eventhandlers
                                                 }

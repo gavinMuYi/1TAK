@@ -11,6 +11,14 @@
             value: {
                 type: String,
                 default: '这是一个文本框'
+            },
+            obj: {
+                type: Object,
+                default: () => {
+                    return {
+                        a: 11
+                    }
+                }
             }
         }
 
