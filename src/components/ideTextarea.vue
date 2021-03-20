@@ -1,11 +1,16 @@
 <template>
-    <textarea ref="mycode" v-model="code" class="ide-textarea" />
+    <textarea ref="mycode" v-model="localVal" class="ide-textarea" />
 </template>
 
 <script>
     import 'codemirror/theme/ambiance.css';
     import 'codemirror/lib/codemirror.css';
     import 'codemirror/addon/hint/show-hint.css';
+    import 'codemirror/addon/fold/foldgutter.css';
+    import 'codemirror/addon/fold/foldcode';
+    import 'codemirror/addon/fold/foldgutter';
+    import 'codemirror/addon/fold/brace-fold';
+    import 'codemirror/addon/fold/comment-fold';
     let CodeMirror = require('codemirror/lib/codemirror');
     require('codemirror/addon/edit/matchbrackets');
     require('codemirror/addon/selection/active-line');
@@ -29,7 +34,8 @@
         },
         data () {
             return {
-                IDE: null
+                IDE: null,
+                localVal: this.format()
             }
         },
         mounted () {
@@ -39,7 +45,10 @@
                 indentWithTabs: true,
                 smartIndent: true,
                 lineNumbers: true,
-                matchBrackets: true
+                matchBrackets: true,
+                foldGutter: true,
+                lineWrapping: true,
+                gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter', 'CodeMirror-lint-markers']
             });
             this.IDE = editor;
             editor.on('cursorActivity', function () {
@@ -49,6 +58,17 @@
         methods: {
             getValue () {
                 return this.IDE.getValue();
+            },
+            format () {
+                let res = this.code
+                switch (this.type) {
+                case 'application/json':
+                    res = JSON.stringify(JSON.parse(this.code), null, 4)
+                    break;
+                default:
+                    break;
+                }
+                return res;
             }
         }
     }

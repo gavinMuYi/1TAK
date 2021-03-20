@@ -14,7 +14,7 @@
                 <div v-else class="customer-style-editor">
                     <span class="btn" @click="emitStyle">预览</span>
                     <span class="btn" @click="doUpdate">更新</span>
-                    <ide-textarea :code="JSON.stringify(style)" ref="styleIDE" type="css" />
+                    <ide-textarea :code="JSON.stringify(style)" ref="styleIDE" type="application/json" />
                 </div>
             </div>
         </div>
