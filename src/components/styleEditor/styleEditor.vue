@@ -8,13 +8,12 @@
             <div class="dom-tree">
                 <dom-tree :data="currentTree" @editStyle="editStyle" v-if="show" ref="domTree" />
             </div>
-            <div class="style-edit-bar">
-                <div class="change-btn" @click="styleEditmode = !styleEditmode"><span class="iconfont icon-qiehuan"></span></div>
-                <styleBar v-if="styleEditmode" :domName="domName" :domStyle="domStyle" @change="diffChangeStyle" @update="update" />
+            <div class="style-edit-bar" v-if="show">
+                <styleBar v-if="!bycode" :domName="domName" :domStyle="domStyle" @change="diffChangeStyle" @update="update" />
                 <div v-else class="customer-style-editor">
                     <span class="btn" @click="emitStyle">预览</span>
                     <span class="btn" @click="doUpdate">更新</span>
-                    <ide-textarea :code="JSON.stringify(style)" ref="styleIDE" type="application/json" />
+                    <ide-textarea :code="JSON.stringify(currentStyle)" ref="styleIDE" type="application/json" />
                 </div>
             </div>
         </div>
@@ -36,7 +35,17 @@
             IdeTextarea
         },
         props: {
+            bycode: {
+                type: Boolean,
+                dafault: false
+            },
             nowEdit: {
+                type: Object,
+                default: () => {
+                    return {}
+                }
+            },
+            currentStyle: {
                 type: Object,
                 default: () => {
                     return {}
@@ -46,7 +55,6 @@
         data () {
             return {
                 show: false,
-                styleEditmode: true,
                 currentTree: null,
                 domName: '',
                 domStyle: {},
@@ -71,6 +79,9 @@
                 });
             },
             close () {
+                this.global_style = {};
+                this.cacheStyle = {};
+                this.style = {};
                 this.domName = '';
                 this.domStyle = {};
                 this.currentTree = null;

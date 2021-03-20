@@ -23,8 +23,9 @@
             </div>
             <div class="config-comp" v-if="!currentEdit.content">
                 <span class="config-comp-title vv-title">组件样式: </span>
-                <span class="btn btn-style" @click="changeStyle">调整</span>
-                <styleEditor ref="styleEditor" :nowEdit="currentEdit" @update="updateStyle" />
+                <span class="btn btn-style" @click="changeStyle(true)">调整</span>
+                <span class="btn btn-style" @click="changeStyle(false)">Code</span>
+                <styleEditor ref="styleEditor" :nowEdit="currentEdit" @update="updateStyle" :currentStyle="this.currentEdit.config.style || {}" :bycode="bycode" />
             </div>
             <div class="config-comp" v-if="currentEdit.content">
                 <span class="config-comp-title vv-title">容器暴露接口: </span>
@@ -95,6 +96,7 @@
         data () {
             return {
                 unitCompIcons: unitCompIcons,
+                bycode: false,
                 compType: {
                     unit: '单位组件',
                     combination: '组合组件',
@@ -141,7 +143,12 @@
                 });
                 return res;
             },
-            changeStyle () {
+            changeStyle (flag) {
+                if (flag) {
+                    this.bycode = false;
+                } else {
+                    this.bycode = true;
+                }
                 this.$refs.styleEditor.open();
                 this.$nextTick(() => {
                     let stylePanel = document.getElementById('stylePanelPreview');

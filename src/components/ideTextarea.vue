@@ -45,10 +45,7 @@
                 indentWithTabs: true,
                 smartIndent: true,
                 lineNumbers: true,
-                matchBrackets: true,
-                foldGutter: true,
-                lineWrapping: true,
-                gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter', 'CodeMirror-lint-markers']
+                matchBrackets: true
             });
             this.IDE = editor;
             editor.on('cursorActivity', function () {
