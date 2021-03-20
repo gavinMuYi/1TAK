@@ -226,11 +226,14 @@
             margin-bottom: 20px;
             position: absolute;
             width: 355px;
-            padding-top: 20px;
-            top: 31px;
+            padding-top: 30px;
+            top: 0px;
             z-index: 10000;
             background: #FFF;
             border-bottom: 1px solid #ededed;
+            .style-item-left {
+                margin-left: 20px;
+            }
             &:before{
                 content:"";
                 position:absolute;
@@ -239,8 +242,8 @@
                 transform-origin: bottom center;
                 transform:rotateZ(90deg) scale(1);
                 left: 235px;
-                top: 10px;
-                width: 47px;
+                top: 15px;
+                width: 57px;
                 height: 19px;
             }
         }

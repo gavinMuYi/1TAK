@@ -21,6 +21,10 @@
             code: {
                 type: String,
                 default: ''
+            },
+            type: {
+                type: String,
+                default: 'javascript'
             }
         },
         data () {
@@ -29,9 +33,9 @@
             }
         },
         mounted () {
-            let mime = 'javascript'
+            let mime = this.type;
             let editor = CodeMirror.fromTextArea(this.$refs.mycode, {
-                mode: mime,
+                mode: {name: mime, json: true},
                 indentWithTabs: true,
                 smartIndent: true,
                 lineNumbers: true,

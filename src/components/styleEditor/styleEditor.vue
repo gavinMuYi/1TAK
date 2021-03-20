@@ -9,7 +9,13 @@
                 <dom-tree :data="currentTree" @editStyle="editStyle" v-if="show" ref="domTree" />
             </div>
             <div class="style-edit-bar">
-                <styleBar :domName="domName" :domStyle="domStyle" @change="diffChangeStyle" @update="update" />
+                <div class="change-btn" @click="styleEditmode = !styleEditmode"><span class="iconfont icon-qiehuan"></span></div>
+                <styleBar v-if="styleEditmode" :domName="domName" :domStyle="domStyle" @change="diffChangeStyle" @update="update" />
+                <div v-else class="customer-style-editor">
+                    <span class="btn" @click="emitStyle">预览</span>
+                    <span class="btn" @click="doUpdate">更新</span>
+                    <ide-textarea :code="JSON.stringify(style)" ref="styleIDE" type="css" />
+                </div>
             </div>
         </div>
     </div>
@@ -18,6 +24,7 @@
 <script>
     import DomTree from './dom-tree';
     import StyleBar from './style-bar';
+    import IdeTextarea from '../ideTextarea';
     import cssConfigJSON from './cssConfig.json';
     import { addCss } from '../../utils/common.js';
 
@@ -25,7 +32,8 @@
         name: 'StyleEditor',
         components: {
             DomTree,
-            StyleBar
+            StyleBar,
+            IdeTextarea
         },
         props: {
             nowEdit: {
@@ -38,6 +46,7 @@
         data () {
             return {
                 show: false,
+                styleEditmode: true,
                 currentTree: null,
                 domName: '',
                 domStyle: {},
@@ -68,6 +77,10 @@
                 this.show = false;
                 var oldStyle = document.getElementById('styleEditorPreview');
                 oldStyle && oldStyle.remove();
+            },
+            doUpdate () {
+                this.global_style = JSON.parse((JSON.stringify(this.style).replace(new RegExp('#stylePanelPreview ', 'gm'), '')));
+                this.update();
             },
             update () {
                 this.$emit('update', this.global_style);
@@ -102,6 +115,10 @@
                         children: children
                     };
                 }
+            },
+            emitStyle () {
+                this.style = JSON.parse(this.$refs.styleIDE.getValue());
+                this.createStyle();
             },
             editStyle (dom, name, domStyle, comstyle) {
                 let cssLength = Object.keys(domStyle).length;
@@ -233,6 +250,26 @@
                 border: 1px solid #333;
                 background: #FFF;
                 overflow: auto;
+                position: relative;
+                .change-btn {
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    z-index: 100000;
+                    color: #ed7827;
+                    font-weight: 700;
+                }
+                .customer-style-editor {
+                    margin-top: 20px;
+                    .btn {
+                        position: relative;
+                        top: -30px;
+                    }
+                    .CodeMirror {
+                        width: 350px;
+                        height: 550px;
+                    }
+                }
             }
         }
     }
