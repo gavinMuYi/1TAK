@@ -3,6 +3,7 @@
 </template>
 
 <script>
+    import beautify from 'js-beautify';
     import 'codemirror/theme/ambiance.css';
     import 'codemirror/lib/codemirror.css';
     import 'codemirror/addon/hint/show-hint.css';
@@ -60,7 +61,10 @@
                 let res = this.code
                 switch (this.type) {
                 case 'application/json':
-                    res = JSON.stringify(JSON.parse(this.code), null, 4)
+                    res = JSON.stringify(JSON.parse(this.code), null, 4);
+                    break;
+                case 'javascript':
+                    res = beautify(this.code, { indent_size: 2, space_in_empty_paren: true });
                     break;
                 default:
                     break;

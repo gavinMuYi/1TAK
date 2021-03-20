@@ -15,6 +15,7 @@
     "codemirror": "^5.59.2",
     "default-passive-events": "^2.0.0",
     "heyui": "^1.28.0",
+    "js-beautify": "^1.13.5",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
