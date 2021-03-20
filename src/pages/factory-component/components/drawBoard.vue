@@ -88,10 +88,14 @@
                         Object.keys(configEventHandlers).forEach(funcKey => {
                             if (funcKey.indexOf(comp.config.hash) > -1) {
                                 var funcStr = configEventHandlers[funcKey].handler;
-                                /* eslint-disable */
-                                var resFunc = new Function('return ' + funcStr).call(this);
-                                /* eslint-enable */
-                                this[configEventHandlers[funcKey].name + comp.config.hash] = resFunc.bind(this._self);
+                                try {
+                                    /* eslint-disable */
+                                    var resFunc = new Function('return ' + funcStr).call(this);
+                                    /* eslint-enable */
+                                    this[configEventHandlers[funcKey].name + comp.config.hash] = resFunc.bind(this._self);
+                                } catch (e) {
+                                    this[configEventHandlers[funcKey].name + comp.config.hash] = () => {};
+                                }
                             }
                         });
                     });
@@ -116,6 +120,42 @@
                                     funcKey.indexOf(comp.config.hash) > -1 && (eventhandlers[configEventHandlers[funcKey].name] = this[configEventHandlers[funcKey].name + comp.config.hash]);
                                 });
                                 var abs = !(String(comp.y + comp.x) === 'NaN');
+                                var localProps = {};
+                                this[comp.config.hash] && Object.keys(cmps[comp.name].props).forEach(item => {
+                                    localProps[item] = null;
+                                    switch (typeof cmps[comp.name].props[item].type()) {
+                                    case 'object':
+                                        try {
+                                            localProps[item] = JSON.parse(this[comp.config.hash][item]);
+                                        } catch (e) {
+                                            localProps[item] = null
+                                        }
+                                        break;
+                                    case 'function':
+                                        try {
+                                            /* eslint-disable */
+                                            var resFunc = new Function('return ' + this[comp.config.hash][item]).call(this);
+                                            /* eslint-enable */
+                                            localProps[item] = resFunc.bind(this._self);
+                                        } catch (e) {
+                                            localProps[item] = () => {};
+                                        }
+                                        break;
+                                    case 'number':
+                                        localProps[item] = Number(this[comp.config.hash][item]);
+                                        break;
+                                    case 'boolean':
+                                        try {
+                                            localProps[item] = JSON.parse(this[comp.config.hash][item]);
+                                        } catch (e) {
+                                            localProps[item] = null
+                                        }
+                                        break;
+                                    default:
+                                        localProps[item] = this[comp.config.hash][item];
+                                        break;
+                                    }
+                                });
                                 return (
                                     <div
                                         class={['flag-sup-$-comp-box', 'comp-box', {'config-box': abs && !that.preview}, {'stc-box': !abs && !that.preview}]}
@@ -154,7 +194,7 @@
                                                 attrs: {
                                                     id: comp.config.hash
                                                 },
-                                                props: this[comp.config.hash],
+                                                props: localProps,
                                                 on: {
                                                     ...eventhandlers
                                                 }

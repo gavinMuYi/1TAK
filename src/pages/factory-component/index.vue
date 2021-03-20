@@ -152,7 +152,7 @@
                         if (item.config.hash === hash) {
                             copyItem = clone(item);
                             configString = JSON.stringify(copyItem.config);
-                            configString.replace(new RegExp(hash, 'gm'), copyHash);
+                            configString = configString.replace(new RegExp(hash, 'gm'), copyHash);
                             copyItem.config = JSON.parse(configString);
                             this.comps.push(copyItem);
                         }
@@ -240,7 +240,7 @@
                     this.$set(props, comp.config.hash, {});
                     var prop = cmps[comp.name].props;
                     for (let key in prop) {
-                        this.$set(props[comp.config.hash], key, typeof prop[key].type() === 'object' ? prop[key].default() : prop[key].default);
+                        this.$set(props[comp.config.hash], key, typeof prop[key].type() === 'object' ? JSON.stringify(prop[key].default()) : prop[key].default);
                     }
                 });
                 return props;
