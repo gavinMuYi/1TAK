@@ -219,32 +219,20 @@
     }
     .style-bar {
         .rule-items-br {
-            margin-top: 70px;
+            margin-top: 60px;
         }
         .style-title {
             padding-bottom: 20px;
             margin-bottom: 20px;
             position: absolute;
             width: 355px;
-            padding-top: 30px;
+            padding-top: 20px;
             top: 0px;
             z-index: 10000;
             background: #FFF;
             border-bottom: 1px solid #ededed;
             .style-item-left {
                 margin-left: 20px;
-            }
-            &:before{
-                content:"";
-                position:absolute;
-                box-sizing:border-box;
-                border-bottom: 1px solid #ededed;
-                transform-origin: bottom center;
-                transform:rotateZ(90deg) scale(1);
-                left: 235px;
-                top: 15px;
-                width: 57px;
-                height: 19px;
             }
         }
         .style-item {

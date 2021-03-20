@@ -246,6 +246,9 @@
                 .btn-style {
                     float: none;
                     width: 50px;
+                    vertical-align: middle;
+                    height: 16px;
+                    line-height: 16px;
                     display: inline-block;
                     text-align: center;
                 }

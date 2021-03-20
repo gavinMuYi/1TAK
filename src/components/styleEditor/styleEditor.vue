@@ -11,6 +11,7 @@
             <div class="style-edit-bar" v-if="show">
                 <styleBar v-if="!bycode" :domName="domName" :domStyle="domStyle" @change="diffChangeStyle" @update="update" />
                 <div v-else class="customer-style-editor">
+                    <span class="code-tit">在对象中编辑CSS(JSON格式)</span>
                     <span class="btn" @click="emitStyle">预览</span>
                     <span class="btn" @click="doUpdate">更新</span>
                     <ide-textarea :code="JSON.stringify(currentStyle)" ref="styleIDE" type="application/json" />
@@ -90,8 +91,9 @@
                 oldStyle && oldStyle.remove();
             },
             doUpdate () {
-                this.global_style = JSON.parse((JSON.stringify(this.style).replace(new RegExp('#stylePanelPreview ', 'gm'), '')));
-                this.update();
+                let sty = JSON.parse(this.$refs.styleIDE.getValue());
+                this.$emit('update', sty);
+                this.close();
             },
             update () {
                 this.$emit('update', this.global_style);
@@ -128,8 +130,12 @@
                 }
             },
             emitStyle () {
-                this.style = JSON.parse(this.$refs.styleIDE.getValue());
-                this.createStyle();
+                let sty = JSON.parse(this.$refs.styleIDE.getValue());
+                let target = {};
+                Object.keys(sty).forEach(css => {
+                    target['#stylePanelPreview ' + css] = sty[css];
+                });
+                this.createStyle(target);
             },
             editStyle (dom, name, domStyle, comstyle) {
                 let cssLength = Object.keys(domStyle).length;
@@ -160,14 +166,15 @@
                 this.global_style[this.domName] = cssStyle;
                 this.createStyle();
             },
-            createStyle () {
+            createStyle (stylein) {
+                let sty = stylein || this.style;
                 var oldStyle = document.getElementById('styleEditorPreview');
                 oldStyle && oldStyle.remove();
                 let styleStr = '';
-                Object.keys(this.style).forEach(key => {
+                Object.keys(sty).forEach(key => {
                     let cssStr = '';
-                    Object.keys(this.style[key]).forEach(css => {
-                        cssStr += `${css}: ${this.style[key][css]};`;
+                    Object.keys(sty[key]).forEach(css => {
+                        cssStr += `${css}: ${sty[key][css]};`;
                     })
                     styleStr += `${key} {${cssStr}}`
                 });
@@ -274,7 +281,14 @@
                     margin-top: 20px;
                     .btn {
                         position: relative;
-                        top: -30px;
+                        top: -20px;
+                    }
+                    .code-tit {
+                        position: relative;
+                        top: -20px;
+                        color: #ed7827;
+                        font-weight: 700;
+                        left: 5px;
                     }
                     .CodeMirror {
                         width: 350px;
