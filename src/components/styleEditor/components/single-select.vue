@@ -65,7 +65,7 @@
         position: relative;
         display: inline-block;
         .trigger-name {
-            color: #1b1919;
+            color: @sub;
             font-weight: 700;
         }
         .box-trigger {
@@ -104,7 +104,7 @@
     }
     .active-select {
         .box-trigger .open {
-            color: #1b1919;
+            color: @sub;
         }
     }
 </style>

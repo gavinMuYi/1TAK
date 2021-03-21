@@ -221,7 +221,7 @@
             left: 0;
             bottom: 0;
             border-top: 1px solid #ededed;
-            background: #0c0c0ce8;
+            background: @mainop;
             padding: 30px 20px;
             box-sizing: border-box;
             .paper {
@@ -265,7 +265,7 @@
                 padding: 20px 10px;
                 vertical-align: top;
                 box-sizing: border-box;
-                border: 1px solid #1b1919;
+                border: 1px solid @sub;
                 background: #FFF;
                 overflow: auto;
                 position: relative;
@@ -274,7 +274,7 @@
                     top: 10px;
                     left: 10px;
                     z-index: 100000;
-                    color: #ed7827;
+                    color: @dep;
                     font-weight: 700;
                 }
                 .customer-style-editor {
@@ -286,7 +286,7 @@
                     .code-tit {
                         position: relative;
                         top: -20px;
-                        color: #ed7827;
+                        color: @dep;
                         font-weight: 700;
                         left: 5px;
                     }

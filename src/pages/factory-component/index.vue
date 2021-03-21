@@ -289,11 +289,12 @@
 </script>
 
 <style lang="less">
+
 .factory-component {
     height: 100%;
     overflow: hidden;
     #ballId {
-        background: #1b1919;
+        background: @sub;
         color: white;
         width: 50px;
         text-align: center;
@@ -316,7 +317,7 @@
         position: fixed;
         top: 0;
         left: 0;
-        background: #0c0c0ce8;
+        background: @mainop;
         color: #FFF;
         width: 400px;
         max-height: 800px;
@@ -327,7 +328,7 @@
     .top-bar {
         height: 100px;
         // background: #f7f8fa;
-        background: #0c0c0c;
+        background: @main;
         // border-bottom: 1px solid #ededed;
         box-sizing: border-box;
         .disable-action {
@@ -340,7 +341,7 @@
             line-height: 100px;
             font-size: 32px;
             font-weight: 700;
-            color: #ed7827;
+            color: @dep;
             margin-left: 30px;
             display: inline-block;
             .icon-yezhu {
@@ -354,7 +355,7 @@
         }
         .actions {
             float: right;
-            color: #ed7827;
+            color: @dep;
             font-weight: 700;
             user-select:none;
             .iconfont {
@@ -363,7 +364,7 @@
             .icon-baocun_mian {
                 font-size: 20px;
                 line-height: 100px;
-                color: #ed7827;
+                color: @dep;
                 font-weight: 400;
                 padding-left: 5px;
                 position: relative;
@@ -376,7 +377,7 @@
     }
     // .left-bar,
     // .right-bar {
-    //     background: #0c0c0c;
+    //     background: @main;
     // }
     .work-space {
         height: ~'calc(100% - 100px)';
@@ -409,7 +410,8 @@
             &:before {
                 content: '';
                 position: absolute;
-                background: #0c0c0ce8;
+                background: @mainop;
+                opacity: 0.7;
                 z-index: 10000;
                 width: 100%;
                 height: 100%;
@@ -433,8 +435,8 @@
         font-size: 14px;
         font-weight: 700;
         padding-left: 15px;
-        background: #1b1919;
-        color: #ed7827;
+        background: @sub;
+        color: @dep;
     }
     .materials-list {
         width: 310px;
@@ -459,17 +461,17 @@
                 line-height: 70px;
                 font-size: 24px;
                 margin: 0 auto 5px;
-                color: #0c0c0c;
+                color: @main;
                 -webkit-transition: font-size 0.15s linear, width 0.15s linear;
                 -moz-transition: font-size 0.15s linear, width 0.15s linear;
                 transition: font-size 0.15s linear, width 0.15s linear;
                 &:hover {
                     font-size: 56px;
-                    color: #ed7827;
+                    color: @dep;
                 }
             }
             .material-name {
-                color: #0c0c0c;
+                color: @main;
             }
         }
     }

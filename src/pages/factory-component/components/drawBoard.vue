@@ -297,7 +297,7 @@
     .right-action-pop {
         padding: 4px 0px!important;
         .sys-pop-action-btn {
-            color: #1b1919;
+            color: @sub;
             font-size: 13px;
             width: 60px;
             text-align: center;
@@ -325,7 +325,7 @@
                     width: 100%;
                     height: 100%;
                     padding: 5px;
-                    border: 1px solid #ed7827;
+                    border: 1px solid @dep;
                     border-radius: 3px;
                     z-index: 10;
                 }
@@ -335,7 +335,7 @@
             &:hover {
                 box-sizing: border-box;
                 padding: 5px;
-                border: 1px solid #ed7827;
+                border: 1px solid @dep;
                 border-radius: 3px;
                 z-index: 10;
             }
