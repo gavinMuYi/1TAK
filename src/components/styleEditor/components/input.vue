@@ -55,7 +55,7 @@
             line-height: inherit;
             height: 25px;
             padding: 3px 0;
-            color: #333;
+            color: #1b1919;
             outline: none;
             border: 0 none;
             background: none;

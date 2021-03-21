@@ -293,7 +293,7 @@
     height: 100%;
     overflow: hidden;
     #ballId {
-        background: #333;
+        background: #1b1919;
         color: white;
         width: 50px;
         text-align: center;
@@ -433,7 +433,7 @@
         font-size: 14px;
         font-weight: 700;
         padding-left: 15px;
-        background: #333;
+        background: #1b1919;
         color: #ed7827;
     }
     .materials-list {

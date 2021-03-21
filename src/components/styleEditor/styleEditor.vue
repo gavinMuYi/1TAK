@@ -252,8 +252,8 @@
                 padding: 30px 10px;
                 vertical-align: top;
                 box-sizing: border-box;
-                border: 1px solid #333;
-                background: #333;
+                border: 1px solid #1b1919;
+                background: #1b1919;
                 margin: 0 10px;
                 overflow: auto;
             }
@@ -265,7 +265,7 @@
                 padding: 20px 10px;
                 vertical-align: top;
                 box-sizing: border-box;
-                border: 1px solid #333;
+                border: 1px solid #1b1919;
                 background: #FFF;
                 overflow: auto;
                 position: relative;

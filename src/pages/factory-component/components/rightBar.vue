@@ -191,7 +191,7 @@
             width: 100%;
             height: 100%;
             padding: 5px;
-            border: 2px dashed #333;
+            border: 2px dashed #1b1919;
             border-radius: 3px;
         }
     }
@@ -212,7 +212,7 @@
             border-bottom: 1px solid #ededed;
         }
         .compname {
-            color: #333;
+            color: #1b1919;
             font-weight: 700;
         }
         .config-bar {

@@ -297,7 +297,7 @@
     .right-action-pop {
         padding: 4px 0px!important;
         .sys-pop-action-btn {
-            color: #333;
+            color: #1b1919;
             font-size: 13px;
             width: 60px;
             text-align: center;
