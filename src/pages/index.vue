@@ -1,6 +1,9 @@
 <template>
     <div class="Vv_Page-index">
-        <div class="index-title">GaHou LAB</div>
+        <div class="index-title">
+            <span class="title">GaHou LAB</span>
+            <span class="iconfont icon-yezhu icon"></span>
+        </div>
         <div class="router-box">
             <router-link :to="{ name: 'FactoryComponent' }">G HTML</router-link>
             <router-link :to="{ name: 'FactoryComponent' }">Vv Page</router-link>
@@ -23,8 +26,10 @@
 
 <style lang="less">
 .Vv_Page-index {
+    width: 100%;
+    overflow: hidden;
     height: 100%;
-    min-width: 2150px;
+    min-width: 2240px;
     position: relative;
     background: linear-gradient(143deg, #ffffff 0, #e8f1ff 30%, #2cf1c0 90%, #0ab68b 100%);
     // clip-path: ellipse(90% 90% at 20% 20%);
@@ -35,6 +40,20 @@
         font-size: 70px;
         top: 400px;
         left: 120px;
+        .title {
+            z-index: 100;
+            display: inline-block;
+            position: relative;
+        }
+        .icon {
+            display: inline-block;
+            font-size: 1300px;
+            position: absolute;
+            top: -400px;
+            left: 100px;
+            color: @dep;
+            transform: rotateY(180deg);
+        }
     }
     .router-box {
         position: absolute;
@@ -61,6 +80,7 @@
         }
     }
     img {
+        z-index: 10;
         position: absolute;
         height: 100%;
         right: 0;
