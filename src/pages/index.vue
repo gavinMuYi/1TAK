@@ -7,7 +7,7 @@
         <div class="router-box">
             <router-link :to="{ name: 'Factory' }">G HTML</router-link>
             <router-link :to="{ name: 'Factory' }">Vv Page</router-link>
-            <router-link :to="{ name: 'Factory' }">Page List</router-link>
+            <router-link :to="{ name: 'View' }">Page List</router-link>
         </div>
         <img src="../assets/img/cover.png">
     </div>

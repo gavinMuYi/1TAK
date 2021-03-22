@@ -1,8 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import FactoryPage from '@/pages/factory-page/index';
+import ViewPage from '@/pages/view/index';
 import Factory from '@/pages/factory/index';
-import PageExhibition from '@/pages/page-exhibition/index';
 import Index from '@/pages/index';
 
 Vue.use(Router);
@@ -18,12 +17,12 @@ export default new Router({
             component: Index
         },
         {
-            path: '/factory/page',
-            name: 'FactoryPage',
+            path: '/page',
+            name: 'View',
             meta: {
-                title: '页面工厂'
+                title: '页面列表'
             },
-            component: FactoryPage
+            component: ViewPage
         },
         {
             path: '/factory',
@@ -32,14 +31,6 @@ export default new Router({
                 title: '组件工厂'
             },
             component: Factory
-        },
-        {
-            path: '/page/exhibition',
-            name: 'PageExhibition',
-            meta: {
-                title: '页面展示'
-            },
-            component: PageExhibition
         }
     ]
 });

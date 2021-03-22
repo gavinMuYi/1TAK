@@ -1,64 +1,21 @@
 <template>
-    <div class="factory">
-        <!-- <div id="ballId">drag</div> -->
-        <pre class="globel-data" v-if="globelData">{{cusComp}}</pre>
-        <div class="top-bar">
-            <div class="pro-title">
-                Vv Page<span class="iconfont icon-yezhu"></span>
-            </div>
-            <div class="actions">
-                <span @click="globelData = !globelData">
-                    <span class="iconfont icon-yuming"></span>
-                    页面信息
-                </span>
-                <span @click="preview = !preview;refreshWorkSpace();">
-                    <span class="iconfont icon-qiehuan1"></span>
-                    {{ preview ? '预览' : '配置' }}态
-                </span>
-                <span @click="abs = !abs;refreshWorkSpace();">
-                    <span class="iconfont icon-moxingzuzhuang"></span>
-                    {{ abs ? '拖动' : '排列' }}
-                </span>
-                <span @click="back" :class="{'disable-action': !snapshot_flag}">
-                    <span class="iconfont icon-shangyibu"></span>
-                    撤销
-                </span>
-                <span @click="redo" :class="{'disable-action': snapshot_flag === snapshot.length - 1 || !snapshot.length}">
-                    <span class="iconfont icon-liuchengtuh5-29"></span>
-                    重做
-                </span>
-                <span @click="save" class="iconLast">
-                    <span class="iconfont icon-baocun_mian"></span>
-                    保存
-                </span>
-            </div>
-        </div>
-        <div :class="['work-space', {'preview': preview}]">
-            <left-bar />
-            <div class="space-content">
-                <div class="component-draw-space" ref="drawSpace" @drop="drop" @dragover="ev => {ev.preventDefault()}">
-                    <draw-board
-                        :comps="comps"
-                        @editComponent="editComponent"
-                        @editContent="editContent"
-                        @changeInline="changeInline"
-                        @action="action"
-                        :cusComp="cusComp"
-                        :key="refresh"
-                        :preview="preview" />
-                </div>
-            </div>
-            <right-bar :nowEdit="nowEdit" @updateParams="updateParams" :cusComp="cusComp" />
-        </div>
-    </div>
+    <draw-board
+        :comps="comps"
+        @editComponent="editComponent"
+        @editContent="editContent"
+        @changeInline="changeInline"
+        @action="action"
+        :cusComp="cusComp"
+        :key="refresh"
+        :preview="preview" />
 </template>
 
 <script>
     import clone from 'clone';
-    import LeftBar from './components/leftBar';
-    import RightBar from './components/rightBar';
-    import DrawBoard from './components/drawBoard';
-    import { iconCompMap } from './config.js';
+    import LeftBar from '../factory/components/leftBar';
+    import RightBar from '../factory/components/rightBar';
+    import DrawBoard from '../factory/components/drawBoard';
+    import { iconCompMap } from '../factory/config.js';
     import { createHash } from '../../utils/common.js';
     // import { suspensionBall } from '../../utils/drag-ball.js';
     const requireComponent = require.context('../../G-HTML', false, /\w+\.(vue|js)$/);
@@ -69,7 +26,7 @@
     });
 
     export default {
-        name: 'Factory',
+        name: 'ViewPage',
         components: {
             LeftBar,
             RightBar,
@@ -79,7 +36,7 @@
             return {
                 globelData: false,
                 abs: true,
-                preview: false,
+                preview: true,
                 refresh: 0,
                 iconCompMap: iconCompMap,
                 nowEdit: {},
@@ -88,31 +45,64 @@
                 config_data_data_bak: {},
                 config_data_eventHandlers_bak: {},
                 snapshot: [],
-                snapshot_flag: 0
-            }
-        },
-        computed: {
-            cusComp () {
-                return {
-                    content: true, // 仅用于配置
+                snapshot_flag: 0,
+                cusComp: {
+                    content: true,
                     type: 'combination',
                     config: {
-                        hash: this.cusCompHash,
+                        hash: 'l1yf',
                         data: {
                             props: {},
                             data: {
-                                ...this.getCompsProps(this.comps),
-                                ...this.config_data_data_bak
+                                mmzn: {
+                                    value: '',
+                                    placeholder: '请输入'
+                                },
+                                e8d4: {
+                                    value: '这是一个文本框',
+                                    obj: {
+                                        a: 11
+                                    },
+                                    arr: [
+                                        {a: 1},
+                                        {b: 2}
+                                    ],
+                                    num: 11,
+                                    bol: true
+                                }
                             },
                             eventHandlers: {
-                                ...this.getCompsEvents(this.comps),
-                                ...this.config_data_eventHandlers_bak
+                                'mmzn-input': {
+                                    name: 'input',
+                                    label: '输入框input事件',
+                                    params: '输入值',
+                                    handler: 'function inputmmzn() {}'
+                                }
                             },
                             emitEvents: []
                         }
                     },
-                    comps: this.comps
-                };
+                    comps: [
+                        {
+                            id: 'icon-shurukuang',
+                            type: 'unit',
+                            x: 316,
+                            y: 175,
+                            name: 'G_INPUT',
+                            config: {hash: 'mmzn'}
+                        },
+                        {
+                            id: 'icon-wenzi',
+                            type: 'unit',
+                            x: 278,
+                            y: 99,
+                            name: 'G_TEXT',
+                            config: {
+                                hash: 'e8d4'
+                            }
+                        }
+                    ]
+                }
             }
         },
         watch: {
@@ -125,11 +115,10 @@
         },
         mounted () {
             this.$set(this, 'nowEdit', this.cusComp);
-            // suspensionBall('ballId', 'https://www.baidu.com');
         },
         methods: {
             save () {
-                console.log(JSON.stringify(this.cusComp));
+                console.log(this.cusComp);
             },
             action (action, hash) {
                 let copyHash = createHash(4);
