@@ -319,7 +319,7 @@
         left: 0;
         background: @mainop;
         color: #FFF;
-        width: 400px;
+        width: 800px;
         max-height: 800px;
         overflow: auto;
         margin: 0;
