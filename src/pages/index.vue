@@ -26,6 +26,8 @@
     height: 100%;
     min-width: 2150px;
     position: relative;
+    background: linear-gradient(143deg, #ffffff 0, #e8f1ff 30%, #2cf1c0 90%, #0ab68b 100%);
+    // clip-path: ellipse(90% 90% at 20% 20%);
     .index-title {
         position: absolute;
         color: @main;
