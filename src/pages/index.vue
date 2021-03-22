@@ -5,9 +5,9 @@
             <span class="iconfont icon-yezhu icon"></span>
         </div>
         <div class="router-box">
-            <router-link :to="{ name: 'FactoryComponent' }">G HTML</router-link>
-            <router-link :to="{ name: 'FactoryComponent' }">Vv Page</router-link>
-            <router-link :to="{ name: 'FactoryComponent' }">Page List</router-link>
+            <router-link :to="{ name: 'Factory' }">G HTML</router-link>
+            <router-link :to="{ name: 'Factory' }">Vv Page</router-link>
+            <router-link :to="{ name: 'Factory' }">Page List</router-link>
         </div>
         <img src="../assets/img/cover.png">
     </div>

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import FactoryPage from '@/pages/factory-page/index';
-import FactoryComponent from '@/pages/factory-component/index';
+import Factory from '@/pages/factory/index';
 import PageExhibition from '@/pages/page-exhibition/index';
 import Index from '@/pages/index';
 
@@ -26,12 +26,12 @@ export default new Router({
             component: FactoryPage
         },
         {
-            path: '/factory/component',
-            name: 'FactoryComponent',
+            path: '/factory',
+            name: 'Factory',
             meta: {
                 title: '组件工厂'
             },
-            component: FactoryComponent
+            component: Factory
         },
         {
             path: '/page/exhibition',
