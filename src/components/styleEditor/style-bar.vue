@@ -231,9 +231,6 @@
             z-index: 10000;
             background: #FFF;
             border-bottom: 1px solid #ededed;
-            .style-item-left {
-                margin-left: 20px;
-            }
         }
         .style-item {
             margin-bottom: 15px;

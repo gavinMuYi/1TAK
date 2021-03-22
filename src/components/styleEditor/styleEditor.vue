@@ -286,7 +286,7 @@
                     .code-tit {
                         position: relative;
                         top: -20px;
-                        color: @dep;
+                        color: @main;
                         font-weight: 700;
                         left: 5px;
                     }
