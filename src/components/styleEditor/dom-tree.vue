@@ -56,7 +56,7 @@
                     // }
 
                     this.tempBackground = this.data[0].dom.style.background;
-                    this.data[0].dom.style.background = '#6377dcad';
+                    this.data[0].dom.style.background = '#0ab68bad';
                 } else {
                     this.data[0].dom.style.background = this.tempBackground;
                 }
@@ -91,9 +91,9 @@
             }
             &:hover {
                 * {
-                    background: #6377dc;
+                    background: #0ab68b;
                 }
-                background: #6377dc;
+                background: #0ab68b;
             }
         }
         .tree-level {
