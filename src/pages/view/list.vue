@@ -54,12 +54,14 @@
             margin-left: 30px;
             display: inline-block;
             .icon-yezhu {
-                font-size: 37px;
+                font-size: 45px;
                 display: inline-block;
                 padding-left: 14px;
                 line-height: 100px;
                 position: relative;
-                top: 3px;
+                top: 0px;
+                left: 5px;
+                transform: rotateY(180deg);
             }
         }
     }
