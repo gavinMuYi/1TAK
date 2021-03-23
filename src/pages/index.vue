@@ -75,8 +75,8 @@
     .router-box {
         position: absolute;
         top: 500px;
-        left: 400px;
-        width: 300px;
+        left: 230px;
+        width: 470px;
         a {
             display: block;
             border: 1px solid @sub;
@@ -90,7 +90,7 @@
             border-radius: 5px;
             margin: 20px 0 20px auto;
             &:hover {
-                width: 300px;
+                width: 470px;
                 border: 1px solid @main;
                 background: @main;
             }
