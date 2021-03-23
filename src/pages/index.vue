@@ -18,7 +18,7 @@
         name: 'Index',
         data () {
             return {
-                range: 30,
+                range: 35,
                 down: true
             }
         },
