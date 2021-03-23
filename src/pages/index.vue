@@ -55,7 +55,7 @@
         color: @main;
         font-weight: 700;
         font-size: 70px;
-        top: 400px;
+        top: 250px;
         left: 220px;
         .title {
             z-index: 100;
@@ -74,7 +74,7 @@
     }
     .router-box {
         position: absolute;
-        top: 700px;
+        top: 500px;
         left: 350px;
         width: 300px;
         a {
