@@ -91,9 +91,9 @@
             }
             &:hover {
                 * {
-                    background: #0ab68b;
+                    background: @sub;
                 }
-                background: #0ab68b;
+                background: @sub;
             }
         }
         .tree-level {
