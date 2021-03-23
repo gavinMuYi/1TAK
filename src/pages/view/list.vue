@@ -101,7 +101,7 @@
             }
         }
         .th {
-            background: @sub;
+            background: @main;
             color: @dep;
             height: 50px;
             line-height: 50px;
