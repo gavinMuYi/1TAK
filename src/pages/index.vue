@@ -35,7 +35,7 @@
                         this.down = true;
                     }
                 }
-            }, 150);
+            }, 130);
         }
     }
 </script>
