@@ -2,7 +2,7 @@
     <div class="Vv_Page-index" :style="`background: linear-gradient(143deg, #ffffff 0, #e8f1ff ${range}%, #2cf1c0 ${range + 20}%, #0ab68b ${range + 60}%, #034a43 100%)`">
         <div class="index-title">
             <span class="title">GaHou LAB</span>
-            <!-- <span class="iconfont icon-yezhu icon"></span> -->
+            <span class="iconfont icon-yezhu icon"></span>
         </div>
         <div class="router-box">
             <router-link :to="{ name: 'GHtml' }">G HTML</router-link>
@@ -64,10 +64,10 @@
         }
         .icon {
             display: inline-block;
-            font-size: 1300px;
+            font-size: 147px;
             position: absolute;
-            top: -400px;
-            left: 100px;
+            top: -85px;
+            left: 370px;
             color: @dep;
             transform: rotateY(180deg);
         }
@@ -75,7 +75,7 @@
     .router-box {
         position: absolute;
         top: 500px;
-        left: 350px;
+        left: 500px;
         width: 300px;
         a {
             display: block;
