@@ -34,7 +34,7 @@ export default new Router({
             component: ViewPage
         },
         {
-            path: '/factory',
+            path: '/vvPage',
             name: 'Factory',
             meta: {
                 title: '组件工厂'
