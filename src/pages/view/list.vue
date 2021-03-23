@@ -17,7 +17,8 @@
                 <div class="tr tr2"></div>
                 <div class="tr tr3"></div>
                 <div class="tr tr4">
-                    <router-link :to="{ name: 'View' }">预览</router-link>
+                    <router-link :to="{ name: 'View' }">查看</router-link>
+                    <span>复制地址</span>
                 </div>
             </div>
         </div>
@@ -84,8 +85,17 @@
                 width: 20%;
                 a {
                     color: @main;
+                    text-decoration: none;
                     &:hover {
                         color: @sub;
+                    }
+                }
+                span {
+                    display: inline-block;
+                    margin-left: 10px;
+                    &:hover {
+                        color: @sub;
+                        cursor: pointer;
                     }
                 }
             }
