@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import ViewPage from '@/pages/view/index';
+import PageList from '@/pages/view/list';
 import Factory from '@/pages/factory/index';
 import Index from '@/pages/index';
 
@@ -17,10 +18,18 @@ export default new Router({
             component: Index
         },
         {
-            path: '/page',
-            name: 'View',
+            path: '/pageList',
+            name: 'pageList',
             meta: {
                 title: '页面列表'
+            },
+            component: PageList
+        },
+        {
+            path: '/view',
+            name: 'View',
+            meta: {
+                title: '页面'
             },
             component: ViewPage
         },

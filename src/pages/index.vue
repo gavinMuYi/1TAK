@@ -2,14 +2,14 @@
     <div class="Vv_Page-index">
         <div class="index-title">
             <span class="title">GaHou LAB</span>
-            <span class="iconfont icon-yezhu icon"></span>
+            <!-- <span class="iconfont icon-yezhu icon"></span> -->
         </div>
         <div class="router-box">
             <router-link :to="{ name: 'Factory' }">G HTML</router-link>
             <router-link :to="{ name: 'Factory' }">Vv Page</router-link>
-            <router-link :to="{ name: 'View' }">Page List</router-link>
+            <router-link :to="{ name: 'pageList' }">Page List</router-link>
         </div>
-        <img src="../assets/img/cover.png">
+        <!-- <img src="../assets/img/cover.png"> -->
     </div>
 </template>
 
@@ -31,7 +31,7 @@
     height: 100%;
     min-width: 2240px;
     position: relative;
-    background: linear-gradient(143deg, #ffffff 0, #e8f1ff 30%, #2cf1c0 90%, #0ab68b 100%);
+    background: linear-gradient(143deg, #ffffff 0, #e8f1ff 30%, #2cf1c0 50%, #0ab68b 80%, #034a43 100%);
     // clip-path: ellipse(90% 90% at 20% 20%);
     .index-title {
         position: absolute;
@@ -39,7 +39,7 @@
         font-weight: 700;
         font-size: 70px;
         top: 400px;
-        left: 120px;
+        left: 220px;
         .title {
             z-index: 100;
             display: inline-block;
@@ -57,8 +57,8 @@
     }
     .router-box {
         position: absolute;
-        bottom: 250px;
-        left: 250px;
+        top: 700px;
+        left: 350px;
         width: 300px;
         a {
             display: block;
