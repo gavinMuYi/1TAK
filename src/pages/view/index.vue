@@ -12,10 +12,10 @@
 
 <script>
     import clone from 'clone';
-    import LeftBar from '../factory/components/leftBar';
-    import RightBar from '../factory/components/rightBar';
-    import DrawBoard from '../factory/components/drawBoard';
-    import { iconCompMap } from '../factory/config.js';
+    import LeftBar from '../vvPage/components/leftBar';
+    import RightBar from '../vvPage/components/rightBar';
+    import DrawBoard from '../vvPage/components/drawBoard';
+    import { iconCompMap } from '../vvPage/config.js';
     import { createHash } from '../../utils/common.js';
     // import { suspensionBall } from '../../utils/drag-ball.js';
     const requireComponent = require.context('../../G-HTML', false, /\w+\.(vue|js)$/);

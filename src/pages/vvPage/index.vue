@@ -69,7 +69,7 @@
     });
 
     export default {
-        name: 'Factory',
+        name: 'VvPage',
         components: {
             LeftBar,
             RightBar,

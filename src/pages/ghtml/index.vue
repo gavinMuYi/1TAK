@@ -1,17 +1,16 @@
 <template>
-    <div class="page-list">
+    <div class="ghtml">
         <div class="top-bar">
             <div class="pro-title">
-                Vv Page List<span class="iconfont icon-yezhu"></span>
+                G HTML<span class="iconfont icon-yezhu"></span>
             </div>
         </div>
-        <router-link :to="{ name: 'View' }">Page View</router-link>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'PageList',
+        name: 'GHtml',
         components: {
         },
         data () {
@@ -23,7 +22,7 @@
 
 <style lang="less">
 
-.page-list {
+.ghtml {
     height: 100%;
     overflow: hidden;
     .top-bar {

@@ -1,8 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import GHtml from '@/pages/ghtml/index';
 import ViewPage from '@/pages/view/index';
 import PageList from '@/pages/view/list';
-import Factory from '@/pages/factory/index';
+import VvPage from '@/pages/vvPage/index';
 import Index from '@/pages/index';
 
 Vue.use(Router);
@@ -16,6 +17,14 @@ export default new Router({
                 title: '首页'
             },
             component: Index
+        },
+        {
+            path: '/ghtml',
+            name: 'GHtml',
+            meta: {
+                title: 'G HTML'
+            },
+            component: GHtml
         },
         {
             path: '/pageList',
@@ -35,11 +44,11 @@ export default new Router({
         },
         {
             path: '/vvPage',
-            name: 'Factory',
+            name: 'VvPage',
             meta: {
                 title: '组件工厂'
             },
-            component: Factory
+            component: VvPage
         }
     ]
 });
