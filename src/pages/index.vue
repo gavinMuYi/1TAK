@@ -5,9 +5,9 @@
             <span class="iconfont icon-yezhu icon"></span>
         </div>
         <div class="router-box">
-            <router-link :to="{ name: 'GHtml' }">G HTML</router-link>
-            <router-link :to="{ name: 'VvPage' }">Vv Page</router-link>
-            <router-link :to="{ name: 'pageList' }">Page List</router-link>
+            <router-link :to="{ name: 'GHtml' }"><span>G HTML</span></router-link>
+            <router-link :to="{ name: 'VvPage' }"><span>Vv Page</span></router-link>
+            <router-link :to="{ name: 'pageList' }"><span>Page List</span></router-link>
         </div>
         <!-- <img src="../assets/img/cover.png"> -->
     </div>
@@ -93,6 +93,11 @@
                 width: 300px;
                 border: 1px solid @main;
                 background: @main;
+            }
+            span {
+                float: right;
+                padding-right: 50px;
+                text-decoration: underline;
             }
         }
     }
