@@ -1,5 +1,5 @@
 <template>
-    <div class="Vv_Page-index" :style="`background: linear-gradient(143deg, #ffffff 0, #e8f1ff ${range}%, #2cf1c0 ${range + 20}%, #0ab68b ${range + 50}%, #034a43 100%)`">
+    <div class="Vv_Page-index" :style="`background: linear-gradient(143deg, #ffffff 0, #e8f1ff ${range}%, #2cf1c0 ${range + 20}%, #0ab68b ${range + 60}%, #034a43 100%)`">
         <div class="index-title">
             <span class="title">GaHou LAB</span>
             <!-- <span class="iconfont icon-yezhu icon"></span> -->
@@ -23,19 +23,19 @@
             }
         },
         mounted () {
-            setInterval(() => {
-                if (this.down) {
-                    this.range--;
-                    if (this.range === 10) {
-                        this.down = false;
-                    }
-                } else {
-                    this.range++;
-                    if (this.range === 40) {
-                        this.down = true;
-                    }
-                }
-            }, 130);
+            // setInterval(() => {
+            //     if (this.down) {
+            //         this.range--;
+            //         if (this.range === 10) {
+            //             this.down = false;
+            //         }
+            //     } else {
+            //         this.range++;
+            //         if (this.range === 35) {
+            //             this.down = true;
+            //         }
+            //     }
+            // }, 130);
         }
     }
 </script>

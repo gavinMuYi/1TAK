@@ -5,7 +5,22 @@
                 Vv Page List<span class="iconfont icon-yezhu"></span>
             </div>
         </div>
-        <router-link :to="{ name: 'View' }">Page View</router-link>
+        <div class="table">
+            <div class="th">
+                <div class="tr tr1">名称</div>
+                <div class="tr tr2">备注</div>
+                <div class="tr tr3">最近修改时间</div>
+                <div class="tr tr4">操作</div>
+            </div>
+            <div class="tl">
+                <div class="tr tr1"></div>
+                <div class="tr tr2"></div>
+                <div class="tr tr3"></div>
+                <div class="tr tr4">
+                    <router-link :to="{ name: 'View' }">预览</router-link>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -44,6 +59,55 @@
                 line-height: 100px;
                 position: relative;
                 top: 3px;
+            }
+        }
+    }
+    .table {
+        width: 1240px;
+        margin: 100px auto;
+        .th,.tl {
+            .tr {
+                display: inline-block;
+                box-sizing: border-box;
+                padding-left: 20px;
+            }
+            .tr1 {
+                width: 20%;
+            }
+            .tr2 {
+                width: 40%;
+            }
+            .tr3 {
+                width: 20%;
+            }
+            .tr4 {
+                width: 20%;
+                a {
+                    color: @main;
+                    &:hover {
+                        color: @sub;
+                    }
+                }
+            }
+        }
+        .th {
+            background: @sub;
+            color: @dep;
+            height: 50px;
+            line-height: 50px;
+            font-size: 0px;
+            font-weight: 500;
+            .tr {
+                font-size: 16px;
+            }
+        }
+        .tl {
+            border-bottom: 1px solid @sub;
+            height: 50px;
+            line-height: 50px;
+            font-size: 0px;
+            .tr {
+                font-size: 14px;
             }
         }
     }
