@@ -1,5 +1,5 @@
 <template>
-    <div class="Vv_Page-index">
+    <div class="Vv_Page-index" :style="`background: linear-gradient(143deg, #ffffff 0, #e8f1ff ${range}%, #2cf1c0 ${range + 20}%, #0ab68b ${range + 50}%, #034a43 100%)`">
         <div class="index-title">
             <span class="title">GaHou LAB</span>
             <!-- <span class="iconfont icon-yezhu icon"></span> -->
@@ -18,20 +18,37 @@
         name: 'Index',
         data () {
             return {
-                // imgUrl: require('../assets/img/cover.jpeg')
+                range: 30,
+                down: true
             }
+        },
+        mounted () {
+            setInterval(() => {
+                if (this.down) {
+                    this.range--;
+                    if (this.range === 10) {
+                        this.down = false;
+                    }
+                } else {
+                    this.range++;
+                    if (this.range === 40) {
+                        this.down = true;
+                    }
+                }
+            }, 150);
         }
     }
 </script>
 
 <style lang="less">
 .Vv_Page-index {
+    user-select: none;
     width: 100%;
     overflow: hidden;
     height: 100%;
     min-width: 2240px;
     position: relative;
-    background: linear-gradient(143deg, #ffffff 0, #e8f1ff 30%, #2cf1c0 50%, #0ab68b 80%, #034a43 100%);
+    // background: linear-gradient(143deg, #ffffff 0, #e8f1ff 30%, #2cf1c0 50%, #0ab68b 80%, #034a43 100%);
     // clip-path: ellipse(90% 90% at 20% 20%);
     .index-title {
         position: absolute;

@@ -357,7 +357,7 @@
             float: right;
             color: @dep;
             font-weight: 700;
-            user-select:none;
+            user-select: none;
             .iconfont {
                 padding-left: 5px;
             }
