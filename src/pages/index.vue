@@ -1,5 +1,5 @@
 <template>
-    <div class="Vv_Page-index" :style="`background: linear-gradient(143deg, #ffffff 0, #e8f1ff ${range - 10}%, rgb(17 124 114) ${range + 25}%, #034a43 100%)`">
+    <div class="Vv_Page-index" :style="`background: linear-gradient(125deg, #ffffff 0, #e8f1ff ${range - 30}%, rgb(17 124 114) ${range + 25}%, #034a43 100%)`">
         <div class="index-title">
             <span class="title">GaHou LAB</span>
             <span class="iconfont icon-yezhu icon"></span>
