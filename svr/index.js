@@ -1,7 +1,10 @@
 const express = require("express");
 const tcb = require('@cloudbase/node-sdk');
+const bodyParser = require('body-parser');
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // 设置跨域
 app.all('*', (req, res, next) => {
@@ -50,6 +53,22 @@ app.get('/getMeta', (req, res) => {
             }
         })
     });
+});
+
+app.post('/saveMeta', function (req, res) {
+    var body = '';
+    Object.keys(req.body).forEach(key => {
+        body = key;
+    });
+    body = JSON.parse(body);
+    pageDate.add(body).then(e => {
+        if (e.id) {
+            res.status(200)
+            res.json({
+                code: 0
+            })
+        }
+    })
 });
 
 const server = app.listen(8082, () => {

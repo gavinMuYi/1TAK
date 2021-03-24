@@ -2,6 +2,15 @@
     <div class="factory">
         <!-- <div id="ballId">drag</div> -->
         <pre class="globel-data" v-if="globelData">{{cusComp}}</pre>
+        <div class="save-msg" v-if="dosave">
+            <div class="input-box"><input placeholder="页面名称" v-model="pageData.pageName" /></div>
+            <div class="input-box"><input placeholder="页面ID" v-model="pageData.metaID" /></div>
+            <div class="input-box"><input placeholder="页面备注" v-model="pageData.remark" /></div>
+            <div class="btn-bar">
+                <div class="btn" @click="save">保存</div>
+                <div class="btn" @click="dosave = false">取消</div>
+            </div>
+        </div>
         <div class="top-bar">
             <div class="pro-title">
                 Vv Page<span class="iconfont icon-yezhu"></span>
@@ -27,7 +36,7 @@
                     <span class="iconfont icon-liuchengtuh5-29"></span>
                     重做
                 </span>
-                <span @click="save" class="iconLast">
+                <span @click="dosave = true" class="iconLast">
                     <span class="iconfont icon-baocun_mian"></span>
                     保存
                 </span>
@@ -77,6 +86,7 @@
         },
         data () {
             return {
+                dosave: false,
                 globelData: false,
                 abs: true,
                 preview: false,
@@ -88,7 +98,12 @@
                 config_data_data_bak: {},
                 config_data_eventHandlers_bak: {},
                 snapshot: [],
-                snapshot_flag: 0
+                snapshot_flag: 0,
+                pageData: {
+                    pageName: '',
+                    metaID: '',
+                    remark: ''
+                }
             }
         },
         computed: {
@@ -129,7 +144,15 @@
         },
         methods: {
             save () {
-                console.log(JSON.stringify(this.cusComp));
+                this.pageData.meta = this.cusComp;
+                this.pageData.lastModifiy = +new Date();
+                const ajaxP = this.$ajax.create({
+                    headers: { 'content-type': 'application/x-www-form-urlencoded' }
+                });
+                ajaxP.post('http://localhost:8082/saveMeta', this.pageData).then(e => {
+                    console.log(e);
+                });
+                this.dosave = false;
             },
             action (action, hash) {
                 let copyHash = createHash(4);
@@ -293,6 +316,62 @@
 .factory {
     height: 100%;
     overflow: hidden;
+    .save-msg {
+        z-index: 100000;
+        position: absolute;
+        width: 400px;
+        height: 300px;
+        top: 50%;
+        left: 50%;
+        margin-left: -200px;
+        padding: 20px;
+        margin-top: -150px;
+        border: 1px solid @main;
+        background: @mainop;
+        border-radius: 10px;
+        text-align: center;
+        .btn-bar {
+            margin-top: 30px;
+            .btn {
+                display: inline-block;
+                width: 80px;
+                vertical-align: middle;
+                height: 26px;
+                line-height: 26px;
+                display: inline-block;
+                text-align: center;
+                font-size: 14px;
+                padding: 2px 5px;
+                border-radius: 3px;
+                background: #ededed;
+                margin: 20px;
+            }
+        }
+        .input-box {
+            height: 40px;
+            margin: 20px auto;
+            width: 250px;
+            box-sizing: border-box;
+            padding: 2px 8px;
+            border: 1px solid #dadee7;
+            border-radius: 2px;
+            transition: border-color .25s;
+            input {
+                position: relative;
+                display: block;
+                width: 100%;
+                line-height: inherit;
+                height: 34px;
+                padding: 7px 0;
+                color: #1e2330;
+                outline: none;
+                border: 0 none;
+                background: none;
+                box-sizing: border-box;
+                width: 100%;
+            }
+        }
+    }
     #ballId {
         background: @sub;
         color: white;
