@@ -11,6 +11,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "clone": "^2.1.2",
     "codemirror": "^5.59.2",
     "default-passive-events": "^2.0.0",

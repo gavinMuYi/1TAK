@@ -14,6 +14,7 @@
 </template>
 
 <script>
+    import axios from 'axios';
     export default {
         name: 'Index',
         data () {
@@ -23,6 +24,9 @@
             }
         },
         mounted () {
+            axios.get('http://localhost:8082/getTest1').then(e => {
+                console.log(e)
+            });
             // setInterval(() => {
             //     if (this.down) {
             //         this.range--;
