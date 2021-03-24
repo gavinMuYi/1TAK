@@ -12,12 +12,12 @@
                 <div class="tr tr3">最近修改时间</div>
                 <div class="tr tr4">操作</div>
             </div>
-            <div class="tl">
-                <div class="tr tr1"></div>
-                <div class="tr tr2"></div>
-                <div class="tr tr3"></div>
+            <div class="tl" v-for="line in list" :key="line._id">
+                <div class="tr tr1">{{ line.pageName }}</div>
+                <div class="tr tr2">{{ line.remark }}</div>
+                <div class="tr tr3">{{ new Date(line.lastModifiy).Format("yyyy-MM-dd hh:mm:ss") }}</div>
                 <div class="tr tr4">
-                    <router-link :to="{ name: 'View' }">查看</router-link>
+                    <router-link :to="{ name: 'View', query: { metaID: line.metaID } }">查看</router-link>
                     <span>复制地址</span>
                 </div>
             </div>
@@ -32,7 +32,13 @@
         },
         data () {
             return {
+                list: []
             }
+        },
+        mounted () {
+            this.$ajax.get('http://localhost:8082/getList').then(e => {
+                this.$set(this, 'list', e.data.data.records);
+            });
         }
     }
 </script>

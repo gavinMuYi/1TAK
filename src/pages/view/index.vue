@@ -34,6 +34,7 @@
         },
         data () {
             return {
+                metaID: this.$route.query.metaID,
                 globelData: false,
                 abs: true,
                 preview: true,
@@ -54,54 +55,12 @@
                         data: {
                             props: {},
                             data: {
-                                mmzn: {
-                                    value: '',
-                                    placeholder: '请输入'
-                                },
-                                e8d4: {
-                                    value: '这是一个文本框',
-                                    obj: {
-                                        a: 11
-                                    },
-                                    arr: [
-                                        {a: 1},
-                                        {b: 2}
-                                    ],
-                                    num: 11,
-                                    bol: true
-                                }
                             },
-                            eventHandlers: {
-                                'mmzn-input': {
-                                    name: 'input',
-                                    label: '输入框input事件',
-                                    params: '输入值',
-                                    handler: 'function inputmmzn() {}'
-                                }
-                            },
+                            eventHandlers: {},
                             emitEvents: []
                         }
                     },
-                    comps: [
-                        {
-                            id: 'icon-shurukuang',
-                            type: 'unit',
-                            x: 316,
-                            y: 175,
-                            name: 'G_INPUT',
-                            config: {hash: 'mmzn'}
-                        },
-                        {
-                            id: 'icon-wenzi',
-                            type: 'unit',
-                            x: 278,
-                            y: 99,
-                            name: 'G_TEXT',
-                            config: {
-                                hash: 'e8d4'
-                            }
-                        }
-                    ]
+                    comps: []
                 }
             }
         },
@@ -115,6 +74,14 @@
         },
         mounted () {
             this.$set(this, 'nowEdit', this.cusComp);
+            console.log(this.metaID);
+            this.$ajax.get('http://localhost:8082/getMeta', {
+                params: {
+                    metaID: this.metaID
+                }
+            }).then(e => {
+                this.$set(this, 'cusComp', e.data.data.data.meta);
+            });
         },
         methods: {
             save () {
