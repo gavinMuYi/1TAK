@@ -9,7 +9,7 @@
             <router-link :to="{ name: 'VvPage' }"><span>Vv Page</span></router-link>
             <router-link :to="{ name: 'pageList' }"><span>Page List</span></router-link>
         </div>
-        <!-- <img src="../assets/img/cover.png"> -->
+        <img src="../assets/img/cover.png">
     </div>
 </template>
 
@@ -46,7 +46,6 @@
     width: 100%;
     overflow: hidden;
     height: 100%;
-    min-width: 2240px;
     position: relative;
     // background: linear-gradient(143deg, #ffffff 0, #e8f1ff 30%, #2cf1c0 50%, #0ab68b 80%, #034a43 100%);
     // clip-path: ellipse(90% 90% at 20% 20%);
@@ -105,6 +104,7 @@
         z-index: 10;
         position: absolute;
         height: 100%;
+        max-width: ~'calc(100% - 900px)';
         right: 0;
     }
 }
