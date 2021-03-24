@@ -8,15 +8,17 @@
         <div class="table">
             <div class="th">
                 <div class="tr tr1">名称</div>
-                <div class="tr tr2">备注</div>
-                <div class="tr tr3">最近修改时间</div>
-                <div class="tr tr4">操作</div>
+                <div class="tr tr2">ID</div>
+                <div class="tr tr3">备注</div>
+                <div class="tr tr4">最近修改时间</div>
+                <div class="tr tr5">操作</div>
             </div>
             <div class="tl" v-for="line in list" :key="line._id">
                 <div class="tr tr1">{{ line.pageName }}</div>
-                <div class="tr tr2">{{ line.remark }}</div>
-                <div class="tr tr3">{{ new Date(line.lastModifiy).Format("yyyy-MM-dd hh:mm:ss") }}</div>
-                <div class="tr tr4">
+                <div class="tr tr2">{{ line.metaID }}</div>
+                <div class="tr tr3">{{ line.remark }}</div>
+                <div class="tr tr4">{{ new Date(line.lastModifiy).Format("yyyy-MM-dd hh:mm:ss") }}</div>
+                <div class="tr tr5">
                     <router-link :to="{ name: 'View', query: { metaID: line.metaID } }">查看</router-link>
                     <span>复制地址</span>
                 </div>
@@ -84,13 +86,16 @@
                 width: 20%;
             }
             .tr2 {
-                width: 40%;
+                width: 20%;
             }
             .tr3 {
-                width: 20%;
+                width: 25%;
             }
             .tr4 {
                 width: 20%;
+            }
+            .tr5 {
+                width: 15%;
                 a {
                     color: @main;
                     text-decoration: none;
