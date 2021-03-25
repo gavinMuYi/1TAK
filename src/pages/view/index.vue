@@ -1,5 +1,6 @@
 <template>
     <draw-board
+        v-if="getData"
         :comps="comps"
         @editComponent="editComponent"
         @editContent="editContent"
@@ -34,6 +35,7 @@
         },
         data () {
             return {
+                getData: false,
                 metaID: this.$route.query.metaID,
                 globelData: false,
                 abs: true,
@@ -74,13 +76,14 @@
         },
         mounted () {
             this.$set(this, 'nowEdit', this.cusComp);
-            console.log(this.metaID);
+            console.log(this.metaID, this);
             this.$ajax.get('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/getMeta', {
                 params: {
                     metaID: this.metaID
                 }
             }).then(e => {
                 this.$set(this, 'cusComp', e.data.data.data.meta);
+                this.getData = true;
             });
         },
         methods: {
