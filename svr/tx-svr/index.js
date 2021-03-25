@@ -1,6 +1,10 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 const tcb = require('@cloudbase/node-sdk');
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // 设置跨域
 app.all('*', (req, res, next) => {
@@ -30,6 +34,38 @@ app.get('/getList', (req, res) => {
             }
         })
     });
+});
+
+app.get('/getMeta', (req, res) => {
+    pageDate
+    .where({
+        metaID: req.query.metaID
+    })
+    .get().then(e => {
+        res.status(200)
+        res.json({
+            code: 0,
+            data: {
+                data: e.data[0]
+            }
+        })
+    });
+});
+
+app.post('/saveMeta', function (req, res) {
+    var body = '';
+    Object.keys(req.body).forEach(key => {
+        body = key;
+    });
+    body = JSON.parse(body);
+    pageDate.add(body).then(e => {
+        if (e.id) {
+            res.status(200)
+            res.json({
+                code: 0
+            })
+        }
+    })
 });
 
 const port = process.env.PORT || 80;

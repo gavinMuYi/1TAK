@@ -149,7 +149,7 @@
                 const ajaxP = this.$ajax.create({
                     headers: { 'content-type': 'application/x-www-form-urlencoded' }
                 });
-                ajaxP.post('http://localhost:8082/saveMeta', this.pageData).then(e => {
+                ajaxP.post('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/saveMeta', this.pageData).then(e => {
                     console.log(e);
                 });
                 this.dosave = false;

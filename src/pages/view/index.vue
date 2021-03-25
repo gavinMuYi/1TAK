@@ -75,7 +75,7 @@
         mounted () {
             this.$set(this, 'nowEdit', this.cusComp);
             console.log(this.metaID);
-            this.$ajax.get('http://localhost:8082/getMeta', {
+            this.$ajax.get('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/getMeta', {
                 params: {
                     metaID: this.metaID
                 }
