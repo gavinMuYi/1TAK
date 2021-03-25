@@ -62,7 +62,6 @@
         },
         computed: {
             _renderCusComp () {
-                console.log('------>>>', clone(this.cusComp));
                 return clone(this.cusComp);
             }
         },
@@ -217,7 +216,6 @@
                     }
                 },
                 data () {
-                    console.log('-----', this, that._renderCusComp);
                     return {
                         ...that._renderCusComp.config.data.data
                     }
