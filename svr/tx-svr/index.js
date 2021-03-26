@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const Qs = require('qs');
 const tcb = require('@cloudbase/node-sdk');
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -53,17 +54,14 @@ app.get('/getMeta', (req, res) => {
 });
 
 app.post('/saveMeta', function (req, res) {
-    var body = '';
-    Object.keys(req.body).forEach(key => {
-        body = key;
-    });
-    body = JSON.parse(body);
+    var body = JSON.parse(Qs.parse(req.body).pageData);
     pageDate.add(body).then(e => {
         if (e.id) {
             res.status(200)
             res.json({
-                code: 0
-            })
+                code: 0,
+                body: body
+            });
         }
     })
 });
