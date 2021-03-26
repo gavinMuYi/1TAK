@@ -43,7 +43,7 @@
             </div>
         </div>
         <div :class="['work-space', {'preview': preview}]">
-            <left-bar />
+            <left-bar :preview="preview" @editContent="editContent" />
             <div class="space-content">
                 <div class="component-draw-space" ref="drawSpace" @drop="drop" @dragover="ev => {ev.preventDefault()}">
                     <draw-board

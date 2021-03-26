@@ -1,5 +1,5 @@
 <template>
-    <div class="left-bar">
+    <div class="left-bar" @click.capture="editContent">
         <span v-for="(menu, index) in componentsMenu" :key="menu.title">
             <div class="title">{{ menu.title }}</div>
             <ul class="materials-list" :style="{height: `calc(${100 * (index ? 2 : 3) / 5}% - 30px)`}">
@@ -24,6 +24,12 @@
 
     export default {
         name: 'LeftBar',
+        props: {
+            preview: {
+                type: Boolean,
+                default: false
+            }
+        },
         data () {
             return {
                 unitCompIcons: unitCompIcons
@@ -42,10 +48,16 @@
         },
         methods: {
             drag (ev, type) {
+                if (this.preview) { return; }
+                this.$emit('editContent');
                 ev.dataTransfer.setData('DragComp', JSON.stringify({
                     id: ev.target.id,
                     type: type
                 }));
+            },
+            editContent (ev) {
+                if (this.preview) { return; }
+                this.$emit('editContent');
             }
         }
     }

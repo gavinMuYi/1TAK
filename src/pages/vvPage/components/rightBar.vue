@@ -130,7 +130,6 @@
                 this.$emit('updateParams', this.currentEdit);
             },
             emitEvent (eventKey, eventIndex) {
-                debugger;
                 this.cusComp.config.data.eventHandlers[eventKey].handler = this.$refs.eventIDE[eventIndex].getValue();
                 this.emitChange();
             },
