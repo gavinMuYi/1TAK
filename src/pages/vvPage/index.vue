@@ -64,6 +64,7 @@
 
 <script>
     import clone from 'clone';
+    import qs from 'qs';
     import LeftBar from './components/leftBar';
     import RightBar from './components/rightBar';
     import DrawBoard from './components/drawBoard';
@@ -147,10 +148,12 @@
                 this.pageData.meta = this.cusComp;
                 this.pageData.lastModifiy = +new Date();
                 const ajaxP = this.$ajax.create({
-                    headers: { 'content-type': 'application/x-www-form-urlencoded' }
+                    headers: { 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' }
                 });
-                ajaxP.post('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/saveMeta', this.pageData).then(e => {
-                    console.log(e);
+                ajaxP.post('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/saveMeta',
+                           qs.stringify({ pageData: JSON.stringify(this.pageData) })
+                ).then(e => {
+                    console.log(e.data);
                 });
                 this.dosave = false;
             },
