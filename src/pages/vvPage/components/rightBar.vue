@@ -45,7 +45,7 @@
                             </div>
                             <div class="config-comp vv-title" v-if="hasEvent(key)">事件处理:</div>
                             <div class="config-comp" v-for="(eventKey, eventIndex) in Object.keys(cusComp.config.data.eventHandlers)" :key="eventKey">
-                                <div v-if="eventKey.indexOf(key) > -1">
+                                <div v-show="eventKey.indexOf(key) > -1">
                                     <div class="config-comp">
                                         <span class="config-comp-title">事件名: </span>
                                         <span>{{ cusComp.config.data.eventHandlers[eventKey].label }}</span>
@@ -130,6 +130,7 @@
                 this.$emit('updateParams', this.currentEdit);
             },
             emitEvent (eventKey, eventIndex) {
+                debugger;
                 this.cusComp.config.data.eventHandlers[eventKey].handler = this.$refs.eventIDE[eventIndex].getValue();
                 this.emitChange();
             },
