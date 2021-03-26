@@ -31,6 +31,10 @@
                 <span class="config-comp-title vv-title">容器暴露接口: </span>
                 <span>{{ currentEdit.config.data.props }}</span>
             </div>
+            <div class="config-comp global-data" v-if="currentEdit.content" :key="'globalDataIDE' + currentEdit.content">
+                <div class="config-comp">全局变量: <span class="btn" @click="emitglobalData">更新</span></div>
+                <ide-textarea :code="globalData" ref="globalDataIDE" type="application/json" :key="currentEdit.content" />
+            </div>
             <div v-if="!currentEdit.content">
                 <div class="config-comp" v-if="!currentEdit.content">
                     <span class="config-comp-title vv-title">组件配置: </span>
@@ -108,6 +112,9 @@
             currentEdit () {
                 return this.nowEdit;
             },
+            globalData () {
+                return JSON.stringify(this.currentEdit.config.data.data);
+            },
             loaclHandler () {
                 let res = {};
                 Object.keys(this.cusComp.config.data.eventHandlers).forEach(eventKey => {
@@ -125,6 +132,9 @@
             }
         },
         methods: {
+            emitglobalData () {
+                this.$emit('globalData', this.$refs.globalDataIDE.getValue());
+            },
             updateStyle (val) {
                 this.$set(this.currentEdit.config, 'style', val);
                 this.$emit('updateParams', this.currentEdit);
@@ -228,6 +238,11 @@
                     overflow: hidden;
                     text-overflow: ellipsis;
                     vertical-align: top;
+                }
+            }
+            .global-data {
+                .CodeMirror {
+                    margin-top: 20px;
                 }
             }
             .config-comp {

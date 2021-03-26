@@ -57,7 +57,7 @@
                         :preview="preview" />
                 </div>
             </div>
-            <right-bar :nowEdit="nowEdit" @updateParams="updateParams" :cusComp="cusComp" />
+            <right-bar :nowEdit="nowEdit" @updateParams="updateParams" :cusComp="cusComp" @globalData="setGlobalData" />
         </div>
     </div>
 </template>
@@ -104,7 +104,8 @@
                     pageName: '',
                     metaID: '',
                     remark: ''
-                }
+                },
+                globalData: {}
             }
         },
         computed: {
@@ -118,7 +119,8 @@
                             props: {},
                             data: {
                                 ...this.getCompsProps(this.comps),
-                                ...this.config_data_data_bak
+                                ...this.config_data_data_bak,
+                                ...this.globalData
                             },
                             eventHandlers: {
                                 ...this.getCompsEvents(this.comps),
@@ -153,7 +155,9 @@
                 ajaxP.post('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/saveMeta',
                            qs.stringify({ pageData: JSON.stringify(this.pageData) })
                 ).then(e => {
-                    console.log(e.data);
+                    if (e.code === 0) {
+                        alert('保存成功~');
+                    }
                 });
                 this.dosave = false;
             },
@@ -236,6 +240,9 @@
                 this.updateParams(clone(this.snapshot[this.snapshot_flag]));
                 this.$set(this, 'comps', clone(this.snapshot[this.snapshot_flag].comps));
                 this.refreshWorkSpace();
+            },
+            setGlobalData (val) {
+                this.$set(this, 'globalData', JSON.parse(val));
             },
             updateParams (comps) {
                 this.refreshWorkSpace();
