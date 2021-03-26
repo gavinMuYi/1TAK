@@ -42,7 +42,7 @@
                     components: this.unitCompIcons
                 }, {
                     title: '复合 组件',
-                    components: this.unitCompIcons
+                    components: []
                 }]
             }
         },
