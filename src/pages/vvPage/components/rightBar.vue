@@ -42,7 +42,7 @@
                     </span>
                     <span class="btn" @click="emitlifeCycle">更新</span>
                 </div>
-                <ide-textarea :code="lifeCycle[lifeCycleKey]" ref="lifeCycleIDE" :key="lifeCycleKey + 'IDE'" />
+                <ide-textarea :code="lifeCycle[lifeCycleKey] || 'function () {}'" ref="lifeCycleIDE" :key="lifeCycleKey + 'IDE'" />
             </div>
             <div v-if="!currentEdit.content">
                 <div class="config-comp" v-if="!currentEdit.content">
