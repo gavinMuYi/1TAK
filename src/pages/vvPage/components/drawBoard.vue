@@ -80,7 +80,7 @@
                 });
             });
             addCss(styleStr, 'compStyle');
-            Vue.component('cus-comp', {
+            var componentConfig = {
                 render (h) {
                     this.eventhandlers = {};
                     var configEventHandlers = that._renderCusComp.config.data.eventHandlers;
@@ -267,7 +267,14 @@
                         this.$emit('editComponent', comp);
                     }
                 }
+            };
+            Object.keys(this._renderCusComp.config.lifeCycle).forEach(key => {
+                /* eslint-disable */
+                var resFunc = new Function('return ' + this._renderCusComp.config.lifeCycle[key]).call(this);
+                /* eslint-enable */
+                componentConfig[key] = resFunc;
             });
+            Vue.component('cus-comp', componentConfig);
         },
         methods: {
             action (action) {

@@ -57,7 +57,13 @@
                         :preview="preview" />
                 </div>
             </div>
-            <right-bar :nowEdit="nowEdit" @updateParams="updateParams" :cusComp="cusComp" @globalData="setGlobalData" />
+            <right-bar
+                :nowEdit="nowEdit"
+                :cusComp="cusComp"
+                :lifeCycle="lifeCycle"
+                @updateParams="updateParams"
+                @globalData="setGlobalData"
+                @lifeCycle="setLifeCycle" />
         </div>
     </div>
 </template>
@@ -105,7 +111,17 @@
                     metaID: '',
                     remark: ''
                 },
-                globalData: {}
+                globalData: {},
+                lifeCycle: {
+                    beforeCreate: 'function () {}',
+                    created: 'function () {}',
+                    beforeMount: 'function () {}',
+                    mounted: 'function () {}',
+                    beforeUpdate: 'function () {}',
+                    updated: 'function () {}',
+                    beforeDestroy: 'function () {}',
+                    destroyed: 'function () {}'
+                }
             }
         },
         computed: {
@@ -127,6 +143,9 @@
                                 ...this.config_data_eventHandlers_bak
                             },
                             emitEvents: []
+                        },
+                        lifeCycle: {
+                            ...this.lifeCycle
                         }
                     },
                     comps: this.comps
@@ -243,6 +262,9 @@
             },
             setGlobalData (val) {
                 this.$set(this, 'globalData', JSON.parse(val));
+            },
+            setLifeCycle (key, val) {
+                this.$set(this.lifeCycle, key, val);
             },
             updateParams (comps) {
                 this.refreshWorkSpace();

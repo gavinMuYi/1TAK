@@ -32,8 +32,17 @@
                 <span>{{ currentEdit.config.data.props }}</span>
             </div>
             <div class="config-comp global-data" v-if="currentEdit.content" :key="'globalDataIDE' + currentEdit.content">
-                <div class="config-comp">全局变量: <span class="btn" @click="emitglobalData">更新</span></div>
+                <div class="config-comp vv-title">全局变量: <span class="btn" @click="emitglobalData">更新</span></div>
                 <ide-textarea :code="globalData" ref="globalDataIDE" type="application/json" :key="currentEdit.content" />
+            </div>
+            <div class="config-comp global-data" v-if="currentEdit.content" :key="lifeCycleKey">
+                <div class="config-comp vv-title">生命周期:
+                    <span class="life-cycle">
+                        <single-select v-model="lifeCycleKey" :options="lifeCycleOptions" />
+                    </span>
+                    <span class="btn" @click="emitlifeCycle">更新</span>
+                </div>
+                <ide-textarea :code="lifeCycle[lifeCycleKey]" ref="lifeCycleIDE" :key="lifeCycleKey + 'IDE'" />
             </div>
             <div v-if="!currentEdit.content">
                 <div class="config-comp" v-if="!currentEdit.content">
@@ -76,12 +85,14 @@
     import { unitCompIcons } from '../config.js';
     import IdeTextarea from '../../../components/ideTextarea';
     import StyleEditor from '../../../components/styleEditor/styleEditor';
+    import SingleSelect from '../../../components/styleEditor/components/single-select';
 
     export default {
         name: 'RightBar',
         components: {
             IdeTextarea,
-            StyleEditor
+            StyleEditor,
+            SingleSelect
         },
         props: {
             nowEdit: {
@@ -91,6 +102,12 @@
                 }
             },
             cusComp: {
+                type: Object,
+                default: () => {
+                    return {}
+                }
+            },
+            lifeCycle: {
                 type: Object,
                 default: () => {
                     return {}
@@ -105,7 +122,9 @@
                     unit: '单位组件',
                     combination: '组合组件',
                     nestification: '嵌套组件'
-                }
+                },
+                lifeCycleKey: 'beforeCreate',
+                lifeCycleOptions: ['beforeCreate', 'created', 'beforeMount', 'mounted', 'beforeUpdate', 'updated', 'beforeDestroy', 'destroyed']
             }
         },
         computed: {
@@ -134,6 +153,9 @@
         methods: {
             emitglobalData () {
                 this.$emit('globalData', this.$refs.globalDataIDE.getValue());
+            },
+            emitlifeCycle () {
+                this.$emit('lifeCycle', this.lifeCycleKey, this.$refs.lifeCycleIDE.getValue());
             },
             updateStyle (val) {
                 this.$set(this.currentEdit.config, 'style', val);
@@ -224,6 +246,21 @@
         .compname {
             color: @sub;
             font-weight: 700;
+        }
+        .life-cycle {
+            .single-select {
+                .icon-xiala1 {
+                    font-size: 12px;
+                    color: #191f1e;
+                }
+                .box-trigger {
+                    color: #191f1e;
+                    width: auto;
+                    height: auto;
+                    border: none;
+                    line-height: auto;
+                }
+            }
         }
         .config-bar {
             overflow: auto;
