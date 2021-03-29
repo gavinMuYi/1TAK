@@ -123,6 +123,8 @@
                                 var localProps = {};
                                 this[comp.config.hash] && Object.keys(cmps[comp.name].props).forEach(item => {
                                     localProps[item] = null;
+                                    // that._renderCusComp.comps.filter(item => { return (item.config.hash === comp.config.hash)})[0].config.props
+                                    // {value: '表达式'};
                                     switch (typeof cmps[comp.name].props[item].type()) {
                                     case 'object':
                                         try {

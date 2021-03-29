@@ -1,12 +1,19 @@
 <template>
     <div @click="func">
         str: {{ value }} obj: {{obj}} arr: {{arr}} num: {{num}} bol: {{bol}}
+        <slot></slot>
+        <slot name="ddd"></slot>
     </div>
 </template>
 
 <script>
     export default {
         name: 'G_TEXT',
+        slot: [{
+            name: 'default',
+            label: '默认插槽',
+            params: ''
+        }],
         props: {
             value: {
                 type: String,
@@ -41,7 +48,6 @@
                 }
             }
         }
-
     }
 </script>
 

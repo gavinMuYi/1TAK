@@ -53,8 +53,12 @@
                         <span v-if="key === currentEdit.config.hash">
                             <div class="config-comp vv-title" v-if="Object.keys(cusComp.config.data.data[key]).length">组件接口:</div>
                             <div class="config-comp props-item" v-for="datakey in Object.keys(cusComp.config.data.data[key])" :key="datakey">
-                                <span class="config-comp-title" :title="datakey">{{ datakey }}</span>
-                                <textarea v-model="cusComp.config.data.data[key][datakey]" @change="emitChange()" />
+                                <span class="config-comp-title" :title="datakey">{{ datakey }}<span @click="emitSetProps(datakey, false)">aa</span></span>
+                                <span v-if="currentEdit.config.props[datakey]">
+                                    <span @click="emitSetProps(datakey, true)" class="btn">更新</span>
+                                    <ide-textarea :code="currentEdit.config.props[datakey]" :ref="datakey + 'IDE'" />
+                                </span>
+                                <textarea v-else v-model="cusComp.config.data.data[key][datakey]" @change="emitChange()" />
                             </div>
                             <div class="config-comp vv-title" v-if="hasEvent(key)">事件处理:</div>
                             <div class="config-comp" v-for="(eventKey, eventIndex) in Object.keys(cusComp.config.data.eventHandlers)" :key="eventKey">
@@ -151,6 +155,12 @@
             }
         },
         methods: {
+            emitSetProps (datakey, mode) {
+                let res = mode
+                    ? this.$refs[datakey + 'IDE'][0].getValue()
+                    : 'function () {}';
+                this.$emit('setProps', this.currentEdit.config.hash, datakey, res, mode);
+            },
             emitglobalData () {
                 this.$emit('globalData', this.$refs.globalDataIDE.getValue());
             },
