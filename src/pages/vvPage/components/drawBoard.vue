@@ -121,10 +121,9 @@
                                 });
                                 var abs = !(String(comp.y + comp.x) === 'NaN');
                                 var localProps = {};
+                                let propsFunc = that._renderCusComp.comps.filter(item => { return item.config.hash === comp.config.hash })[0].config.props;
                                 this[comp.config.hash] && Object.keys(cmps[comp.name].props).forEach(item => {
                                     localProps[item] = null;
-                                    // that._renderCusComp.comps.filter(item => { return (item.config.hash === comp.config.hash)})[0].config.props
-                                    // {value: '表达式'};
                                     switch (typeof cmps[comp.name].props[item].type()) {
                                     case 'object':
                                         try {
@@ -156,6 +155,20 @@
                                     default:
                                         localProps[item] = this[comp.config.hash][item];
                                         break;
+                                    }
+                                    if (propsFunc[item]) {
+                                        let flag = true;
+                                        try {
+                                            /* eslint-disable */
+                                            var resFunc = new Function('return ' + propsFunc[item]).call(this);
+                                            /* eslint-enable */
+                                            this['propsFunc' + '_' + comp.config.hash + '_' + item] = resFunc;
+                                        } catch (e) {
+                                            flag = false;
+                                        }
+                                        if (flag) {
+                                            localProps[item] = this['propsFunc' + '_' + comp.config.hash + '_' + item].call(this._self);
+                                        }
                                     }
                                 });
                                 return (

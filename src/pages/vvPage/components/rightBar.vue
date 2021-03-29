@@ -53,8 +53,11 @@
                         <span v-if="key === currentEdit.config.hash">
                             <div class="config-comp vv-title" v-if="Object.keys(cusComp.config.data.data[key]).length">组件接口:</div>
                             <div class="config-comp props-item" v-for="datakey in Object.keys(cusComp.config.data.data[key])" :key="datakey">
-                                <span class="config-comp-title" :title="datakey">{{ datakey }}<span @click="emitSetProps(datakey, false)">aa</span></span>
-                                <span v-if="currentEdit.config.props[datakey]">
+                                <span class="config-comp-title" :title="datakey">
+                                    <span @click="emitSetProps(datakey, false)" class="iconfont icon-qiehuan5"></span>
+                                    {{ datakey }}
+                                </span>
+                                <span v-if="currentEdit.config.props[datakey]" class="props-data">
                                     <span @click="emitSetProps(datakey, true)" class="btn">更新</span>
                                     <ide-textarea :code="currentEdit.config.props[datakey]" :ref="datakey + 'IDE'" />
                                 </span>
@@ -280,7 +283,7 @@
             padding: 20px 10px 0 20px;
             .props-item {
                 .config-comp-title {
-                    width: 50px;
+                    width: 80px;
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
@@ -290,6 +293,12 @@
             .global-data {
                 .CodeMirror {
                     margin-top: 20px;
+                }
+            }
+            .props-data {
+                .CodeMirror {
+                    height: 100px;
+                    margin-top: 15px;
                 }
             }
             .config-comp {
