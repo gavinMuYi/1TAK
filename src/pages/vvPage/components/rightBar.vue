@@ -1,5 +1,5 @@
 <template>
-    <div class="right-bar">
+    <div :class="['right-bar', {'content-right-bar': currentEdit.content}]">
         <div class="title">{{ currentEdit.content ? '容器' : '子组件' }}</div>
         <div class="config-bar" v-if="Object.keys(currentEdit).length"><div class="config-comp">
             <span class="config-comp-title vv-title">组件分类: </span>
@@ -94,8 +94,16 @@
                                     </div>
                                     <div class="config-comp">
                                         <span class="config-comp-title">插槽组件: </span>
-                                        <span class="iconfont icon-gengduo1" v-if="!slot.children.lenght"></span>
+                                        <span class="iconfont icon-gengduo1" v-if="!slot.children.lenght" @click="showSlotPanel(slot.name)">
+                                        </span>
                                         <span v-else>{{ slot.children.map(e => { return e.name } ) }}</span>
+                                    </div>
+                                </div>
+                                <div :class="['slot-editor-panel', { 'slot-editor-panel-open': slotPanel }, { 'slot-editor-panel-close': !slotPanel }]" :key="currentEdit.config.hash + '_' + slot.name" v-if="slotPanel">
+                                    <span class="iconfont icon-xiala1 iconxiala" @click="closeSlotPanel"></span>
+                                    <span class="slot-name">{{ currentEdit.config.hash + '_' + slot.name }}</span>
+                                    <div v-if="slotPanel" style="height: 100%">
+                                        <vv-page :topDataLevel="false" />
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +127,8 @@
         components: {
             IdeTextarea,
             StyleEditor,
-            SingleSelect
+            SingleSelect,
+            VvPage: () => import('../index.vue')
         },
         props: {
             nowEdit: {
@@ -145,6 +154,8 @@
             return {
                 unitCompIcons: unitCompIcons,
                 bycode: false,
+                slotPanel: false,
+                slotName: '',
                 compType: {
                     unit: '单位组件',
                     combination: '组合组件',
@@ -178,6 +189,14 @@
             }
         },
         methods: {
+            showSlotPanel (name) {
+                this.slotName = name;
+                this.slotPanel = true;
+            },
+            closeSlotPanel () {
+                this.slotName = '';
+                this.slotPanel = false;
+            },
             emitSetProps (datakey, mode) {
                 let res = mode
                     ? this.$refs[datakey + 'IDE'][0].getValue()
@@ -247,6 +266,50 @@
 </script>
 
 <style lang="less">
+    .slot-editor-panel {
+        transition: opacity 1s;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: @main;
+        top: 0;
+        left: 0;
+        .iconxiala {
+            position: fixed;
+            top: 0px;
+            left: 50%;
+            font-size: 30px;
+            color: #fff;
+        }
+        .slot-name {
+            position: fixed;
+            top: 40px;
+            right: 20px;
+            font-size: 30px;
+            color: #fff;
+        }
+        .content-right-bar {
+            .config-bar {
+                * {
+                    display: none;
+                }
+            }
+        }
+    }
+    .slot-editor-panel-open {
+        opacity: 1;
+        z-index: 100000000;
+        background: #fff;
+        .top-bar {
+            * {
+                display: none;
+            }
+        }
+    }
+    .slot-editor-panel-close {
+        opacity: 0;
+        height: 0;
+    }
     .event-box {
         &:before {
             content: '';

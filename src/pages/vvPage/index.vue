@@ -92,6 +92,16 @@
             RightBar,
             DrawBoard
         },
+        props: {
+            preCusComp: {
+                type: Object,
+                default: undefined
+            },
+            topDataLevel: {
+                type: Boolean,
+                default: true
+            }
+        },
         data () {
             return {
                 dosave: false,
@@ -101,10 +111,10 @@
                 refresh: 0,
                 iconCompMap: iconCompMap,
                 nowEdit: {},
-                comps: [],
-                cusCompHash: createHash(4),
-                config_data_data_bak: {},
-                config_data_eventHandlers_bak: {},
+                comps: this.preCusComp ? this.preCusComp.comps : [],
+                cusCompHash: this.preCusComp ? this.preCusComp.config.hash : createHash(4),
+                config_data_data_bak: this.preCusComp ? this.preCusComp.config.data.data : {},
+                config_data_eventHandlers_bak: this.preCusComp ? this.preCusComp.config.data.eventHandlers : {},
                 snapshot: [],
                 snapshot_flag: 0,
                 pageData: {
@@ -113,12 +123,12 @@
                     remark: ''
                 },
                 globalData: {},
-                lifeCycle: {}
+                lifeCycle: this.preCusComp ? this.preCusComp.config.lifeCycle : {}
             }
         },
         computed: {
             cusComp () {
-                return {
+                var config = {
                     content: true, // 仅用于配置
                     type: 'combination',
                     config: {
@@ -142,6 +152,10 @@
                     },
                     comps: this.comps
                 };
+                if (this.topDataLevel) {
+                    window.GlobelMeta = config;
+                }
+                return config;
             }
         },
         watch: {
