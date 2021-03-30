@@ -11,7 +11,6 @@
         name: 'G_TEXT',
         slot: [{
             name: 'default',
-            label: '默认插槽',
             params: ''
         }],
         props: {

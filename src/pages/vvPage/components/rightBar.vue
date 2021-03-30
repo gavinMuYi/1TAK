@@ -80,6 +80,26 @@
                                     </div>
                                 </div>
                             </div>
+                            <div v-if="currentEdit.config.slot.length">
+                            <div class="config-comp vv-title">组件插槽:</div>
+                                <div class="config-comp" v-for="(slot, slotIndex) in currentEdit.config.slot" :key="slot.name + slotIndex">
+                                <div>
+                                    <div class="config-comp">
+                                        <span class="config-comp-title">插槽名: </span>
+                                        <span>{{ slot.name }}</span>
+                                    </div>
+                                    <div class="config-comp">
+                                        <span class="config-comp-title">插槽参数: </span>
+                                        <span>{{ slot.params }}</span>
+                                    </div>
+                                    <div class="config-comp">
+                                        <span class="config-comp-title">插槽组件: </span>
+                                        <span class="iconfont icon-gengduo1" v-if="!slot.children.lenght"></span>
+                                        <span v-else>{{ slot.children.map(e => { return e.name } ) }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
                         </span>
                     </div>
                 </div>
@@ -283,7 +303,7 @@
             padding: 20px 10px 0 20px;
             .props-item {
                 .config-comp-title {
-                    width: 80px;
+                    width: 60px;
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;

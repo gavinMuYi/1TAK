@@ -298,7 +298,6 @@
                 comps.forEach(comp => {
                     this.$set(props, comp.config.hash, {});
                     var prop = cmps[comp.name].props;
-                    console.log(cmps[comp.name]);
                     for (let key in prop) {
                         this.$set(props[comp.config.hash], key, typeof prop[key].type() === 'object' ? JSON.stringify(prop[key].default()) : prop[key].default);
                     }
@@ -333,7 +332,11 @@
                 }
                 data.config !== undefined
                     ? (dragCompData.config = data.config)
-                    : (dragCompData.config = { hash: createHash(4), props: {} });
+                    : (dragCompData.config = {
+                        hash: createHash(4),
+                        props: {},
+                        slot: (cmps[this.iconCompMap[data.id]].slot || []).map(e => { return { ...e, children: [] } })
+                });
                 data.index !== undefined && this.comps.splice(data.index, 1);
                 this.comps.push(dragCompData);
                 this.editComponent(dragCompData);
