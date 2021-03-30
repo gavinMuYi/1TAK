@@ -80,148 +80,149 @@
                 });
             });
             addCss(styleStr, 'compStyle');
-            var componentConfig = {
-                render (h) {
-                    var configEventHandlers = that._renderCusComp.config.data.eventHandlers;
-                    that._renderCusComp.comps.forEach((comp, index) => {
-                        Object.keys(configEventHandlers).forEach(funcKey => {
-                            if (funcKey.indexOf(comp.config.hash) > -1) {
-                                var funcStr = configEventHandlers[funcKey].handler;
-                                try {
-                                    /* eslint-disable */
-                                    var resFunc = new Function('return ' + funcStr).call(this);
-                                    /* eslint-enable */
-                                    this[configEventHandlers[funcKey].name + comp.config.hash] = resFunc.bind(this._self);
-                                } catch (e) {
-                                    this[configEventHandlers[funcKey].name + comp.config.hash] = () => {};
-                                }
+            var renderFunction = function (h) {
+                var configEventHandlers = that._renderCusComp.config.data.eventHandlers;
+                that._renderCusComp.comps.forEach((comp, index) => {
+                    Object.keys(configEventHandlers).forEach(funcKey => {
+                        if (funcKey.indexOf(comp.config.hash) > -1) {
+                            var funcStr = configEventHandlers[funcKey].handler;
+                            try {
+                                /* eslint-disable */
+                                var resFunc = new Function('return ' + funcStr).call(this);
+                                /* eslint-enable */
+                                this[configEventHandlers[funcKey].name + comp.config.hash] = resFunc.bind(this._self);
+                            } catch (e) {
+                                this[configEventHandlers[funcKey].name + comp.config.hash] = () => {};
                             }
-                        });
-                    });
-                    var directives = [];
-                    !that.preview && directives.push({
-                        name: 'pop',
-                        arg: 'morePop',
-                        modifiers: { rightClick: true }
-                    });
-                    !that.preview && directives.push({
-                        name: 'pop',
-                        arg: 'namePop',
-                        modifiers: { hover: true }
-                    });
-                    return (
-                        <div class="cus-comp" id={that.cusComp.config.hash}>
-                        {
-                            this.comps.map((comp, index) => {
-                                var configEventHandlers = that._renderCusComp.config.data.eventHandlers;
-                                var eventhandlers = {};
-                                Object.keys(configEventHandlers).forEach(funcKey => {
-                                    funcKey.indexOf(comp.config.hash) > -1 && (eventhandlers[configEventHandlers[funcKey].name] = this[configEventHandlers[funcKey].name + comp.config.hash]);
-                                });
-                                var abs = !(String(comp.y + comp.x) === 'NaN');
-                                var localProps = {};
-                                let tar = that._renderCusComp.comps.filter(item => { return item.config.hash === comp.config.hash })[0];
-                                let propsFunc = tar ? tar.config.props : {};
-                                this[comp.config.hash] && Object.keys(cmps[comp.name].props).forEach(item => {
-                                    localProps[item] = null;
-                                    switch (typeof cmps[comp.name].props[item].type()) {
-                                    case 'object':
-                                        try {
-                                            localProps[item] = JSON.parse(this[comp.config.hash][item]);
-                                        } catch (e) {
-                                            localProps[item] = null
-                                        }
-                                        break;
-                                    case 'function':
-                                        try {
-                                            /* eslint-disable */
-                                            var resFunc = new Function('return ' + this[comp.config.hash][item]).call(this);
-                                            /* eslint-enable */
-                                            localProps[item] = resFunc.bind(this._self);
-                                        } catch (e) {
-                                            localProps[item] = () => {};
-                                        }
-                                        break;
-                                    case 'number':
-                                        localProps[item] = Number(this[comp.config.hash][item]);
-                                        break;
-                                    case 'boolean':
-                                        try {
-                                            localProps[item] = JSON.parse(this[comp.config.hash][item]);
-                                        } catch (e) {
-                                            localProps[item] = null
-                                        }
-                                        break;
-                                    default:
-                                        localProps[item] = this[comp.config.hash][item];
-                                        break;
-                                    }
-                                    if (propsFunc[item]) {
-                                        let flag = true;
-                                        try {
-                                            /* eslint-disable */
-                                            var resFunc = new Function('return ' + propsFunc[item]).call(this);
-                                            /* eslint-enable */
-                                            this['propsFunc' + '_' + comp.config.hash + '_' + item] = resFunc;
-                                        } catch (e) {
-                                            flag = false;
-                                        }
-                                        if (flag) {
-                                            localProps[item] = this['propsFunc' + '_' + comp.config.hash + '_' + item].call(this._self);
-                                        }
-                                    }
-                                });
-                                return (
-                                    <div
-                                        class={['flag-sup-$-comp-box', 'comp-box', {'config-box': abs && !that.preview}, {'stc-box': !abs && !that.preview}]}
-                                        key={comp.id + comp.x + comp.y + index}
-                                        id={comp.config.hash + '-box'}
-                                        style={abs ? {
-                                            position: 'absolute',
-                                            top: comp.y + 'px',
-                                            left: comp.x + 'px'
-                                        } : {
-                                            display: 'inline-block'
-                                        }}
-                                        {...{ directives }}
-                                        draggable={!that.preview}
-                                        onMouseover={ev => { if (that.preview) { return; } this.$emit('nameHover', comp.config.hash); }}
-                                        onContextmenu={ev => { if (that.preview) { return; } if (ev.button === 2) { this.$emit('rightClick', comp) } }}
-                                        onDrop={ev => { if (that.preview) { return; } if (!abs) { this.moveInline(ev); } ev.stopPropagation(); ev.preventDefault(); }}
-                                        onDragover={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
-                                        onDragstart={ev => { if (that.preview) { return; } this.move(ev, comp, index); }}
-                                        onClick={ev => { ev.stopPropagation(); this.editComponent(ev, comp); }}>
-                                        {
-                                            // [1, 2].map(x => {
-                                            //     return (
-                                            //         h(comp.name, {
-                                            //             attrs: {
-                                            //                 id: comp.config.hash
-                                            //             },
-                                            //             props: this[comp.config.hash],
-                                            //             on: {
-                                            //                 ...eventhandlers
-                                            //             }
-                                            //         })
-                                            //     )
-                                            // })
-                                            h(comp.name, {
-                                                attrs: {
-                                                    id: comp.config.hash
-                                                },
-                                                props: localProps,
-                                                on: {
-                                                    ...eventhandlers
-                                                }
-                                            })
-                                        }
-                                    </div>
-                                )
-                            })
                         }
-                        </div>
-                    )
-                },
+                    });
+                });
+                var directives = [];
+                !that.preview && directives.push({
+                    name: 'pop',
+                    arg: 'morePop',
+                    modifiers: { rightClick: true }
+                });
+                !that.preview && directives.push({
+                    name: 'pop',
+                    arg: 'namePop',
+                    modifiers: { hover: true }
+                });
+                return (
+                    <div class="cus-comp" id={that.cusComp.config.hash}>
+                    {
+                        this.comps.map((comp, index) => {
+                            var configEventHandlers = that._renderCusComp.config.data.eventHandlers;
+                            var eventhandlers = {};
+                            Object.keys(configEventHandlers).forEach(funcKey => {
+                                funcKey.indexOf(comp.config.hash) > -1 && (eventhandlers[configEventHandlers[funcKey].name] = this[configEventHandlers[funcKey].name + comp.config.hash]);
+                            });
+                            var abs = !(String(comp.y + comp.x) === 'NaN');
+                            var localProps = {};
+                            let tar = that._renderCusComp.comps.filter(item => { return item.config.hash === comp.config.hash })[0];
+                            let propsFunc = tar ? tar.config.props : {};
+                            this[comp.config.hash] && Object.keys(cmps[comp.name].props).forEach(item => {
+                                localProps[item] = null;
+                                switch (typeof cmps[comp.name].props[item].type()) {
+                                case 'object':
+                                    try {
+                                        localProps[item] = JSON.parse(this[comp.config.hash][item]);
+                                    } catch (e) {
+                                        localProps[item] = null
+                                    }
+                                    break;
+                                case 'function':
+                                    try {
+                                        /* eslint-disable */
+                                        var resFunc = new Function('return ' + this[comp.config.hash][item]).call(this);
+                                        /* eslint-enable */
+                                        localProps[item] = resFunc.bind(this._self);
+                                    } catch (e) {
+                                        localProps[item] = () => {};
+                                    }
+                                    break;
+                                case 'number':
+                                    localProps[item] = Number(this[comp.config.hash][item]);
+                                    break;
+                                case 'boolean':
+                                    try {
+                                        localProps[item] = JSON.parse(this[comp.config.hash][item]);
+                                    } catch (e) {
+                                        localProps[item] = null
+                                    }
+                                    break;
+                                default:
+                                    localProps[item] = this[comp.config.hash][item];
+                                    break;
+                                }
+                                if (propsFunc[item]) {
+                                    let flag = true;
+                                    try {
+                                        /* eslint-disable */
+                                        var resFunc = new Function('return ' + propsFunc[item]).call(this);
+                                        /* eslint-enable */
+                                        this['propsFunc' + '_' + comp.config.hash + '_' + item] = resFunc;
+                                    } catch (e) {
+                                        flag = false;
+                                    }
+                                    if (flag) {
+                                        localProps[item] = this['propsFunc' + '_' + comp.config.hash + '_' + item].call(this._self);
+                                    }
+                                }
+                            });
+                            return (
+                                <div
+                                    class={['flag-sup-$-comp-box', 'comp-box', {'config-box': abs && !that.preview}, {'stc-box': !abs && !that.preview}]}
+                                    key={comp.id + comp.x + comp.y + index}
+                                    id={comp.config.hash + '-box'}
+                                    style={abs ? {
+                                        position: 'absolute',
+                                        top: comp.y + 'px',
+                                        left: comp.x + 'px'
+                                    } : {
+                                        display: 'inline-block'
+                                    }}
+                                    {...{ directives }}
+                                    draggable={!that.preview}
+                                    onMouseover={ev => { if (that.preview) { return; } this.$emit('nameHover', comp.config.hash); }}
+                                    onContextmenu={ev => { if (that.preview) { return; } if (ev.button === 2) { this.$emit('rightClick', comp) } }}
+                                    onDrop={ev => { if (that.preview) { return; } if (!abs) { this.moveInline(ev); } ev.stopPropagation(); ev.preventDefault(); }}
+                                    onDragover={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
+                                    onDragstart={ev => { if (that.preview) { return; } this.move(ev, comp, index); }}
+                                    onClick={ev => { ev.stopPropagation(); this.editComponent(ev, comp); }}>
+                                    {
+                                        // [1, 2].map(x => {
+                                        //     return (
+                                        //         h(comp.name, {
+                                        //             attrs: {
+                                        //                 id: comp.config.hash
+                                        //             },
+                                        //             props: this[comp.config.hash],
+                                        //             on: {
+                                        //                 ...eventhandlers
+                                        //             }
+                                        //         })
+                                        //     )
+                                        // })
+                                        h(comp.name, {
+                                            attrs: {
+                                                id: comp.config.hash
+                                            },
+                                            props: localProps,
+                                            on: {
+                                                ...eventhandlers
+                                            }
+                                        })
+                                    }
+                                </div>
+                            )
+                        })
+                    }
+                    </div>
+                )
+            };
+            var componentConfig = {
+                render: renderFunction,
                 props: {
                     comps: {
                         type: Array,
