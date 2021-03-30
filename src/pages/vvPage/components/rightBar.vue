@@ -99,8 +99,12 @@
                                     </div>
                                 </div>
                                 <div :class="['slot-editor-panel', { 'slot-editor-panel-open': slotPanel }, { 'slot-editor-panel-close': !slotPanel }]" :key="currentEdit.config.hash + '_' + slot.name" v-if="slotPanel">
-                                    <span class="iconfont icon-xiala1 iconxiala" @click="closeSlotPanel"></span>
-                                    <span class="slot-name" @click="updateSlot">{{ currentEdit.config.hash + '_' + slot.name }}</span>
+                                    <span class="slot-name">
+                                        slot编辑: {{ currentEdit.config.hash + '_' + slot.name }}
+                                    </span>
+                                    <span @click="updateSlot" class="update-slot">
+                                        <span class="iconfont icon-shangji"></span>更新到上层
+                                    </span>
                                     <div v-if="slotPanel" style="height: 100%">
                                         <vv-page :topDataLevel="false" :preCusComp="preCusComp" ref="vvpage" />
                                     </div>
@@ -306,19 +310,28 @@
         background: @main;
         top: 0;
         left: 0;
-        .iconxiala {
-            position: fixed;
-            top: 0px;
-            left: 50%;
-            font-size: 30px;
-            color: #fff;
-        }
         .slot-name {
             position: fixed;
             top: 40px;
+            right: 50%;
+            margin-right: -90px;
+            display: inline-block;
+            font-size: 16px;
+            color: @dep;
+            font-weight: 700;
+        }
+        .update-slot {
+            position: fixed;
+            top: 40px;
             right: 20px;
-            font-size: 30px;
-            color: #fff;
+            margin-left: 30px;
+            font-size: 16px;
+            color: @dep;
+            font-weight: 700;
+            .iconfont {
+                font-size: 16px;
+                margin-right: 5px;
+            }
         }
         .content-right-bar {
             .config-bar {
@@ -330,7 +343,7 @@
     }
     .slot-editor-panel-open {
         opacity: 1;
-        z-index: 100000000;
+        z-index: 10;
         background: #fff;
         .top-bar {
             * {
