@@ -94,16 +94,15 @@
                                     </div>
                                     <div class="config-comp">
                                         <span class="config-comp-title">插槽组件: </span>
-                                        <span class="iconfont icon-gengduo1" v-if="!slot.children.lenght" @click="showSlotPanel(slot.name)">
-                                        </span>
-                                        <span v-else>{{ slot.children.map(e => { return e.name } ) }}</span>
+                                        <span v-if="slot.children && slot.children.length" @click="showSlotPanel(slot.name)">{{ slot.children.map(e => { return e.name } ) }}</span>
+                                        <span class="iconfont icon-gengduo1" v-else @click="showSlotPanel(slot.name)"></span>
                                     </div>
                                 </div>
                                 <div :class="['slot-editor-panel', { 'slot-editor-panel-open': slotPanel }, { 'slot-editor-panel-close': !slotPanel }]" :key="currentEdit.config.hash + '_' + slot.name" v-if="slotPanel">
                                     <span class="iconfont icon-xiala1 iconxiala" @click="closeSlotPanel"></span>
-                                    <span class="slot-name">{{ currentEdit.config.hash + '_' + slot.name }}</span>
+                                    <span class="slot-name" @click="updateSlot">{{ currentEdit.config.hash + '_' + slot.name }}</span>
                                     <div v-if="slotPanel" style="height: 100%">
-                                        <vv-page :topDataLevel="false" />
+                                        <vv-page :topDataLevel="false" :preCusComp="preCusComp" ref="vvpage" />
                                     </div>
                                 </div>
                             </div>
@@ -152,6 +151,7 @@
         },
         data () {
             return {
+                preCusComp: undefined,
                 unitCompIcons: unitCompIcons,
                 bycode: false,
                 slotPanel: false,
@@ -189,12 +189,44 @@
             }
         },
         methods: {
+            updateSlot () {
+                this.$emit('slotChange', {
+                    data: this.$refs.vvpage[0].cusComp.config.data.data,
+                    event: this.$refs.vvpage[0].cusComp.config.data.eventHandlers,
+                    slots: this.$refs.vvpage[0].cusComp.comps,
+                    slotName: this.slotName,
+                    hash: this.currentEdit.config.hash
+                });
+                this.closeSlotPanel();
+            },
             showSlotPanel (name) {
+                this.$set(this, 'preCusComp', {
+                    content: true,
+                    type: 'combination',
+                    config: {
+                        hash: 'slot',
+                        data: {
+                            props: {},
+                            data: {
+                                ...window.GlobelMeta.config.data.data
+                            },
+                            eventHandlers: {
+                                ...window.GlobelMeta.config.data.eventHandlers
+                            },
+                            emitEvents: []
+                        },
+                        lifeCycle: {
+                            ...window.GlobelMeta.config.lifeCycle
+                        }
+                    },
+                    comps: this.currentEdit.config.slot.filter(item => {
+                        return item.name === name;
+                    })[0].children
+                });
                 this.slotName = name;
                 this.slotPanel = true;
             },
             closeSlotPanel () {
-                this.slotName = '';
                 this.slotPanel = false;
             },
             emitSetProps (datakey, mode) {

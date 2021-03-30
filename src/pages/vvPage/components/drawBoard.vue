@@ -82,7 +82,6 @@
             addCss(styleStr, 'compStyle');
             var componentConfig = {
                 render (h) {
-                    this.eventhandlers = {};
                     var configEventHandlers = that._renderCusComp.config.data.eventHandlers;
                     that._renderCusComp.comps.forEach((comp, index) => {
                         Object.keys(configEventHandlers).forEach(funcKey => {
@@ -121,7 +120,8 @@
                                 });
                                 var abs = !(String(comp.y + comp.x) === 'NaN');
                                 var localProps = {};
-                                let propsFunc = that._renderCusComp.comps.length ? that._renderCusComp.comps.filter(item => { return item.config.hash === comp.config.hash })[0].config.props : {};
+                                let tar = that._renderCusComp.comps.filter(item => { return item.config.hash === comp.config.hash })[0];
+                                let propsFunc = tar ? tar.config.props : {};
                                 this[comp.config.hash] && Object.keys(cmps[comp.name].props).forEach(item => {
                                     localProps[item] = null;
                                     switch (typeof cmps[comp.name].props[item].type()) {

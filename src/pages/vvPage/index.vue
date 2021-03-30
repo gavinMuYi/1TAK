@@ -64,7 +64,8 @@
                 @updateParams="updateParams"
                 @globalData="setGlobalData"
                 @lifeCycle="setLifeCycle"
-                @setProps="setProps" />
+                @setProps="setProps"
+                @slotChange="slotChange" />
         </div>
     </div>
 </template>
@@ -185,6 +186,20 @@
                     }
                 });
                 this.dosave = false;
+            },
+            slotChange (slotData) {
+                this.refreshWorkSpace();
+                this.comps.forEach(item => {
+                    if (item.config.hash === slotData.hash) {
+                        item.config.slot.forEach(slot => {
+                            if (slot.name === slotData.slotName) {
+                                this.$set(slot, 'children', slotData.slots);
+                            }
+                        });
+                    }
+                });
+                this.$set(this, 'config_data_data_bak', slotData.data);
+                this.$set(this, 'config_data_eventHandlers_bak', slotData.event);
             },
             setProps (hash, datakey, funcStr, mode) {
                 this.comps.forEach(item => {
