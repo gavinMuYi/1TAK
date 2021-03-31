@@ -81,35 +81,35 @@
                                 </div>
                             </div>
                             <div v-if="currentEdit.config.slot.length">
-                            <div class="config-comp vv-title">组件插槽:</div>
-                                <div class="config-comp" v-for="(slot, slotIndex) in currentEdit.config.slot" :key="slot.name + slotIndex">
-                                <div>
-                                    <div class="config-comp">
-                                        <span class="config-comp-title">插槽名: </span>
-                                        <span>{{ slot.name }}</span>
-                                    </div>
-                                    <div class="config-comp">
-                                        <span class="config-comp-title">插槽参数: </span>
-                                        <span>{{ slot.params }}</span>
-                                    </div>
-                                    <div class="config-comp">
-                                        <span class="config-comp-title">插槽组件: </span>
-                                        <span v-if="slot.children && slot.children.length" @click="showSlotPanel(slot.name)">{{ slot.children.map(e => { return e.name } ) }}</span>
-                                        <span class="iconfont icon-gengduo1" v-else @click="showSlotPanel(slot.name)"></span>
-                                    </div>
+                                <div class="config-comp vv-title">组件插槽:</div>
+                                    <div class="config-comp slot-box" v-for="(slot, slotIndex) in currentEdit.config.slot" :key="slot.name + slotIndex">
+                                        <div>
+                                            <div class="config-comp">
+                                                <span class="config-comp-title">插槽名: </span>
+                                                <span>{{ slot.name }}</span>
+                                            </div>
+                                            <div class="config-comp">
+                                                <span class="config-comp-title">插槽参数: </span>
+                                                <span>{{ slot.params }}</span>
+                                            </div>
+                                            <div class="config-comp">
+                                                <span class="config-comp-title">插槽组件: </span>
+                                                <span v-if="slot.children && slot.children.length" @click="showSlotPanel(slot.name)">{{ slot.children.map(e => { return e.name } ) }}</span>
+                                                <span class="iconfont icon-gengduo1" v-else @click="showSlotPanel(slot.name)"></span>
+                                            </div>
+                                        </div>
+                                        <div :class="['slot-editor-panel', { 'slot-editor-panel-open': slotPanel }, { 'slot-editor-panel-close': !slotPanel }]" :key="currentEdit.config.hash + '_' + slot.name" v-if="slotPanel">
+                                            <span class="slot-name">
+                                                slot编辑: {{ currentEdit.config.hash + '_' + slotName }}
+                                            </span>
+                                            <span @click="updateSlot" class="update-slot">
+                                                <span class="iconfont icon-shangji"></span>更新到上层
+                                            </span>
+                                            <div v-if="slotPanel" style="height: 100%">
+                                                <vv-page :topDataLevel="false" :preCusComp="preCusComp" ref="vvpage" />
+                                            </div>
+                                        </div>
                                 </div>
-                                <div :class="['slot-editor-panel', { 'slot-editor-panel-open': slotPanel }, { 'slot-editor-panel-close': !slotPanel }]" :key="currentEdit.config.hash + '_' + slot.name" v-if="slotPanel">
-                                    <span class="slot-name">
-                                        slot编辑: {{ currentEdit.config.hash + '_' + slotName }}
-                                    </span>
-                                    <span @click="updateSlot" class="update-slot">
-                                        <span class="iconfont icon-shangji"></span>更新到上层
-                                    </span>
-                                    <div v-if="slotPanel" style="height: 100%">
-                                        <vv-page :topDataLevel="false" :preCusComp="preCusComp" ref="vvpage" />
-                                    </div>
-                                </div>
-                            </div>
                             </div>
                         </span>
                     </div>
@@ -388,6 +388,12 @@
         width: 300px;
         border-left: 1px solid #ededed;
         vertical-align: top;
+        .slot-box {
+            border-bottom: 1px solid #ededed;
+            &:last-child {
+                border-bottom: none;
+            }
+        }
         .vv-title {
             color: #191f1e;
             font-weight: 700;
