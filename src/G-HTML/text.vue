@@ -1,7 +1,7 @@
 <template>
     <div @click="func">
         str: {{ value }} obj: {{obj}} arr: {{arr}} num: {{num}} bol: {{bol}}
-        <slot></slot>
+        <slot props="{a: 1}"></slot>
         <slot name="ddd"></slot>
     </div>
 </template>

@@ -174,7 +174,10 @@
                                 });
                                 var scopedSlots = {};
                                 comp.config.slot.forEach(slot => {
-                                    scopedSlots[slot.name] = renderFunction(slot.children, false).bind(this)
+                                    scopedSlots[slot.name] = props => {
+                                        console.log(JSON.stringify(props));
+                                        return renderFunction(slot.children, false).call(this);
+                                    }
                                 });
                                 return (
                                     <div
