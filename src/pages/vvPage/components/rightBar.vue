@@ -51,6 +51,14 @@
                 <div class="event-system">
                     <div class="config-comp" v-for="key in Object.keys(cusComp.config.data.data)" :key="key">
                         <span v-if="key === currentEdit.config.hash">
+                            <div class="config-comp" v-if="!currentEdit.content">
+                                <span class="config-comp-title vv-title">v-if: </span>
+                                <span>{{ currentEdit.config.vif }}</span>
+                            </div>
+                            <div class="config-comp" v-if="!currentEdit.content">
+                                <span class="config-comp-title vv-title">v-for: </span>
+                                <span>{{ currentEdit.config.vfor }}</span>
+                            </div>
                             <div class="config-comp vv-title" v-if="Object.keys(cusComp.config.data.data[key]).length">组件接口:</div>
                             <div class="config-comp props-item" v-for="datakey in Object.keys(cusComp.config.data.data[key])" :key="datakey">
                                 <span class="config-comp-title" :title="datakey">

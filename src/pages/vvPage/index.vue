@@ -364,7 +364,9 @@
                     : (dragCompData.config = {
                         hash: createHash(4),
                         props: {},
-                        slot: (cmps[this.iconCompMap[data.id]].slot || []).map(e => { return { ...e, children: [] } })
+                        slot: (cmps[this.iconCompMap[data.id]].slot || []).map(e => { return { ...e, children: [] } }),
+                        vif: undefined,
+                        vfor: undefined
                 });
                 data.index !== undefined && this.comps.splice(data.index, 1);
                 this.comps.push(dragCompData);
