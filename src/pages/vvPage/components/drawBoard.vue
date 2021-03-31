@@ -84,34 +84,34 @@
                 return function () {
                     const h = this.$createElement;
                     var directives = [];
-                    if (top) {
-                        var configEventHandlers = that._renderCusComp.config.data.eventHandlers;
-                        that._renderCusComp.comps.forEach((comp, index) => {
-                            Object.keys(configEventHandlers).forEach(funcKey => {
-                                if (funcKey.indexOf(comp.config.hash) > -1) {
-                                    var funcStr = configEventHandlers[funcKey].handler;
-                                    try {
-                                        /* eslint-disable */
-                                        var resFunc = new Function('return ' + funcStr).call(this);
-                                        /* eslint-enable */
-                                        this[configEventHandlers[funcKey].name + comp.config.hash] = resFunc.bind(this._self);
-                                    } catch (e) {
-                                        this[configEventHandlers[funcKey].name + comp.config.hash] = () => {};
-                                    }
-                                }
-                            });
+                    // if (top) {
+                    var configEventHandlers = that._renderCusComp.config.data.eventHandlers;
+                    that._renderCusComp.comps.forEach((comp, index) => {
+                        Object.keys(configEventHandlers).forEach(funcKey => {
+                            var funcStr = configEventHandlers[funcKey].handler;
+                            var funcName = funcKey.split('-');
+                            funcName = funcName[1] + funcName[0];
+                            try {
+                                /* eslint-disable */
+                                var resFunc = new Function('return ' + funcStr).call(this);
+                                /* eslint-enable */
+                                this[funcName] = resFunc.bind(this._self);
+                            } catch (e) {
+                                this[funcName] = () => {};
+                            }
                         });
-                        !that.preview && directives.push({
-                            name: 'pop',
-                            arg: 'morePop',
-                            modifiers: { rightClick: true }
-                        });
-                        !that.preview && directives.push({
-                            name: 'pop',
-                            arg: 'namePop',
-                            modifiers: { hover: true }
-                        });
-                    }
+                    });
+                    !that.preview && directives.push({
+                        name: 'pop',
+                        arg: 'morePop',
+                        modifiers: { rightClick: true }
+                    });
+                    !that.preview && directives.push({
+                        name: 'pop',
+                        arg: 'namePop',
+                        modifiers: { hover: true }
+                    });
+                    // }
                     return (
                         <div class={top ? 'cus-comp' : 'slot-template'} id={that.cusComp.config.hash}>
                         {
