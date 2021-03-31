@@ -100,7 +100,7 @@
                                 </div>
                                 <div :class="['slot-editor-panel', { 'slot-editor-panel-open': slotPanel }, { 'slot-editor-panel-close': !slotPanel }]" :key="currentEdit.config.hash + '_' + slot.name" v-if="slotPanel">
                                     <span class="slot-name">
-                                        slot编辑: {{ currentEdit.config.hash + '_' + slot.name }}
+                                        slot编辑: {{ currentEdit.config.hash + '_' + slotName }}
                                     </span>
                                     <span @click="updateSlot" class="update-slot">
                                         <span class="iconfont icon-shangji"></span>更新到上层
