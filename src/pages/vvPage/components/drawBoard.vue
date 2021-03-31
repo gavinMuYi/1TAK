@@ -85,7 +85,6 @@
                     if (!top && typeof args === 'object') {
                         this.$slotArgs = args;
                         window.$slotArgs = this.$slotArgs || {};
-                        console.log(this);
                     }
                     if (top && !this.$slotArgs) {
                         this.$slotArgs = window.$slotArgs;
