@@ -84,7 +84,6 @@
                 return function () {
                     const h = this.$createElement;
                     var directives = [];
-                    // if (top) {
                     var configEventHandlers = that._renderCusComp.config.data.eventHandlers;
                     arrComps.forEach((comp, index) => {
                         Object.keys(configEventHandlers).forEach(funcKey => {
@@ -111,7 +110,6 @@
                         arg: 'namePop',
                         modifiers: { hover: true }
                     });
-                    // }
                     return (
                         <div class={top ? 'cus-comp' : 'slot-template'} id={that.cusComp.config.hash}>
                         {
