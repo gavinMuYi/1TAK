@@ -86,7 +86,7 @@
                     var directives = [];
                     // if (top) {
                     var configEventHandlers = that._renderCusComp.config.data.eventHandlers;
-                    that._renderCusComp.comps.forEach((comp, index) => {
+                    arrComps.forEach((comp, index) => {
                         Object.keys(configEventHandlers).forEach(funcKey => {
                             var funcStr = configEventHandlers[funcKey].handler;
                             var funcName = funcKey.split('-');
@@ -123,7 +123,7 @@
                                 });
                                 var abs = !(String(comp.y + comp.x) === 'NaN');
                                 var localProps = {};
-                                let tar = that._renderCusComp.comps.filter(item => { return item.config.hash === comp.config.hash })[0];
+                                let tar = arrComps.filter(item => { return item.config.hash === comp.config.hash })[0];
                                 let propsFunc = tar ? tar.config.props : {};
                                 this[comp.config.hash] && Object.keys(cmps[comp.name].props).forEach(item => {
                                     localProps[item] = null;
