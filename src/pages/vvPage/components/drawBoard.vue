@@ -81,7 +81,15 @@
             });
             addCss(styleStr, 'compStyle');
             var renderFunction = function (arrComps, top) {
-                return function () {
+                return function (args) {
+                    if (!top && typeof args === 'object') {
+                        this.$slotArgs = args;
+                        window.$slotArgs = this.$slotArgs || {};
+                        console.log(this);
+                    }
+                    if (top && !this.$slotArgs) {
+                        this.$slotArgs = window.$slotArgs;
+                    }
                     const h = this.$createElement;
                     var directives = [];
                     var configEventHandlers = that._renderCusComp.config.data.eventHandlers;
@@ -174,10 +182,11 @@
                                 });
                                 var scopedSlots = {};
                                 comp.config.slot.forEach(slot => {
-                                    scopedSlots[slot.name] = props => {
-                                        console.log(JSON.stringify(props));
-                                        return renderFunction(slot.children, false).call(this);
-                                    }
+                                    slot.children.length && (scopedSlots[slot.name] = props => {
+                                        let proArgs = {};
+                                        proArgs[comp.config.hash + slot.name] = props
+                                        return renderFunction(slot.children, false).call(this, { ...args, ...proArgs });
+                                    });
                                 });
                                 return (
                                     <div

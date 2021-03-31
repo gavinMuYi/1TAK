@@ -1,8 +1,8 @@
 <template>
-    <div @click="func">
-        str: {{ value }} obj: {{obj}} arr: {{arr}} num: {{num}} bol: {{bol}}
-        <slot props="{a: 1}"></slot>
-        <slot name="ddd"></slot>
+    <div @click="add">
+        {{ numsss }} str: {{ value }} obj: {{obj}} arr: {{arr}} num: {{num}} bol: {{bol}}
+        <slot :props="{numsss: numsss}"></slot>
+        <slot name="ddd" :props="{b: 1}"></slot>
     </div>
 </template>
 
@@ -11,6 +11,9 @@
         name: 'G_TEXT',
         slot: [{
             name: 'default',
+            params: ''
+        }, {
+            name: 'ddd',
             params: ''
         }],
         props: {
@@ -45,6 +48,16 @@
                 default: (a) => {
                     console.log('aaa');
                 }
+            }
+        },
+        data () {
+            return {
+                numsss: 0
+            }
+        },
+        methods: {
+            add () {
+                this.numsss++;
             }
         }
     }
