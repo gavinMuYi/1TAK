@@ -346,8 +346,21 @@
         z-index: 10;
         background: #fff;
         .top-bar {
-            * {
-                display: none;
+            .actions {
+                span {
+                    display: none;
+                }
+            }
+            .layout {
+                display: inline-block!important;
+                position: fixed;
+                right: 130px;
+                top: 40px;
+                font-size: 16px;
+                font-weight: 700;
+                span {
+                    display: inline-block!important;
+                }
             }
         }
     }

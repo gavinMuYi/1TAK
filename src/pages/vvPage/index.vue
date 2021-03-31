@@ -24,7 +24,7 @@
                     <span class="iconfont icon-qiehuan1"></span>
                     {{ preview ? '预览' : '配置' }}态
                 </span>
-                <span @click="abs = !abs;refreshWorkSpace();">
+                <span @click="abs = !abs;refreshWorkSpace();" class="layout">
                     <span class="iconfont icon-moxingzuzhuang"></span>
                     {{ abs ? '拖动' : '排列' }}
                 </span>
