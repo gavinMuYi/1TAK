@@ -80,18 +80,22 @@
                 });
             });
             addCss(styleStr, 'compStyle');
-            var renderFunction = function (arrComps, top) {
-                return function (args) {
-                    if (!top && typeof args === 'object') {
-                        this.$slotArgs = args;
-                        window.$slotArgs = this.$slotArgs || {};
-                    }
-                    if (top && !this.$slotArgs) {
-                        this.$slotArgs = window.$slotArgs;
-                    }
+            var renderFunction = function (arrComps, top, slotProps) {
+                // slotProps && console.log('out', slotProps);
+                return function () {
+                    // return function (args) {
+                    // slotProps && console.log('in', slotProps);
+                    // if (!top && typeof args === 'object') {
+                    //     this.$slotArgs = args;
+                    //     window.$slotArgs = this.$slotArgs || {};
+                    // }
+                    // if (top && !this.$slotArgs) {
+                    //     this.$slotArgs = window.$slotArgs;
+                    // }
                     const h = this.$createElement;
                     var directives = [];
                     var configEventHandlers = that._renderCusComp.config.data.eventHandlers;
+                    // 函数
                     arrComps.forEach((comp, index) => {
                         Object.keys(configEventHandlers).forEach(funcKey => {
                             var funcStr = configEventHandlers[funcKey].handler;
@@ -101,7 +105,7 @@
                                 /* eslint-disable */
                                 var resFunc = new Function('return ' + funcStr).call(this);
                                 /* eslint-enable */
-                                this[funcName] = resFunc.bind(this._self);
+                                this[funcName] = e => { resFunc.call(this._self, e, slotProps) };
                             } catch (e) {
                                 this[funcName] = () => {};
                             }
@@ -175,7 +179,7 @@
                                             flag = false;
                                         }
                                         if (flag) {
-                                            localProps[item] = this['propsFunc' + '_' + comp.config.hash + '_' + item].call(this._self);
+                                            localProps[item] = this['propsFunc' + '_' + comp.config.hash + '_' + item].call(this._self, slotProps);
                                         }
                                     }
                                 });
@@ -183,8 +187,12 @@
                                 comp.config.slot.forEach(slot => {
                                     slot.children.length && (scopedSlots[slot.name] = props => {
                                         let proArgs = {};
-                                        proArgs[comp.config.hash + slot.name] = props
-                                        return renderFunction(slot.children, false).call(this, { ...args, ...proArgs });
+                                        proArgs[comp.config.hash + slot.name] = props;
+                                        return renderFunction(slot.children, false, {
+                                            ...proArgs,
+                                            ...slotProps
+                                        }).call(this);
+                                        // }).call(this, { ...args, ...proArgs });
                                     });
                                 });
                                 return (

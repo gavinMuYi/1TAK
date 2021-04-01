@@ -1,7 +1,8 @@
 <template>
-    <div @click="add">
+    <!-- <div @click="add"> -->
+    <div>
         {{ numsss }} str: {{ value }} obj: {{obj}} arr: {{arr}} num: {{num}} bol: {{bol}}
-        <slot :props="{numsss: numsss}"></slot>
+        <div v-for="item in arr" :key="item.a"><slot :props="item"></slot></div>
         <slot name="ddd" :props="{b: 1}"></slot>
     </div>
 </template>
@@ -32,7 +33,7 @@
             arr: {
                 type: Array,
                 default: () => {
-                    return [{a: 1}, {b: 2}]
+                    return [{a: 1}, {a: 2}]
                 }
             },
             num: {

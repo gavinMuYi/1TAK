@@ -106,7 +106,7 @@
                                                 <span class="iconfont icon-gengduo1" v-else @click="showSlotPanel(slot.name)"></span>
                                             </div>
                                         </div>
-                                        <div :class="['slot-editor-panel', { 'slot-editor-panel-open': slotPanel }, { 'slot-editor-panel-close': !slotPanel }]" :key="currentEdit.config.hash + '_' + slot.name" v-if="slotPanel">
+                                        <div :class="['slot-editor-panel', { 'slot-editor-panel-open': slotPanel }, { 'slot-editor-panel-close': !slotPanel }]" :key="currentEdit.config.hash + '_' + slot.name" v-if="slotPanel && slot.name === slotName">
                                             <span class="slot-name">
                                                 slot编辑: {{ currentEdit.config.hash + '_' + slotName }}
                                             </span>
