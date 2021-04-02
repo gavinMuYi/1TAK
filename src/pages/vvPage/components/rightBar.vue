@@ -406,6 +406,7 @@
             margin-bottom: 20px;
             border-bottom: 1px solid #ededed;
             border-right: 1px solid #ededed;
+            box-shadow: 4px 2px 4px #22222230;
         }
         .slot-box {
             border-bottom: 1px solid #ededed;
