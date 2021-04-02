@@ -53,7 +53,13 @@
                         <span v-if="key === currentEdit.config.hash">
                             <div class="config-comp" v-if="!currentEdit.content">
                                 <span class="config-comp-title vv-title">v-if: </span>
-                                <span>{{ currentEdit.config.vif }}</span>
+                                <span
+                                    class="iconfont icon-anniu"
+                                    @click="emitSetVif(false)"></span>
+                                <span v-if="currentEdit.config.vif" class="props-data">
+                                    <span @click="emitSetVif(true)" class="btn">更新</span>
+                                    <ide-textarea :code="currentEdit.config.vif" ref="vifIDE" />
+                                </span>
                             </div>
                             <div class="config-comp" v-if="!currentEdit.content">
                                 <span class="config-comp-title vv-title">v-for: </span>
@@ -102,7 +108,10 @@
                                             </div>
                                             <div class="config-comp">
                                                 <span class="config-comp-title">插槽组件: </span>
-                                                <span v-if="slot.children && slot.children.length" @click="showSlotPanel(slot.name)">{{ slot.children.map(e => { return e.name } ) }}<span class="iconfont icon-search"></span></span>
+                                                <span v-if="slot.children && slot.children.length" @click="showSlotPanel(slot.name)">
+                                                    {{ slot.children.map(e => { return e.name } ) }}
+                                                    <span class="iconfont icon-search"></span>
+                                                </span>
                                                 <span class="iconfont icon-gengduo1" v-else @click="showSlotPanel(slot.name)"></span>
                                             </div>
                                         </div>
@@ -201,6 +210,15 @@
             }
         },
         methods: {
+            emitSetVif (flag) {
+                let func;
+                if (!flag) {
+                    func = undefined;
+                } else {
+                    func = this.$refs.vifIDE[0].getValue();
+                }
+                this.$emit('setVif', this.currentEdit.config.hash, func);
+            },
             updateSlot () {
                 this.$emit('slotChange', {
                     data: this.$refs.vvpage[0].cusComp.config.data.data,

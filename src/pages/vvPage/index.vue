@@ -66,6 +66,7 @@
                 @globalData="setGlobalData"
                 @lifeCycle="setLifeCycle"
                 @setProps="setProps"
+                @setVif="setVif"
                 @slotChange="slotChange" />
         </div>
     </div>
@@ -210,6 +211,21 @@
                             delete item.config.props[datakey];
                         } else {
                             this.$set(item.config.props, datakey, funcStr);
+                        }
+                    }
+                });
+            },
+            setVif (hash, func) {
+                this.comps.forEach(item => {
+                    if (item.config.hash === hash) {
+                        if (!func) {
+                            if (!item.config.vif) {
+                                item.config.vif = 'funnction () {}';
+                            } else {
+                                item.config.vif = func;
+                            }
+                        } else {
+                            item.config.vif = func;
                         }
                     }
                 });
