@@ -102,7 +102,7 @@
                                             </div>
                                             <div class="config-comp">
                                                 <span class="config-comp-title">插槽组件: </span>
-                                                <span v-if="slot.children && slot.children.length" @click="showSlotPanel(slot.name)">{{ slot.children.map(e => { return e.name } ) }}</span>
+                                                <span v-if="slot.children && slot.children.length" @click="showSlotPanel(slot.name)">{{ slot.children.map(e => { return e.name } ) }}<span class="iconfont icon-search"></span></span>
                                                 <span class="iconfont icon-gengduo1" v-else @click="showSlotPanel(slot.name)"></span>
                                             </div>
                                         </div>
