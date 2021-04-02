@@ -80,4 +80,14 @@
         width: 260px;
         height: 150px;
     }
+      .cm-s-default .cm-string {
+        color: #11aa56!important;
+      }
+      .CodeMirror-gutters {
+        background: @sub!important;
+      }
+      .CodeMirror-gutter-elt {
+        color: @dep!important;
+        text-align: center!important;
+      }
 </style>
