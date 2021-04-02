@@ -45,6 +45,10 @@
             preview: {
                 type: Boolean,
                 default: false
+            },
+            topDataLevel: {
+                type: Boolean,
+                default: true
             }
         },
         data () {
@@ -99,6 +103,14 @@
                             var funcStr = configEventHandlers[funcKey].handler;
                             var funcName = funcKey.split('-');
                             funcName = funcName[1] + funcName[0];
+                            if (!that.topDataLevel) {
+                                // slot
+                                var flagkey = funcStr.indexOf('{');
+                                var headStr = funcStr.substr(0, flagkey);
+                                var bodyStr = funcStr.substr(flagkey);
+                                bodyStr = bodyStr.replace(new RegExp('slotProps', 'gm'), 'window.$slotArgs');
+                                funcStr = headStr + bodyStr;
+                            }
                             try {
                                 /* eslint-disable */
                                 var resFunc = new Function('return ' + funcStr).call(this);
@@ -168,9 +180,18 @@
                                     }
                                     if (propsFunc[item]) {
                                         let flag = true;
+                                        var funcStr = propsFunc[item];
+                                        if (!that.topDataLevel) {
+                                            // slot
+                                            var flagkey = funcStr.indexOf('{');
+                                            var headStr = funcStr.substr(0, flagkey);
+                                            var bodyStr = funcStr.substr(flagkey);
+                                            bodyStr = bodyStr.replace(new RegExp('slotProps', 'gm'), 'window.$slotArgs');
+                                            funcStr = headStr + bodyStr;
+                                        }
                                         try {
                                             /* eslint-disable */
-                                            var resFunc = new Function('return ' + propsFunc[item]).call(this);
+                                            var resFunc = new Function('return ' + funcStr).call(this);
                                             /* eslint-enable */
                                             this['propsFunc' + '_' + comp.config.hash + '_' + item] = resFunc;
                                         } catch (e) {

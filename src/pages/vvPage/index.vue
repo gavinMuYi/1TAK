@@ -48,6 +48,7 @@
                 <div class="component-draw-space" ref="drawSpace" @drop="drop" @dragover="ev => {ev.preventDefault()}">
                     <draw-board
                         :comps="comps"
+                        :topDataLevel="topDataLevel"
                         @editComponent="editComponent"
                         @editContent="editContent"
                         @changeInline="changeInline"
