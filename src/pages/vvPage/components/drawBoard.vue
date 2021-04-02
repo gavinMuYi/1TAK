@@ -83,15 +83,13 @@
             var renderFunction = function (arrComps, top, slotProps) {
                 // slotProps && console.log('out', slotProps);
                 return function () {
-                    // return function (args) {
-                    // slotProps && console.log('in', slotProps);
-                    // if (!top && typeof args === 'object') {
-                    //     this.$slotArgs = args;
-                    //     window.$slotArgs = this.$slotArgs || {};
-                    // }
-                    // if (top && !this.$slotArgs) {
-                    //     this.$slotArgs = window.$slotArgs;
-                    // }
+                    if (!top && typeof slotProps === 'object') {
+                        this.$slotArgs = slotProps;
+                        window.$slotArgs = this.$slotArgs || {};
+                    }
+                    if (top && !this.$slotArgs) {
+                        this.$slotArgs = window.$slotArgs;
+                    }
                     const h = this.$createElement;
                     var directives = [];
                     var configEventHandlers = that._renderCusComp.config.data.eventHandlers;

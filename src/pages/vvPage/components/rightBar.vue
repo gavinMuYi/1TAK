@@ -305,6 +305,10 @@
                     break;
                 }
             }
+        },
+        errorCaptured (err, vm, info) {
+            console.log(err, vm, info);
+            return false;
         }
     }
 </script>
@@ -396,6 +400,13 @@
         width: 300px;
         border-left: 1px solid #ededed;
         vertical-align: top;
+        textarea {
+            height: 60px;
+            border: none;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ededed;
+            border-right: 1px solid #ededed;
+        }
         .slot-box {
             border-bottom: 1px solid #ededed;
             &:last-child {
