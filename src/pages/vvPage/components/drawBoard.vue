@@ -74,15 +74,21 @@
             var oldStyle = document.getElementById('compStyle');
             oldStyle && oldStyle.remove();
             let styleStr = '';
-            this._renderCusComp.comps.forEach(comp => {
-                comp.config.style && Object.keys(comp.config.style).forEach(key => {
-                    let cssStr = '';
-                    Object.keys(comp.config.style[key]).forEach(css => {
-                        cssStr += `${css}: ${comp.config.style[key][css]};`;
-                    })
-                    styleStr += `${key} {${cssStr}}`
+            var parseStyleStr = function (arr) {
+                arr.forEach(comp => {
+                    comp.config.slot && comp.config.slot.forEach(slotComp => {
+                        slotComp.children && parseStyleStr(slotComp.children);
+                    });
+                    comp.config.style && Object.keys(comp.config.style).forEach(key => {
+                        let cssStr = '';
+                        Object.keys(comp.config.style[key]).forEach(css => {
+                            cssStr += `${css}: ${comp.config.style[key][css]};`;
+                        })
+                        styleStr += `${key} {${cssStr}}`
+                    });
                 });
-            });
+            }
+            parseStyleStr(this._renderCusComp.comps);
             addCss(styleStr, 'compStyle');
             var renderFunction = function (arrComps, top, slotProps) {
                 // slotProps && console.log('out', slotProps);
