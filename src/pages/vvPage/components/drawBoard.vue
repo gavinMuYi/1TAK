@@ -220,53 +220,77 @@
                                         // }).call(this, { ...args, ...proArgs });
                                     });
                                 });
-                                return (
-                                    <div
-                                        class={['flag-sup-$-comp-box', 'comp-box', {'config-box': abs && !that.preview}, {'stc-box': !abs && !that.preview}]}
-                                        key={comp.id + comp.x + comp.y + index}
-                                        id={comp.config.hash + '-box'}
-                                        style={abs ? {
-                                            position: 'absolute',
-                                            top: comp.y + 'px',
-                                            left: comp.x + 'px'
-                                        } : {
-                                            display: 'inline-block'
-                                        }}
-                                        {...{ directives }}
-                                        draggable={!that.preview}
-                                        onMouseover={ev => { if (that.preview) { return; } this.$emit('nameHover', comp.config.hash); }}
-                                        onContextmenu={ev => { if (that.preview) { return; } if (ev.button === 2) { this.$emit('rightClick', comp) } }}
-                                        onDrop={ev => { if (that.preview) { return; } if (!abs) { this.moveInline(ev); } ev.stopPropagation(); ev.preventDefault(); }}
-                                        onDragover={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
-                                        onDragstart={ev => { if (that.preview) { return; } this.move(ev, comp, index); }}
-                                        onClick={ev => { if (!top) { return; } ev.stopPropagation(); this.editComponent(ev, comp); }}>
-                                        {
-                                            // [1, 2].map(x => {
-                                            //     return (
-                                            //         h(comp.name, {
-                                            //             attrs: {
-                                            //                 id: comp.config.hash
-                                            //             },
-                                            //             props: this[comp.config.hash],
-                                            //             on: {
-                                            //                 ...eventhandlers
-                                            //             }
-                                            //         })
-                                            //     )
-                                            // })
-                                            h(comp.name, {
-                                                attrs: {
-                                                    id: comp.config.hash
-                                                },
-                                                props: localProps,
-                                                on: {
-                                                    ...eventhandlers
-                                                },
-                                                scopedSlots: scopedSlots
-                                            })
-                                        }
-                                    </div>
-                                )
+                                var vifFunc;
+                                if (comp.config.vif) {
+                                    var funcStr = comp.config.vif;
+                                    if (!that.topDataLevel) {
+                                        // slot
+                                        var flagkey = funcStr.indexOf('{');
+                                        var headStr = funcStr.substr(0, flagkey);
+                                        var bodyStr = funcStr.substr(flagkey);
+                                        bodyStr = bodyStr.replace(new RegExp('slotProps', 'gm'), 'window.$slotArgs');
+                                        funcStr = headStr + bodyStr;
+                                    }
+                                    try {
+                                        /* eslint-disable */
+                                        var resFunc = new Function('return ' + funcStr).call(this);
+                                        /* eslint-enable */
+                                        vifFunc = resFunc;
+                                    } catch (e) {
+                                        vifFunc = undefined;
+                                    }
+                                }
+                                if ((vifFunc && vifFunc.call(this)) || !vifFunc) {
+                                    return (
+                                        <div
+                                            class={['flag-sup-$-comp-box', 'comp-box', {'config-box': abs && !that.preview}, {'stc-box': !abs && !that.preview}]}
+                                            key={comp.id + comp.x + comp.y + index}
+                                            id={comp.config.hash + '-box'}
+                                            style={abs ? {
+                                                position: 'absolute',
+                                                top: comp.y + 'px',
+                                                left: comp.x + 'px'
+                                            } : {
+                                                display: 'inline-block'
+                                            }}
+                                            {...{ directives }}
+                                            draggable={!that.preview}
+                                            onMouseover={ev => { if (that.preview) { return; } this.$emit('nameHover', comp.config.hash); }}
+                                            onContextmenu={ev => { if (that.preview) { return; } if (ev.button === 2) { this.$emit('rightClick', comp) } }}
+                                            onDrop={ev => { if (that.preview) { return; } if (!abs) { this.moveInline(ev); } ev.stopPropagation(); ev.preventDefault(); }}
+                                            onDragover={ev => { if (that.preview) { return; } ev.stopPropagation(); ev.preventDefault(); }}
+                                            onDragstart={ev => { if (that.preview) { return; } this.move(ev, comp, index); }}
+                                            onClick={ev => { if (!top) { return; } ev.stopPropagation(); this.editComponent(ev, comp); }}>
+                                            {
+                                                // [1, 2].map(x => {
+                                                //     return (
+                                                //         h(comp.name, {
+                                                //             attrs: {
+                                                //                 id: comp.config.hash
+                                                //             },
+                                                //             props: this[comp.config.hash],
+                                                //             on: {
+                                                //                 ...eventhandlers
+                                                //             }
+                                                //         })
+                                                //     )
+                                                // })
+                                                h(comp.name, {
+                                                    attrs: {
+                                                        id: comp.config.hash
+                                                    },
+                                                    props: localProps,
+                                                    on: {
+                                                        ...eventhandlers
+                                                    },
+                                                    scopedSlots: scopedSlots
+                                                })
+                                            }
+                                        </div>
+                                    )
+                                } else {
+                                    return (<span></span>)
+                                }
                             })
                         }
                         </div>
