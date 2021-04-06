@@ -447,6 +447,7 @@
             display: block!important;
             width: 200px!important;
             margin-bottom: 20px;
+            font-weight: 700;
         }
         textarea {
             height: 60px;
