@@ -12,8 +12,8 @@
                 <styleBar v-if="!bycode" :domName="domName" :domStyle="domStyle" @change="diffChangeStyle" @update="update" />
                 <div v-else class="customer-style-editor">
                     <span class="code-tit">在对象中编辑CSS(JSON格式)</span>
-                    <span class="btn" @click="emitStyle">预览</span>
-                    <span class="btn" @click="doUpdate">更新</span>
+                    <span class="iconfont icon-chakan" @click="emitStyle"></span>
+                    <span class="iconfont icon-gengxin2" @click="doUpdate"></span>
                     <ide-textarea :code="JSON.stringify(currentStyle)" ref="styleIDE" type="application/json" />
                 </div>
             </div>
@@ -279,9 +279,12 @@
                 }
                 .customer-style-editor {
                     margin-top: 20px;
-                    .btn {
+                    .iconfont {
                         position: relative;
                         top: -20px;
+                        float: right;
+                        font-size: 24px;
+                        margin-right: 10px;
                     }
                     .code-tit {
                         position: relative;

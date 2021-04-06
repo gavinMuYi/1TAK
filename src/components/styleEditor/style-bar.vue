@@ -7,7 +7,7 @@
             <div class="style-item style-title">
                 <span class="style-item-left">DOM: </span>
                 <span>{{ domName }}</span>
-                <span class="btn style-item-btn" @click="update">更新</span>
+                <span class="iconfont icon-gengxin2 style-item-btn" @click="update"></span>
             </div>
             <div class="rule-items-br"></div>
             <div class="style-item"
@@ -252,6 +252,8 @@
             .style-item-btn {
                 float: right;
                 width: 50px;
+                font-size: 24px;
+                margin-top: -5px;
                 display: inline-block;
                 text-align: center;
             }

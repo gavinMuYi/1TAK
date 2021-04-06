@@ -23,8 +23,8 @@
             </div>
             <div class="config-comp" v-if="!currentEdit.content">
                 <span class="config-comp-title vv-title">组件样式: </span>
-                <span class="btn btn-style" @click="changeStyle(true)">调整</span>
-                <span class="btn btn-style" @click="changeStyle(false)">Code</span>
+                <span @click="changeStyle(true)"><span class="iconfont icon-pintu css-btn"></span>调整</span>
+                <span @click="changeStyle(false)"><span class="iconfont icon-daima css-btn"></span>代码</span>
                 <styleEditor ref="styleEditor" :nowEdit="currentEdit" @update="updateStyle" :currentStyle="this.currentEdit.config.style || {}" :bycode="bycode" />
             </div>
             <div class="config-comp" v-if="currentEdit.content">
@@ -418,6 +418,11 @@
         width: 300px;
         border-left: 1px solid #ededed;
         vertical-align: top;
+        .css-btn {
+            font-size: 12px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
         .icon-shurukuang1 {
             font-size: 16px;
             font-weight: 700;
