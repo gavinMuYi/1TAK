@@ -208,18 +208,6 @@
                                         }
                                     }
                                 });
-                                var scopedSlots = {};
-                                comp.config.slot.forEach(slot => {
-                                    slot.children.length && (scopedSlots[slot.name] = props => {
-                                        let proArgs = {};
-                                        proArgs[comp.config.hash + slot.name] = props;
-                                        return renderFunction(slot.children, false, {
-                                            ...proArgs,
-                                            ...slotProps
-                                        }).call(this);
-                                        // }).call(this, { ...args, ...proArgs });
-                                    });
-                                });
                                 var vifFunc;
                                 if (comp.config.vif) {
                                     var funcStr = comp.config.vif;
@@ -240,6 +228,17 @@
                                         vifFunc = undefined;
                                     }
                                 }
+                                var scopedSlots = {};
+                                comp.config.slot.forEach(slot => {
+                                    slot.children.length && (scopedSlots[slot.name] = props => {
+                                        let proArgs = {};
+                                        proArgs[comp.config.hash + slot.name] = props;
+                                        return renderFunction(slot.children, false, {
+                                            ...proArgs,
+                                            ...slotProps
+                                        }).call(this);
+                                    });
+                                });
                                 var domComp = h(comp.name, {
                                     attrs: {
                                         id: comp.config.hash
