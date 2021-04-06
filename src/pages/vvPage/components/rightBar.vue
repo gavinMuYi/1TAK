@@ -422,6 +422,7 @@
             color: @main;
             &:hover {
                 color: @mainop;
+                cursor: pointer;
             }
         }
         .css-btn {
