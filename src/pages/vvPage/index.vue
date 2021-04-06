@@ -220,7 +220,7 @@
                     if (item.config.hash === hash) {
                         if (!func) {
                             if (!item.config.vif) {
-                                item.config.vif = 'function () {return true}';
+                                item.config.vif = 'function () {return true;}';
                             } else {
                                 item.config.vif = func;
                             }
