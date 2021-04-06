@@ -89,5 +89,7 @@
       .CodeMirror-gutter-elt {
         color: @dep!important;
         text-align: center!important;
+        font-size: 12px;
+        line-height: 18px;
       }
 </style>

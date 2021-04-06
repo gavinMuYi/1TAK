@@ -485,7 +485,7 @@
         top: 0;
         left: 0;
         background: @mainop;
-        color: #FFF;
+        color: @dep;
         width: 800px;
         max-height: 800px;
         overflow: auto;

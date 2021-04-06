@@ -418,6 +418,12 @@
         width: 300px;
         border-left: 1px solid #ededed;
         vertical-align: top;
+        .iconfont {
+            color: @main;
+            &:hover {
+                color: @mainop;
+            }
+        }
         .css-btn {
             font-size: 12px;
             margin-left: 10px;
@@ -479,6 +485,12 @@
                 float: right;
                 margin-right: 20px;
                 z-index: 100;
+            }
+            .icon--qiyong {
+                color: #7e7e7e!important;
+            }
+            .icon-qiyong {
+                color: @main!important;
             }
         }
         .compname {
