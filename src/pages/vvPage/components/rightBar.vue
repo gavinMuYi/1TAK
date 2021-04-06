@@ -110,7 +110,7 @@
                                                 <span class="config-comp-title">插槽组件: </span>
                                                 <span v-if="slot.children && slot.children.length" @click="showSlotPanel(slot.name)">
                                                     {{ slot.children.map(e => { return e.name } ) }}
-                                                    <span class="iconfont icon-bianji"></span>
+                                                    <span class="iconfont icon-bianji1"></span>
                                                 </span>
                                                 <span class="iconfont icon-gengduo1" v-else @click="showSlotPanel(slot.name)"></span>
                                             </div>
@@ -454,6 +454,10 @@
             &:last-child {
                 border-bottom: none;
             }
+            .icon-bianji1 {
+                position: relative;
+                top: 2px;
+            }
         }
         .vv-title {
             color: #191f1e;
@@ -486,6 +490,7 @@
                 .icon-xiala1 {
                     font-size: 12px;
                     color: #191f1e;
+                    margin-left: 5px;
                 }
                 .box-trigger {
                     color: #191f1e;
