@@ -289,7 +289,7 @@
                                         </div>
                                     )
                                 } else {
-                                    return (<span></span>)
+                                    return null
                                 }
                             })
                         }
