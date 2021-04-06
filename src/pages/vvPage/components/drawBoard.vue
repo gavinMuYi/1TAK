@@ -240,6 +240,19 @@
                                         vifFunc = undefined;
                                     }
                                 }
+                                var domComp = h(comp.name, {
+                                    attrs: {
+                                        id: comp.config.hash
+                                    },
+                                    props: localProps,
+                                    on: {
+                                        ...eventhandlers
+                                    },
+                                    scopedSlots: scopedSlots
+                                });
+                                this.$nextTick(() => {
+                                    this.$refs[comp.config.hash] = domComp.componentInstance;
+                                });
                                 if ((vifFunc && vifFunc.call(this)) || !vifFunc) {
                                     return (
                                         <div
@@ -275,16 +288,7 @@
                                                 //         })
                                                 //     )
                                                 // })
-                                                h(comp.name, {
-                                                    attrs: {
-                                                        id: comp.config.hash
-                                                    },
-                                                    props: localProps,
-                                                    on: {
-                                                        ...eventhandlers
-                                                    },
-                                                    scopedSlots: scopedSlots
-                                                })
+                                                domComp
                                             }
                                         </div>
                                     )
