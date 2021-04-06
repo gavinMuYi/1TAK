@@ -421,7 +421,7 @@
         .iconfont {
             color: @main;
             &:hover {
-                color: @mainop;
+                color: @sub;
                 cursor: pointer;
             }
         }

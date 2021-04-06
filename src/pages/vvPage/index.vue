@@ -636,7 +636,7 @@
                 transition: font-size 0.15s linear, width 0.15s linear;
                 &:hover {
                     font-size: 56px;
-                    color: @dep;
+                    color: @sub;
                 }
             }
             .material-name {
