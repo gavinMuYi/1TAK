@@ -32,7 +32,7 @@
                 <span>{{ currentEdit.config.data.props }}</span>
             </div>
             <div class="config-comp global-data" v-if="currentEdit.content" :key="'globalDataIDE' + currentEdit.content">
-                <div class="config-comp vv-title">全局变量: <span class="btn" @click="emitglobalData">更新</span></div>
+                <div class="config-comp vv-title">全局变量: <span class="iconfont icon-gengxin2 global-gx" @click="emitglobalData"></span></div>
                 <ide-textarea :code="globalData" ref="globalDataIDE" type="application/json" :key="currentEdit.content" />
             </div>
             <div class="config-comp global-data" v-if="currentEdit.content" :key="lifeCycleKey">
@@ -40,7 +40,7 @@
                     <span class="life-cycle">
                         <single-select v-model="lifeCycleKey" :options="lifeCycleOptions" />
                     </span>
-                    <span class="btn" @click="emitlifeCycle">更新</span>
+                    <span class="iconfont icon-gengxin2 global-gx" @click="emitlifeCycle"></span>
                 </div>
                 <ide-textarea :code="lifeCycle[lifeCycleKey] || 'function () {}'" ref="lifeCycleIDE" :key="lifeCycleKey + 'IDE'" />
             </div>
@@ -54,10 +54,10 @@
                             <div class="config-comp" v-if="!currentEdit.content">
                                 <span class="config-comp-title vv-title">v-if: </span>
                                 <span
-                                    class="iconfont icon-anniu"
+                                    :class="['iconfont', {'icon--qiyong': !currentEdit.config.vif}, {'icon-qiyong': currentEdit.config.vif}]"
                                     @click="emitSetVif(false)"></span>
                                 <span v-if="currentEdit.config.vif" class="props-data">
-                                    <span @click="emitSetVif(true)" class="btn">更新</span>
+                                    <span @click="emitSetVif(true)" class="iconfont icon-gengxin2 props-data-gx"></span>
                                     <ide-textarea :code="currentEdit.config.vif" ref="vifIDE" />
                                 </span>
                             </div>
@@ -67,12 +67,12 @@
                             </div>
                             <div class="config-comp vv-title" v-if="Object.keys(cusComp.config.data.data[key]).length">组件接口:</div>
                             <div class="config-comp props-item" v-for="datakey in Object.keys(cusComp.config.data.data[key])" :key="datakey">
-                                <span class="config-comp-title" :title="datakey">
-                                    <span @click="emitSetProps(datakey, false)" class="iconfont icon-pintu"></span>
+                                <span class="config-comp-title props-title" :title="datakey">
+                                    <span @click="emitSetProps(datakey, false)" :class="['iconfont', {'icon-shurukuang1': !currentEdit.config.props[datakey]}, {'icon-daima': currentEdit.config.props[datakey]}]"></span>
                                     {{ datakey }}
                                 </span>
                                 <span v-if="currentEdit.config.props[datakey]" class="props-data">
-                                    <span @click="emitSetProps(datakey, true)" class="btn">更新</span>
+                                    <span @click="emitSetProps(datakey, true)" class="icon-gengxin2 iconfont"></span>
                                     <ide-textarea :code="currentEdit.config.props[datakey]" :ref="datakey + 'IDE'" />
                                 </span>
                                 <textarea v-else v-model="cusComp.config.data.data[key][datakey]" @change="emitChange()" />
@@ -89,7 +89,7 @@
                                         <span>{{ cusComp.config.data.eventHandlers[eventKey].params }}</span>
                                     </div>
                                     <div class="config-comp">
-                                        <div class="config-comp">事件处理器: <span class="btn" @click="emitEvent(eventKey, eventIndex)">更新</span></div>
+                                        <div class="config-comp">事件处理器: <span class="event-gx-btn iconfont icon-gengxin2" @click="emitEvent(eventKey, eventIndex)"></span></div>
                                         <ide-textarea :code="loaclHandler[eventKey]" ref="eventIDE" />
                                     </div>
                                 </div>
@@ -110,7 +110,7 @@
                                                 <span class="config-comp-title">插槽组件: </span>
                                                 <span v-if="slot.children && slot.children.length" @click="showSlotPanel(slot.name)">
                                                     {{ slot.children.map(e => { return e.name } ) }}
-                                                    <span class="iconfont icon-search"></span>
+                                                    <span class="iconfont icon-bianji"></span>
                                                 </span>
                                                 <span class="iconfont icon-gengduo1" v-else @click="showSlotPanel(slot.name)"></span>
                                             </div>
@@ -418,6 +418,24 @@
         width: 300px;
         border-left: 1px solid #ededed;
         vertical-align: top;
+        .icon-shurukuang1 {
+            font-size: 16px;
+            font-weight: 700;
+            transform: rotate(180deg);
+            display: inline-block;
+            position: relative;
+            top: 1px;
+        }
+        .icon-daima {
+            font-weight: 700;
+            position: relative;
+            top: 1px;
+        }
+        .props-title {
+            display: block!important;
+            width: 200px!important;
+            margin-bottom: 20px;
+        }
         textarea {
             height: 60px;
             border: none;
@@ -440,6 +458,19 @@
             padding-left: 15px;
             border-left: 1px solid #ededed;
             border-bottom: 1px solid #ededed;
+            .event-gx-btn {
+                float: right;
+                font-size: 24px;
+                margin-right: 20px;
+            }
+            .icon-qiyong,
+            .icon--qiyong {
+                font-size: 26px;
+                position: relative;
+                float: right;
+                margin-right: 20px;
+                z-index: 100;
+            }
         }
         .compname {
             color: @sub;
@@ -474,16 +505,45 @@
                     text-overflow: ellipsis;
                     vertical-align: top;
                 }
+                .icon-gengxin2 {
+                    position: absolute;
+                    top: -20px;
+                    right: 0;
+                    float: right;
+                    font-size: 24px;
+                }
+                textarea {
+                    margin-left: 20px;
+                    width: 220px;
+                    height: 70px;
+                }
             }
             .global-data {
                 .CodeMirror {
                     margin-top: 20px;
                 }
+                .global-gx {
+                    float: right;
+                    font-size: 24px;
+                    margin-right: 20px;
+                    font-weight: 400;
+                }
             }
             .props-data {
+                position: relative;
+                width: 240px;
+                display: inline-block;
+                margin-top: -20px;
                 .CodeMirror {
                     height: 100px;
                     margin-top: 15px;
+                }
+                .props-data-gx {
+                    position: absolute;
+                    top: -7px;
+                    right: 35px;
+                    font-size: 24px;
+                    float: right;
                 }
             }
             .config-comp {
