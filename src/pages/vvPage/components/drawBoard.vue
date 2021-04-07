@@ -210,48 +210,105 @@
                                 });
                                 var vifFunc;
                                 if (comp.config.vif) {
-                                    var funcStr = comp.config.vif;
+                                    var funcStrvif = comp.config.vif;
                                     if (!that.topDataLevel) {
                                         // slot
-                                        var flagkey = funcStr.indexOf('{');
-                                        var headStr = funcStr.substr(0, flagkey);
-                                        var bodyStr = funcStr.substr(flagkey);
-                                        bodyStr = bodyStr.replace(new RegExp('slotProps', 'gm'), 'window.$slotArgs');
-                                        funcStr = headStr + bodyStr;
+                                        var flagkeyvif = funcStrvif.indexOf('{');
+                                        var headStrvif = funcStrvif.substr(0, flagkeyvif);
+                                        var bodyStrvif = funcStrvif.substr(flagkeyvif);
+                                        bodyStrvif = bodyStrvif.replace(new RegExp('slotProps', 'gm'), 'window.$slotArgs');
+                                        funcStrvif = headStrvif + bodyStrvif;
                                     }
                                     try {
                                         /* eslint-disable */
-                                        var resFunc = new Function('return ' + funcStr).call(this);
+                                        var resFunc = new Function('return ' + funcStrvif).call(this);
                                         /* eslint-enable */
                                         vifFunc = resFunc;
                                     } catch (e) {
                                         vifFunc = undefined;
                                     }
                                 }
-                                var scopedSlots = {};
-                                comp.config.slot.forEach(slot => {
-                                    slot.children.length && (scopedSlots[slot.name] = props => {
-                                        let proArgs = {};
-                                        proArgs[comp.config.hash + slot.name] = props;
-                                        return renderFunction(slot.children, false, {
-                                            ...proArgs,
-                                            ...slotProps
-                                        }).call(this);
+                                var vforFunc;
+                                if (comp.config.vfor) {
+                                    var funcStrvfor = comp.config.vfor;
+                                    if (!that.topDataLevel) {
+                                        // slot
+                                        var flagkeyvfor = funcStrvfor.indexOf('{');
+                                        var headStrvfor = funcStrvfor.substr(0, flagkeyvfor);
+                                        var bodyStrvfor = funcStrvfor.substr(flagkeyvfor);
+                                        bodyStrvfor = bodyStrvfor.replace(new RegExp('slotProps', 'gm'), 'window.$slotArgs');
+                                        funcStrvfor = headStrvfor + bodyStrvfor;
+                                    }
+                                    try {
+                                        /* eslint-disable */
+                                        var resFunc = new Function('return ' + funcStrvfor).call(this);
+                                        /* eslint-enable */
+                                        vforFunc = resFunc;
+                                    } catch (e) {
+                                        vforFunc = undefined;
+                                    }
+                                }
+                                var domComp
+                                if (vforFunc && vforFunc.call(this)) {
+                                    var list = vforFunc.call(this);
+                                    domComp = list.map((item, index) => {
+                                        var scopedSlots = {};
+                                        comp.config.slot.forEach(slot => {
+                                            slot.children.length && (scopedSlots[slot.name] = props => {
+                                                let proArgs = {};
+                                                proArgs[comp.config.hash + slot.name] = props;
+                                                proArgs[comp.config.hash + slot.name + '_vfor'] = {
+                                                    item: item,
+                                                    index: index
+                                                };
+                                                return renderFunction(slot.children, false, {
+                                                    ...proArgs,
+                                                    ...slotProps
+                                                }).call(this);
+                                            });
+                                        });
+                                        var nodeDom = h(comp.name, {
+                                            attrs: {
+                                                id: comp.config.hash
+                                            },
+                                            props: localProps,
+                                            on: {
+                                                ...eventhandlers
+                                            },
+                                            scopedSlots: scopedSlots
+                                        });
+                                        // this.$nextTick(() => {
+                                        //     !this.$refs[comp.config.hash] && (this.$refs[comp.config.hash] = []);
+                                        //     this.$refs[comp.config.hash] && this.$refs[comp.config.hash].push(nodeDom.componentInstance);
+                                        // });
+                                        return nodeDom;
                                     });
-                                });
-                                var domComp = h(comp.name, {
-                                    attrs: {
-                                        id: comp.config.hash
-                                    },
-                                    props: localProps,
-                                    on: {
-                                        ...eventhandlers
-                                    },
-                                    scopedSlots: scopedSlots
-                                });
-                                this.$nextTick(() => {
-                                    this.$refs[comp.config.hash] = domComp.componentInstance;
-                                });
+                                } else {
+                                    var scopedSlots = {};
+                                    comp.config.slot.forEach(slot => {
+                                        slot.children.length && (scopedSlots[slot.name] = props => {
+                                            let proArgs = {};
+                                            proArgs[comp.config.hash + slot.name] = props;
+                                            return renderFunction(slot.children, false, {
+                                                ...proArgs,
+                                                ...slotProps
+                                            }).call(this);
+                                        });
+                                    });
+                                    domComp = h(comp.name, {
+                                        attrs: {
+                                            id: comp.config.hash
+                                        },
+                                        props: localProps,
+                                        on: {
+                                            ...eventhandlers
+                                        },
+                                        scopedSlots: scopedSlots
+                                    });
+                                    this.$nextTick(() => {
+                                        this.$refs[comp.config.hash] = domComp.componentInstance;
+                                    });
+                                }
                                 if ((vifFunc && vifFunc.call(this)) || !vifFunc) {
                                     return (
                                         <div
