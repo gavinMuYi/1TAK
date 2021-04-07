@@ -58,7 +58,7 @@
             line-height: 100px;
             font-size: 32px;
             font-weight: 700;
-            color: @dep;
+            color: @dep!important;
             margin-left: 30px;
             display: inline-block;
             .icon-yezhu {
@@ -69,6 +69,7 @@
                 position: relative;
                 top: 0px;
                 left: 5px;
+                color: @dep!important;
                 transform: rotateY(180deg);
             }
         }

@@ -64,7 +64,7 @@
                             <div class="config-comp" v-if="!currentEdit.content">
                                 <span class="config-comp-title vv-title">v-for: </span>
                                 <span
-                                    :class="['iconfont', {'icon--qiyong': !currentEdit.config.vfor}, {'icon-qiyong': currentEdit.config.vfor}]"
+                                    :class="['iconfont', {'v-for-btn': (!currentEdit.config.vif && !currentEdit.config.vfor) || (!currentEdit.config.vif && currentEdit.config.vfor)}, {'icon--qiyong': !currentEdit.config.vfor}, {'icon-qiyong': currentEdit.config.vfor}]"
                                     @click="emitSetV(false, 'vfor')"></span>
                                 <span v-if="currentEdit.config.vfor" class="props-data">
                                     <span @click="emitSetV(true, 'vfor')" class="iconfont icon-gengxin2 props-data-gx"></span>
@@ -499,6 +499,9 @@
             }
             .icon-qiyong {
                 color: @main!important;
+            }
+            .v-for-btn {
+                margin-right: -25px;
             }
         }
         .compname {
