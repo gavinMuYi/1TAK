@@ -269,7 +269,8 @@
                                         });
                                         var nodeDom = h(comp.name, {
                                             attrs: {
-                                                id: comp.config.hash
+                                                id: comp.config.hash,
+                                                class: comp.config.hash + '-' + index
                                             },
                                             props: localProps,
                                             on: {
@@ -277,10 +278,13 @@
                                             },
                                             scopedSlots: scopedSlots
                                         });
-                                        // this.$nextTick(() => {
-                                        //     !this.$refs[comp.config.hash] && (this.$refs[comp.config.hash] = []);
-                                        //     this.$refs[comp.config.hash] && this.$refs[comp.config.hash].push(nodeDom.componentInstance);
-                                        // });
+                                        this.$nextTick(() => {
+                                            if (!this.$refs[comp.config.hash] || !this.$refs[comp.config.hash][0]) {
+                                                this.$refs[comp.config.hash] = [];
+                                            } else {
+                                                this.$refs[comp.config.hash] && this.$refs[comp.config.hash].push(nodeDom.componentInstance);
+                                            }
+                                        });
                                         return nodeDom;
                                     });
                                 } else {
