@@ -66,7 +66,7 @@
                 @globalData="setGlobalData"
                 @lifeCycle="setLifeCycle"
                 @setProps="setProps"
-                @setVif="setVif"
+                @setV="setV"
                 @slotChange="slotChange" />
         </div>
     </div>
@@ -215,17 +215,20 @@
                     }
                 });
             },
-            setVif (hash, func) {
+            setV (hash, func, key) {
+                var funcStr = key === 'vif'
+                    ? 'function () {return true;}'
+                    : 'function () {return "";}';
                 this.comps.forEach(item => {
                     if (item.config.hash === hash) {
                         if (!func) {
-                            if (!item.config.vif) {
-                                item.config.vif = 'function () {return true;}';
+                            if (!item.config[key]) {
+                                item.config[key] = funcStr;
                             } else {
-                                item.config.vif = func;
+                                item.config[key] = func;
                             }
                         } else {
-                            item.config.vif = func;
+                            item.config[key] = func;
                         }
                     }
                 });

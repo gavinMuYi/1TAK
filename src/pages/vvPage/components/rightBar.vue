@@ -55,15 +55,22 @@
                                 <span class="config-comp-title vv-title">v-if: </span>
                                 <span
                                     :class="['iconfont', {'icon--qiyong': !currentEdit.config.vif}, {'icon-qiyong': currentEdit.config.vif}]"
-                                    @click="emitSetVif(false)"></span>
+                                    @click="emitSetV(false, 'vif')"></span>
                                 <span v-if="currentEdit.config.vif" class="props-data">
-                                    <span @click="emitSetVif(true)" class="iconfont icon-gengxin2 props-data-gx"></span>
+                                    <span @click="emitSetV(true, 'vif')" class="iconfont icon-gengxin2 props-data-gx"></span>
                                     <ide-textarea :code="currentEdit.config.vif" ref="vifIDE" />
                                 </span>
                             </div>
                             <div class="config-comp" v-if="!currentEdit.content">
                                 <span class="config-comp-title vv-title">v-for: </span>
                                 <span>{{ currentEdit.config.vfor }}</span>
+                                <span
+                                    :class="['iconfont', {'icon--qiyong': !currentEdit.config.vfor}, {'icon-qiyong': currentEdit.config.vfor}]"
+                                    @click="emitSetV(false, 'vfor')"></span>
+                                <span v-if="currentEdit.config.vfor" class="props-data">
+                                    <span @click="emitSetV(true, 'vfor')" class="iconfont icon-gengxin2 props-data-gx"></span>
+                                    <ide-textarea :code="currentEdit.config.vfor" ref="vforIDE" />
+                                </span>
                             </div>
                             <div class="config-comp vv-title" v-if="Object.keys(cusComp.config.data.data[key]).length">组件接口:</div>
                             <div class="config-comp props-item" v-for="datakey in Object.keys(cusComp.config.data.data[key])" :key="datakey">
@@ -210,14 +217,14 @@
             }
         },
         methods: {
-            emitSetVif (flag) {
+            emitSetV (flag, key) {
                 let func;
                 if (!flag) {
                     func = undefined;
                 } else {
-                    func = this.$refs.vifIDE[0].getValue();
+                    func = this.$refs[key + 'IDE'][0].getValue();
                 }
-                this.$emit('setVif', this.currentEdit.config.hash, func);
+                this.$emit('setV', this.currentEdit.config.hash, func, key);
             },
             updateSlot () {
                 this.$emit('slotChange', {
