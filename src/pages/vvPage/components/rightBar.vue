@@ -63,7 +63,6 @@
                             </div>
                             <div class="config-comp" v-if="!currentEdit.content">
                                 <span class="config-comp-title vv-title">v-for: </span>
-                                <span>{{ currentEdit.config.vfor }}</span>
                                 <span
                                     :class="['iconfont', {'icon--qiyong': !currentEdit.config.vfor}, {'icon-qiyong': currentEdit.config.vfor}]"
                                     @click="emitSetV(false, 'vfor')"></span>
