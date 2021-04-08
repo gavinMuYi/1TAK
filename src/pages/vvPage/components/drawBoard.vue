@@ -335,19 +335,6 @@
                                             onDragstart={ev => { if (that.preview) { return; } this.move(ev, comp, index); }}
                                             onClick={ev => { if (!top) { return; } ev.stopPropagation(); this.editComponent(ev, comp); }}>
                                             {
-                                                // [1, 2].map(x => {
-                                                //     return (
-                                                //         h(comp.name, {
-                                                //             attrs: {
-                                                //                 id: comp.config.hash
-                                                //             },
-                                                //             props: this[comp.config.hash],
-                                                //             on: {
-                                                //                 ...eventhandlers
-                                                //             }
-                                                //         })
-                                                //     )
-                                                // })
                                                 domComp
                                             }
                                         </div>
