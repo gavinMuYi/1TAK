@@ -361,13 +361,6 @@
                                         Object.keys(configEventHandlers).forEach(funcKey => {
                                             funcKey.indexOf(comp.config.hash) > -1 && (loopEventhandlers[configEventHandlers[funcKey].name] = funcGroup[configEventHandlers[funcKey].name + comp.config.hash]);
                                         });
-                                        // var loopEventhandlers = {};
-                                        // Object.keys(eventhandlers).forEach(event => {
-                                        //     loopEventhandlers[event] = e => {
-                                        //         console.log('eventhandlers[event]', eventhandlers[event]);
-                                        //         eventhandlers[event].call(this, e, slotProps, loopProps);
-                                        //     }
-                                        // });
                                         var nodeDom = h(comp.name, {
                                             attrs: {
                                                 id: comp.config.hash
