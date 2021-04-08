@@ -267,6 +267,10 @@
                                                 }).call(this);
                                             });
                                         });
+                                        var loopProps = {
+                                            item: dataitem,
+                                            index: index
+                                        };
                                         // 复写localProps传loopProps
                                         this[comp.config.hash] && Object.keys(cmps[comp.name].props).forEach(item => {
                                             localProps[item] = null;
@@ -322,10 +326,6 @@
                                                     flag = false;
                                                 }
                                                 if (flag) {
-                                                    var loopProps = {
-                                                        item: dataitem,
-                                                        index: index
-                                                    };
                                                     localProps[item] = this['propsFunc' + '_' + comp.config.hash + '_' + item].call(
                                                         this._self,
                                                         slotProps,
@@ -335,6 +335,39 @@
                                             }
                                         });
                                         // 复写eventhandlers传loopProps
+                                        var funcGroup = {};
+                                        Object.keys(configEventHandlers).forEach(funcKey => {
+                                            var funcStr = configEventHandlers[funcKey].handler;
+                                            var funcName = funcKey.split('-');
+                                            funcName = funcName[1] + funcName[0];
+                                            if (!that.topDataLevel) {
+                                                // slot
+                                                var flagkey = funcStr.indexOf('{');
+                                                var headStr = funcStr.substr(0, flagkey);
+                                                var bodyStr = funcStr.substr(flagkey);
+                                                bodyStr = bodyStr.replace(new RegExp('slotProps', 'gm'), 'window.$slotArgs');
+                                                funcStr = headStr + bodyStr;
+                                            }
+                                            try {
+                                                /* eslint-disable */
+                                                var resFunc = new Function('return ' + funcStr).call(this);
+                                                /* eslint-enable */
+                                                funcGroup[funcName] = e => { resFunc.call(this._self, e, slotProps, loopProps) };
+                                            } catch (e) {
+                                                funcGroup[funcName] = () => {};
+                                            }
+                                        });
+                                        var loopEventhandlers = {};
+                                        Object.keys(configEventHandlers).forEach(funcKey => {
+                                            funcKey.indexOf(comp.config.hash) > -1 && (loopEventhandlers[configEventHandlers[funcKey].name] = funcGroup[configEventHandlers[funcKey].name + comp.config.hash]);
+                                        });
+                                        // var loopEventhandlers = {};
+                                        // Object.keys(eventhandlers).forEach(event => {
+                                        //     loopEventhandlers[event] = e => {
+                                        //         console.log('eventhandlers[event]', eventhandlers[event]);
+                                        //         eventhandlers[event].call(this, e, slotProps, loopProps);
+                                        //     }
+                                        // });
                                         var nodeDom = h(comp.name, {
                                             attrs: {
                                                 id: comp.config.hash,
@@ -342,7 +375,7 @@
                                             },
                                             props: localProps,
                                             on: {
-                                                ...eventhandlers
+                                                ...loopEventhandlers
                                             },
                                             scopedSlots: scopedSlots
                                         });
