@@ -51,20 +51,20 @@
                 <div class="event-system">
                     <div class="config-comp" v-for="key in Object.keys(cusComp.config.data.data)" :key="key">
                         <span v-if="key === currentEdit.config.hash">
-                            <div class="config-comp" v-if="!currentEdit.content">
+                            <div class="config-comp vbtn-box" v-if="!currentEdit.content">
                                 <span class="config-comp-title vv-title">v-if: </span>
                                 <span
-                                    :class="['iconfont', {'icon--qiyong': !currentEdit.config.vif}, {'icon-qiyong': currentEdit.config.vif}]"
+                                    :class="['iconfont', 'v-btn', {'icon--qiyong': !currentEdit.config.vif}, {'icon-qiyong': currentEdit.config.vif}]"
                                     @click="emitSetV(false, 'vif')"></span>
                                 <span v-if="currentEdit.config.vif" class="props-data">
                                     <span @click="emitSetV(true, 'vif')" class="iconfont icon-gengxin2 props-data-gx"></span>
                                     <ide-textarea :code="currentEdit.config.vif" ref="vifIDE" />
                                 </span>
                             </div>
-                            <div class="config-comp" v-if="!currentEdit.content">
+                            <div class="config-comp vbtn-box" v-if="!currentEdit.content">
                                 <span class="config-comp-title vv-title">v-for: </span>
                                 <span
-                                    :class="['iconfont', {'v-for-btn': (!currentEdit.config.vif && !currentEdit.config.vfor) || (!currentEdit.config.vif && currentEdit.config.vfor)}, {'icon--qiyong': !currentEdit.config.vfor}, {'icon-qiyong': currentEdit.config.vfor}]"
+                                    :class="['iconfont', 'v-btn', {'icon--qiyong': !currentEdit.config.vfor}, {'icon-qiyong': currentEdit.config.vfor}]"
                                     @click="emitSetV(false, 'vfor')"></span>
                                 <span v-if="currentEdit.config.vfor" class="props-data">
                                     <span @click="emitSetV(true, 'vfor')" class="iconfont icon-gengxin2 props-data-gx"></span>
@@ -489,8 +489,9 @@
             .icon-qiyong,
             .icon--qiyong {
                 font-size: 26px;
-                position: relative;
-                float: right;
+                position: absolute;
+                right: 0px;
+                top: 0px;
                 margin-right: 20px;
                 z-index: 100;
             }
@@ -500,9 +501,9 @@
             .icon-qiyong {
                 color: @main!important;
             }
-            .v-for-btn {
-                margin-right: -25px;
-            }
+        }
+        .vbtn-box {
+            position: relative;
         }
         .compname {
             color: @sub;
@@ -566,14 +567,13 @@
                 position: relative;
                 width: 240px;
                 display: inline-block;
-                margin-top: -20px;
                 .CodeMirror {
                     height: 100px;
                     margin-top: 15px;
                 }
                 .props-data-gx {
                     position: absolute;
-                    top: -7px;
+                    top: -18px;
                     right: 35px;
                     font-size: 24px;
                     float: right;
