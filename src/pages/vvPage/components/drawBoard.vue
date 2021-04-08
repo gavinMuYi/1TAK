@@ -370,8 +370,7 @@
                                         // });
                                         var nodeDom = h(comp.name, {
                                             attrs: {
-                                                id: comp.config.hash,
-                                                class: comp.config.hash + '-' + index
+                                                id: comp.config.hash
                                             },
                                             props: localProps,
                                             on: {
