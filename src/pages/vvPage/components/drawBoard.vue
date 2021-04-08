@@ -310,11 +310,7 @@
                                                     var flagkey = funcStr.indexOf('{');
                                                     var headStr = funcStr.substr(0, flagkey);
                                                     var bodyStr = funcStr.substr(flagkey);
-                                                    var loopStr = JSON.stringify({
-                                                        item: dataitem,
-                                                        index: index
-                                                    });
-                                                    bodyStr = bodyStr.replace(new RegExp('slotProps', 'gm'), `{...window.$slotArgs,loopProps:JSON.parse('${loopStr}')}`);
+                                                    bodyStr = bodyStr.replace(new RegExp('slotProps', 'gm'), 'window.$slotArgs');
                                                     funcStr = headStr + bodyStr;
                                                 }
                                                 try {
@@ -326,16 +322,19 @@
                                                     flag = false;
                                                 }
                                                 if (flag) {
-                                                    localProps[item] = this['propsFunc' + '_' + comp.config.hash + '_' + item].call(this._self, {
-                                                        ...slotProps,
-                                                        loopProps: {
-                                                            item: dataitem,
-                                                            index: index
-                                                        }
-                                                    });
+                                                    var loopProps = {
+                                                        item: dataitem,
+                                                        index: index
+                                                    };
+                                                    localProps[item] = this['propsFunc' + '_' + comp.config.hash + '_' + item].call(
+                                                        this._self,
+                                                        slotProps,
+                                                        loopProps
+                                                    );
                                                 }
                                             }
                                         });
+                                        // 复写eventhandlers传loopProps
                                         var nodeDom = h(comp.name, {
                                             attrs: {
                                                 id: comp.config.hash,
