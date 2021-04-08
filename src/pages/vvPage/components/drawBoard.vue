@@ -257,7 +257,7 @@
                                             slot.children.length && (scopedSlots[slot.name] = props => {
                                                 let proArgs = {};
                                                 proArgs[comp.config.hash + slot.name] = props;
-                                                proArgs[comp.config.hash + slot.name + '_localProps'] = {
+                                                proArgs[comp.config.hash + slot.name + '_loopProps'] = {
                                                     item: item,
                                                     index: index
                                                 };
