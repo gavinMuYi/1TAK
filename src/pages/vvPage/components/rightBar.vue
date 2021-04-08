@@ -488,6 +488,7 @@
             padding-left: 15px;
             border-left: 1px solid #ededed;
             border-bottom: 1px solid #ededed;
+            margin-bottom: 20px;
             .event-gx-btn {
                 float: right;
                 font-size: 24px;
