@@ -251,14 +251,14 @@
                                 var domComp
                                 if (vforFunc && vforFunc.call(this)) {
                                     var list = vforFunc.call(this);
-                                    domComp = list.map((item, index) => {
+                                    domComp = list.map((dataitem, index) => {
                                         var scopedSlots = {};
                                         comp.config.slot.forEach(slot => {
                                             slot.children.length && (scopedSlots[slot.name] = props => {
                                                 let proArgs = {};
                                                 proArgs[comp.config.hash + slot.name] = props;
                                                 proArgs[comp.config.hash + slot.name + '_loopProps'] = {
-                                                    item: item,
+                                                    item: dataitem,
                                                     index: index
                                                 };
                                                 return renderFunction(slot.children, false, {
@@ -266,6 +266,75 @@
                                                     ...slotProps
                                                 }).call(this);
                                             });
+                                        });
+                                        // 复写localProps传loopProps
+                                        this[comp.config.hash] && Object.keys(cmps[comp.name].props).forEach(item => {
+                                            localProps[item] = null;
+                                            switch (typeof cmps[comp.name].props[item].type()) {
+                                            case 'object':
+                                                try {
+                                                    localProps[item] = JSON.parse(this[comp.config.hash][item]);
+                                                } catch (e) {
+                                                    localProps[item] = null
+                                                }
+                                                break;
+                                            case 'function':
+                                                try {
+                                                    /* eslint-disable */
+                                                    var resFunc = new Function('return ' + this[comp.config.hash][item]).call(this);
+                                                    /* eslint-enable */
+                                                    localProps[item] = resFunc.bind(this._self);
+                                                } catch (e) {
+                                                    localProps[item] = () => {};
+                                                }
+                                                break;
+                                            case 'number':
+                                                localProps[item] = Number(this[comp.config.hash][item]);
+                                                break;
+                                            case 'boolean':
+                                                try {
+                                                    localProps[item] = JSON.parse(this[comp.config.hash][item]);
+                                                } catch (e) {
+                                                    localProps[item] = null
+                                                }
+                                                break;
+                                            default:
+                                                localProps[item] = this[comp.config.hash][item];
+                                                break;
+                                            }
+                                            if (propsFunc[item]) {
+                                                let flag = true;
+                                                var funcStr = propsFunc[item];
+                                                if (!that.topDataLevel) {
+                                                    // slot
+                                                    var flagkey = funcStr.indexOf('{');
+                                                    var headStr = funcStr.substr(0, flagkey);
+                                                    var bodyStr = funcStr.substr(flagkey);
+                                                    var loopStr = JSON.stringify({
+                                                        item: dataitem,
+                                                        index: index
+                                                    });
+                                                    bodyStr = bodyStr.replace(new RegExp('slotProps', 'gm'), `{...window.$slotArgs,loopProps:JSON.parse('${loopStr}')}`);
+                                                    funcStr = headStr + bodyStr;
+                                                }
+                                                try {
+                                                    /* eslint-disable */
+                                                    var resFunc = new Function('return ' + funcStr).call(this);
+                                                    /* eslint-enable */
+                                                    this['propsFunc' + '_' + comp.config.hash + '_' + item] = resFunc;
+                                                } catch (e) {
+                                                    flag = false;
+                                                }
+                                                if (flag) {
+                                                    localProps[item] = this['propsFunc' + '_' + comp.config.hash + '_' + item].call(this._self, {
+                                                        ...slotProps,
+                                                        loopProps: {
+                                                            item: dataitem,
+                                                            index: index
+                                                        }
+                                                    });
+                                                }
+                                            }
                                         });
                                         var nodeDom = h(comp.name, {
                                             attrs: {
