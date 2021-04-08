@@ -13,8 +13,6 @@
 
 <script>
     import clone from 'clone';
-    import LeftBar from '../vvPage/components/leftBar';
-    import RightBar from '../vvPage/components/rightBar';
     import DrawBoard from '../vvPage/components/drawBoard';
     import { iconCompMap } from '../vvPage/config.js';
     import { createHash } from '../../utils/common.js';
@@ -29,8 +27,6 @@
     export default {
         name: 'ViewPage',
         components: {
-            LeftBar,
-            RightBar,
             DrawBoard
         },
         data () {
@@ -49,6 +45,13 @@
                 config_data_eventHandlers_bak: {},
                 snapshot: [],
                 snapshot_flag: 0,
+                pageData: {
+                    pageName: '',
+                    metaID: '',
+                    remark: ''
+                },
+                globalData: {},
+                lifeCycle: this.preCusComp ? this.preCusComp.config.lifeCycle : {},
                 cusComp: {
                     content: true,
                     type: 'combination',
@@ -88,6 +91,50 @@
         methods: {
             save () {
                 console.log(this.cusComp);
+            },
+            slotChange (slotData) {
+                this.refreshWorkSpace();
+                this.comps.forEach(item => {
+                    if (item.config.hash === slotData.hash) {
+                        item.config.slot.forEach(slot => {
+                            if (slot.name === slotData.slotName) {
+                                this.$set(slot, 'children', slotData.slots);
+                            }
+                        });
+                    }
+                });
+                this.$set(this, 'config_data_data_bak', slotData.data);
+                this.$set(this, 'config_data_eventHandlers_bak', slotData.event);
+            },
+            setProps (hash, datakey, funcStr, mode) {
+                this.comps.forEach(item => {
+                    if (item.config.hash === hash) {
+                        if (item.config.props[datakey] && !mode) {
+                            this.$set(item.config.props, datakey, '');
+                            delete item.config.props[datakey];
+                        } else {
+                            this.$set(item.config.props, datakey, funcStr);
+                        }
+                    }
+                });
+            },
+            setV (hash, func, key) {
+                var funcStr = key === 'vif'
+                    ? 'function () {return true;}'
+                    : 'function () {return "";}';
+                this.comps.forEach(item => {
+                    if (item.config.hash === hash) {
+                        if (!func) {
+                            if (!item.config[key]) {
+                                item.config[key] = funcStr;
+                            } else {
+                                item.config[key] = func;
+                            }
+                        } else {
+                            item.config[key] = func;
+                        }
+                    }
+                });
             },
             action (action, hash) {
                 let copyHash = createHash(4);
@@ -169,6 +216,12 @@
                 this.$set(this, 'comps', clone(this.snapshot[this.snapshot_flag].comps));
                 this.refreshWorkSpace();
             },
+            setGlobalData (val) {
+                this.$set(this, 'globalData', JSON.parse(val));
+            },
+            setLifeCycle (key, val) {
+                this.$set(this.lifeCycle, key, val);
+            },
             updateParams (comps) {
                 this.refreshWorkSpace();
                 if (comps.content) {
@@ -231,7 +284,13 @@
                 }
                 data.config !== undefined
                     ? (dragCompData.config = data.config)
-                    : (dragCompData.config = { hash: createHash(4) });
+                    : (dragCompData.config = {
+                        hash: createHash(4),
+                        props: {},
+                        slot: (cmps[this.iconCompMap[data.id]].slot || []).map(e => { return { ...e, children: [] } }),
+                        vif: undefined,
+                        vfor: undefined
+                });
                 data.index !== undefined && this.comps.splice(data.index, 1);
                 this.comps.push(dragCompData);
                 this.editComponent(dragCompData);
@@ -251,6 +310,62 @@
 .factory {
     height: 100%;
     overflow: hidden;
+    .save-msg {
+        z-index: 100000;
+        position: absolute;
+        width: 400px;
+        height: 300px;
+        top: 50%;
+        left: 50%;
+        margin-left: -200px;
+        padding: 20px;
+        margin-top: -150px;
+        border: 1px solid @main;
+        background: @mainop;
+        border-radius: 10px;
+        text-align: center;
+        .btn-bar {
+            margin-top: 30px;
+            .btn {
+                display: inline-block;
+                width: 80px;
+                vertical-align: middle;
+                height: 26px;
+                line-height: 26px;
+                display: inline-block;
+                text-align: center;
+                font-size: 14px;
+                padding: 2px 5px;
+                border-radius: 3px;
+                background: #ededed;
+                margin: 20px;
+            }
+        }
+        .input-box {
+            height: 40px;
+            margin: 20px auto;
+            width: 250px;
+            box-sizing: border-box;
+            padding: 2px 8px;
+            border: 1px solid #dadee7;
+            border-radius: 2px;
+            transition: border-color .25s;
+            input {
+                position: relative;
+                display: block;
+                width: 100%;
+                line-height: inherit;
+                height: 34px;
+                padding: 7px 0;
+                color: #1e2330;
+                outline: none;
+                border: 0 none;
+                background: none;
+                box-sizing: border-box;
+                width: 100%;
+            }
+        }
+    }
     #ballId {
         background: @sub;
         color: white;
@@ -318,7 +433,7 @@
             float: right;
             color: @dep;
             font-weight: 700;
-            user-select:none;
+            user-select: none;
             .iconfont {
                 padding-left: 5px;
             }
