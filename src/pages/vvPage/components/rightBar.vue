@@ -27,10 +27,10 @@
                 <span @click="changeStyle(false)"><span class="iconfont icon-daima css-btn"></span>代码</span>
                 <styleEditor ref="styleEditor" :nowEdit="currentEdit" @update="updateStyle" :currentStyle="this.currentEdit.config.style || {}" :bycode="bycode" />
             </div>
-            <div class="config-comp" v-if="currentEdit.content">
+            <!-- <div class="config-comp" v-if="currentEdit.content">
                 <span class="config-comp-title vv-title">容器暴露接口: </span>
                 <span>{{ currentEdit.config.data.props }}</span>
-            </div>
+            </div> -->
             <div class="config-comp global-data" v-if="currentEdit.content" :key="'globalDataIDE' + currentEdit.content">
                 <div class="config-comp vv-title">全局变量: <span class="iconfont icon-gengxin2 global-gx" @click="emitglobalData"></span></div>
                 <ide-textarea :code="globalData" ref="globalDataIDE" type="application/json" :key="currentEdit.content" />
