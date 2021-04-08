@@ -249,8 +249,8 @@
                                     }
                                 }
                                 var domComp
-                                if (vforFunc && vforFunc.call(this)) {
-                                    var list = vforFunc.call(this);
+                                if (vforFunc && vforFunc.call(this, slotProps)) {
+                                    var list = vforFunc.call(this, slotProps);
                                     domComp = list.map((dataitem, index) => {
                                         var scopedSlots = {};
                                         comp.config.slot.forEach(slot => {
@@ -406,7 +406,7 @@
                                         this.$refs[comp.config.hash] = domComp.componentInstance;
                                     });
                                 }
-                                if ((vifFunc && vifFunc.call(this)) || !vifFunc) {
+                                if ((vifFunc && vifFunc.call(this, slotProps)) || !vifFunc) {
                                     return (
                                         <div
                                             class={['flag-sup-$-comp-box', 'comp-box', {'config-box': abs && !that.preview}, {'stc-box': !abs && !that.preview}]}
