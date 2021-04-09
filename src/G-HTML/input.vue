@@ -1,6 +1,6 @@
 <template>
     <div class="G_input">
-        <input :placeholder="placeholder" :value="value" @input="input"/>
+        <input :placeholder="placeholder" v-model="currentValue" @input="input" @blur="blur"/>
     </div>
 </template>
 
@@ -22,9 +22,24 @@
                 default: '请输入'
             }
         },
+        data () {
+            return {
+                currentValue: this.value
+            }
+        },
+        watch: {
+            value (val, oldValue) {
+                if (this.currentValue !== val) {
+                    this.currentValue = val;
+                }
+            }
+        },
         methods: {
-            input (val) {
-                this.$emit('input', val)
+            input () {
+                this.$emit('input', this.currentValue);
+            },
+            blur () {
+                this.$emit('blur', this.currentValue);
             }
         }
     }
