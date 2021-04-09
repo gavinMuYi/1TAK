@@ -16,13 +16,8 @@
     import DrawBoard from '../vvPage/components/drawBoard';
     import { iconCompMap } from '../vvPage/config.js';
     import { createHash } from '../../utils/common.js';
-    // import { suspensionBall } from '../../utils/drag-ball.js';
-    const requireComponent = require.context('../../G-HTML', false, /\w+\.(vue|js)$/);
-    var cmps = {};
-    requireComponent.keys().map(fileName => {
-        let cmp = requireComponent(fileName).default
-        cmps[cmp.name] = cmp
-    });
+    import gtml from '../../G-HTML';
+    var cmps = gtml;
 
     export default {
         name: 'ViewPage',
