@@ -11,6 +11,10 @@
             name: 'input',
             label: '输入框input事件',
             params: '输入值'
+        }, {
+            name: 'blur',
+            label: '输入框blur事件',
+            params: '输入值'
         }],
         props: {
             value: {
