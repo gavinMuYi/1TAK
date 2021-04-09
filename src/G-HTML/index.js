@@ -1,9 +1,9 @@
 import G_INPUT from './input';
-import G_TEXT from './text';
+import G_TEST from './test';
 
 window._ghtml = {
     G_INPUT,
-    G_TEXT
+    G_TEST
 };
 
 export default window._ghtml;

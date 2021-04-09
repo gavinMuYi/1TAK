@@ -9,7 +9,7 @@
 
 <script>
     export default {
-        name: 'G_TEXT',
+        name: 'G_TEST',
         slot: [{
             name: 'default',
             params: ''
