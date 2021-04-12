@@ -212,6 +212,7 @@
         }
         #stylePanelContent.style-content-close {
             height: 0;
+            padding: 0;
         }
         #stylePanelContent {
             transition: height 1s;
