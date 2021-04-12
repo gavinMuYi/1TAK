@@ -564,7 +564,7 @@
                     width: 100%;
                     height: 100%;
                     padding: 5px;
-                    border: 1px solid @dep;
+                    border: 1px solid @sub;
                     border-radius: 3px;
                     z-index: 10;
                 }
@@ -574,7 +574,7 @@
             &:hover {
                 box-sizing: border-box;
                 padding: 5px;
-                border: 1px solid @dep;
+                border: 1px solid @sub;
                 border-radius: 3px;
                 z-index: 10;
             }
