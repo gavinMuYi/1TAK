@@ -1,6 +1,5 @@
 <template>
     <div class="factory">
-        <!-- <div id="ballId">drag</div> -->
         <pre class="globel-data" v-if="globelData">{{cusComp}}</pre>
         <div class="save-msg" v-if="dosave">
             <div class="input-box"><input placeholder="页面名称" v-model="pageData.pageName" /></div>
@@ -176,7 +175,6 @@
         },
         mounted () {
             this.$set(this, 'nowEdit', this.cusComp);
-            // suspensionBall('ballId', 'https://www.baidu.com');
         },
         methods: {
             save () {
@@ -468,26 +466,6 @@
                 width: 100%;
             }
         }
-    }
-    #ballId {
-        background: @sub;
-        color: white;
-        width: 50px;
-        text-align: center;
-        height: 50px;
-        line-height: 50px;
-        border-radius: 50%;
-        box-shadow: 5px 5px 40px rgba(0, 0, 0, 0.5);
-        z-index: 10000;
-        /* 过渡效果在IE下展示效果不友好 */
-        transition: all 0.08s;
-        user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        -webkit-user-select: none;
-        top: 50%;
-        left: 50%;
-        transform: translate3d(-50%, -50%, 0);
     }
     .globel-data {
         position: fixed;
