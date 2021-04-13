@@ -218,6 +218,7 @@
             transition: height 1s;
             position: fixed;
             width: 100%;
+            min-width: 1500px;
             height: 700px;
             left: 0;
             bottom: 0;
