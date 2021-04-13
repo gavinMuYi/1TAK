@@ -73,7 +73,7 @@ app.get(/^\/mock/, (req, res) => {
 });
 
 app.get('/getMockList', (req, res) => {
-    mockData.get().then(e => {
+    mockDate.get().then(e => {
         res.status(200)
         res.json({
             code: 0,
