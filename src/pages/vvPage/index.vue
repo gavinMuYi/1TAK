@@ -20,6 +20,10 @@
                     <span class="iconfont icon-quanjituanxiangmuguanli"></span>
                     mock调试{{ windowMock ? 'on' : 'off' }}
                 </span>
+                <span>
+                    <span class="iconfont icon-fuzhi"></span>
+                    接口协议
+                </span>
                 <span @click="globelData = !globelData">
                     <span class="iconfont icon-yuming"></span>
                     页面信息
