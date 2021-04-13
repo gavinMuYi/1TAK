@@ -13,6 +13,7 @@ const ajaxP = axios.create({
     headers: { 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' }
 });
 const BASE_URL = 'mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/';
+window.basicUrl = 'https://' + BASE_URL;
 var whiteList = [
     '/saveMeta',
     '/getMeta',
