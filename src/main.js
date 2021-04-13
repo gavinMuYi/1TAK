@@ -9,7 +9,31 @@ require('../css/heyui.less');
 
 Vue.config.productionTip = false;
 Vue.use(install, { components: { ColorPicker, Slider }, prototypes: Prototypes });
+const ajaxP = axios.create({
+    headers: { 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' }
+});
+const BASE_URL = 'mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab';
+window.basicUrl = 'https://' + BASE_URL;
+var whiteList = [
+    '/saveMeta',
+    '/getMeta',
+    '/getList'
+].map(url => {
+    return 'https://' + BASE_URL + url
+});
 Vue.prototype.$ajax = axios;
+Vue.prototype.$ajax.post = function (url, options) {
+    if (window.mock && whiteList.indexOf(url) === -1) {
+        url = url.replace(BASE_URL, BASE_URL + '/mock');
+    }
+    return ajaxP.post(url, options);
+};
+Vue.prototype.$ajax.get = function (url, options) {
+    if (window.mock && whiteList.indexOf(url) === -1) {
+        url = url.replace(BASE_URL, BASE_URL + '/mock');
+    }
+    return ajaxP.get(url, options);
+}
 
 /* eslint-disable */
 Date.prototype.Format = function (fmt) {

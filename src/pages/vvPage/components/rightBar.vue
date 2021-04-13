@@ -27,10 +27,10 @@
                 <span @click="changeStyle(false)"><span class="iconfont icon-daima css-btn"></span>代码</span>
                 <styleEditor ref="styleEditor" :nowEdit="currentEdit" @update="updateStyle" :currentStyle="this.currentEdit.config.style || {}" :bycode="bycode" />
             </div>
-            <div class="config-comp" v-if="currentEdit.content">
+            <!-- <div class="config-comp" v-if="currentEdit.content">
                 <span class="config-comp-title vv-title">容器暴露接口: </span>
                 <span>{{ currentEdit.config.data.props }}</span>
-            </div>
+            </div> -->
             <div class="config-comp global-data" v-if="currentEdit.content" :key="'globalDataIDE' + currentEdit.content">
                 <div class="config-comp vv-title">全局变量: <span class="iconfont icon-gengxin2 global-gx" @click="emitglobalData"></span></div>
                 <ide-textarea :code="globalData" ref="globalDataIDE" type="application/json" :key="currentEdit.content" />
@@ -431,6 +431,14 @@
                 cursor: pointer;
             }
         }
+        .icon-shangji,
+        .icon-moxingzuzhuang {
+            color: @dep;
+            &:hover {
+                color: @dep;
+                cursor: pointer;
+            }
+        }
         .css-btn {
             font-size: 12px;
             margin-left: 10px;
@@ -452,7 +460,6 @@
         .props-title {
             display: block!important;
             width: 200px!important;
-            margin-bottom: 20px;
             font-weight: 700;
         }
         textarea {
@@ -481,6 +488,7 @@
             padding-left: 15px;
             border-left: 1px solid #ededed;
             border-bottom: 1px solid #ededed;
+            margin-bottom: 20px;
             .event-gx-btn {
                 float: right;
                 font-size: 24px;

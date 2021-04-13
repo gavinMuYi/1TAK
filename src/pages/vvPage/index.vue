@@ -1,6 +1,5 @@
 <template>
     <div class="factory">
-        <!-- <div id="ballId">drag</div> -->
         <pre class="globel-data" v-if="globelData">{{cusComp}}</pre>
         <div class="save-msg" v-if="dosave">
             <div class="input-box"><input placeholder="页面名称" v-model="pageData.pageName" /></div>
@@ -16,6 +15,14 @@
                 Vv Page<span class="iconfont icon-yezhu"></span>
             </div>
             <div class="actions">
+                <span @click="changeMock">
+                    <span class="iconfont icon-quanjituanxiangmuguanli"></span>
+                    mock调试{{ windowMock ? 'on' : 'off' }}
+                </span>
+                <span>
+                    <span class="iconfont icon-fuzhi"></span>
+                    接口协议
+                </span>
                 <span @click="globelData = !globelData">
                     <span class="iconfont icon-yuming"></span>
                     页面信息
@@ -80,13 +87,8 @@
     import DrawBoard from './components/drawBoard';
     import { iconCompMap } from './config.js';
     import { createHash } from '../../utils/common.js';
-    // import { suspensionBall } from '../../utils/drag-ball.js';
-    const requireComponent = require.context('../../G-HTML', false, /\w+\.(vue|js)$/);
-    var cmps = {};
-    requireComponent.keys().map(fileName => {
-        let cmp = requireComponent(fileName).default
-        cmps[cmp.name] = cmp
-    });
+    import gtml from '../../G-HTML';
+    var cmps = gtml;
 
     export default {
         name: 'VvPage',
@@ -106,7 +108,9 @@
             }
         },
         data () {
+            window.mock = true;
             return {
+                windowMock: true,
                 dosave: false,
                 globelData: false,
                 abs: true,
@@ -171,23 +175,23 @@
         },
         mounted () {
             this.$set(this, 'nowEdit', this.cusComp);
-            // suspensionBall('ballId', 'https://www.baidu.com');
         },
         methods: {
             save () {
                 this.pageData.meta = this.cusComp;
                 this.pageData.lastModifiy = +new Date();
-                const ajaxP = this.$ajax.create({
-                    headers: { 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' }
-                });
-                ajaxP.post('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/saveMeta',
-                           qs.stringify({ pageData: JSON.stringify(this.pageData) })
+                this.$ajax.post('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/saveMeta',
+                                qs.stringify({ pageData: JSON.stringify(this.pageData) })
                 ).then(e => {
                     if (e.data.code === 0) {
                         alert('保存成功~');
                     }
                 });
                 this.dosave = false;
+            },
+            changeMock () {
+                this.windowMock = !this.windowMock;
+                window.mock = !window.mock;
             },
             slotChange (slotData) {
                 this.refreshWorkSpace();
@@ -462,26 +466,6 @@
                 width: 100%;
             }
         }
-    }
-    #ballId {
-        background: @sub;
-        color: white;
-        width: 50px;
-        text-align: center;
-        height: 50px;
-        line-height: 50px;
-        border-radius: 50%;
-        box-shadow: 5px 5px 40px rgba(0, 0, 0, 0.5);
-        z-index: 10000;
-        /* 过渡效果在IE下展示效果不友好 */
-        transition: all 0.08s;
-        user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        -webkit-user-select: none;
-        top: 50%;
-        left: 50%;
-        transform: translate3d(-50%, -50%, 0);
     }
     .globel-data {
         position: fixed;

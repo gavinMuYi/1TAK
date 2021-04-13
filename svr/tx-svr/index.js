@@ -19,6 +19,7 @@ app.all('*', (req, res, next) => {
 
 const DBapp = tcb.init({});
 const pageDate = DBapp.database().collection("page_date_db");
+const mockDate = DBapp.database().collection("mock_date_db");
 
 app.get('/', (req, res) => {
     res.status(200)
@@ -51,6 +52,37 @@ app.get('/getMeta', (req, res) => {
             }
         })
     });
+});
+
+app.get(/^\/mock/, (req, res) => {
+    var requestedUrlSTR = req.protocol + '://' + req.get('Host') + req.url;
+    var requestedUrl = new URL(requestedUrlSTR);
+    mockDate
+    .where({
+        pathname: requestedUrl.pathname.replace('mock/', '')
+    })
+    .get().then(e => {
+        res.status(200)
+        res.json({
+            code: 0,
+            data: {
+                data: e.data[0]
+            }
+        })
+    });
+});
+
+app.post('/saveMock', function (req, res) {
+    var body = JSON.parse(Qs.parse(req.body).mockData);
+    mockDate.add(body).then(e => {
+        if (e.id) {
+            res.status(200)
+            res.json({
+                code: 0,
+                body: body
+            });
+        }
+    })
 });
 
 app.post('/saveMeta', function (req, res) {

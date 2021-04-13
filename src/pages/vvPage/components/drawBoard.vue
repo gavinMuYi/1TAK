@@ -22,12 +22,8 @@
     import pop from '../../../components/pop';
     import { addCss } from '../../../utils/common.js';
     // 注册单位组件
-    const requireComponent = require.context('../../../G-HTML', false, /\w+\.(vue|js)$/);
-    var cmps = {};
-    requireComponent.keys().map(fileName => {
-        let cmp = requireComponent(fileName).default
-        cmps[cmp.name] = cmp
-    });
+    import gtml from '../../../G-HTML';
+    var cmps = gtml;
 
     export default {
         name: 'DrawBoard',
@@ -249,16 +245,16 @@
                                     }
                                 }
                                 var domComp
-                                if (vforFunc && vforFunc.call(this)) {
-                                    var list = vforFunc.call(this);
-                                    domComp = list.map((item, index) => {
+                                if (vforFunc && vforFunc.call(this, slotProps)) {
+                                    var list = vforFunc.call(this, slotProps);
+                                    domComp = list.map((dataitem, index) => {
                                         var scopedSlots = {};
                                         comp.config.slot.forEach(slot => {
                                             slot.children.length && (scopedSlots[slot.name] = props => {
                                                 let proArgs = {};
                                                 proArgs[comp.config.hash + slot.name] = props;
                                                 proArgs[comp.config.hash + slot.name + '_loopProps'] = {
-                                                    item: item,
+                                                    item: dataitem,
                                                     index: index
                                                 };
                                                 return renderFunction(slot.children, false, {
@@ -267,14 +263,107 @@
                                                 }).call(this);
                                             });
                                         });
+                                        var loopProps = {
+                                            item: dataitem,
+                                            index: index
+                                        };
+                                        // 复写localProps传loopProps
+                                        this[comp.config.hash] && Object.keys(cmps[comp.name].props).forEach(item => {
+                                            localProps[item] = null;
+                                            switch (typeof cmps[comp.name].props[item].type()) {
+                                            case 'object':
+                                                try {
+                                                    localProps[item] = JSON.parse(this[comp.config.hash][item]);
+                                                } catch (e) {
+                                                    localProps[item] = null
+                                                }
+                                                break;
+                                            case 'function':
+                                                try {
+                                                    /* eslint-disable */
+                                                    var resFunc = new Function('return ' + this[comp.config.hash][item]).call(this);
+                                                    /* eslint-enable */
+                                                    localProps[item] = resFunc.bind(this._self);
+                                                } catch (e) {
+                                                    localProps[item] = () => {};
+                                                }
+                                                break;
+                                            case 'number':
+                                                localProps[item] = Number(this[comp.config.hash][item]);
+                                                break;
+                                            case 'boolean':
+                                                try {
+                                                    localProps[item] = JSON.parse(this[comp.config.hash][item]);
+                                                } catch (e) {
+                                                    localProps[item] = null
+                                                }
+                                                break;
+                                            default:
+                                                localProps[item] = this[comp.config.hash][item];
+                                                break;
+                                            }
+                                            if (propsFunc[item]) {
+                                                let flag = true;
+                                                var funcStr = propsFunc[item];
+                                                if (!that.topDataLevel) {
+                                                    // slot
+                                                    var flagkey = funcStr.indexOf('{');
+                                                    var headStr = funcStr.substr(0, flagkey);
+                                                    var bodyStr = funcStr.substr(flagkey);
+                                                    bodyStr = bodyStr.replace(new RegExp('slotProps', 'gm'), 'window.$slotArgs');
+                                                    funcStr = headStr + bodyStr;
+                                                }
+                                                try {
+                                                    /* eslint-disable */
+                                                    var resFunc = new Function('return ' + funcStr).call(this);
+                                                    /* eslint-enable */
+                                                    this['propsFunc' + '_' + comp.config.hash + '_' + item] = resFunc;
+                                                } catch (e) {
+                                                    flag = false;
+                                                }
+                                                if (flag) {
+                                                    localProps[item] = this['propsFunc' + '_' + comp.config.hash + '_' + item].call(
+                                                        this._self,
+                                                        slotProps,
+                                                        loopProps
+                                                    );
+                                                }
+                                            }
+                                        });
+                                        // 复写eventhandlers传loopProps
+                                        var funcGroup = {};
+                                        Object.keys(configEventHandlers).forEach(funcKey => {
+                                            var funcStr = configEventHandlers[funcKey].handler;
+                                            var funcName = funcKey.split('-');
+                                            funcName = funcName[1] + funcName[0];
+                                            if (!that.topDataLevel) {
+                                                // slot
+                                                var flagkey = funcStr.indexOf('{');
+                                                var headStr = funcStr.substr(0, flagkey);
+                                                var bodyStr = funcStr.substr(flagkey);
+                                                bodyStr = bodyStr.replace(new RegExp('slotProps', 'gm'), 'window.$slotArgs');
+                                                funcStr = headStr + bodyStr;
+                                            }
+                                            try {
+                                                /* eslint-disable */
+                                                var resFunc = new Function('return ' + funcStr).call(this);
+                                                /* eslint-enable */
+                                                funcGroup[funcName] = e => { resFunc.call(this._self, e, slotProps, loopProps) };
+                                            } catch (e) {
+                                                funcGroup[funcName] = () => {};
+                                            }
+                                        });
+                                        var loopEventhandlers = {};
+                                        Object.keys(configEventHandlers).forEach(funcKey => {
+                                            funcKey.indexOf(comp.config.hash) > -1 && (loopEventhandlers[configEventHandlers[funcKey].name] = funcGroup[configEventHandlers[funcKey].name + comp.config.hash]);
+                                        });
                                         var nodeDom = h(comp.name, {
                                             attrs: {
-                                                id: comp.config.hash,
-                                                class: comp.config.hash + '-' + index
+                                                id: comp.config.hash
                                             },
                                             props: localProps,
                                             on: {
-                                                ...eventhandlers
+                                                ...loopEventhandlers
                                             },
                                             scopedSlots: scopedSlots
                                         });
@@ -313,7 +402,7 @@
                                         this.$refs[comp.config.hash] = domComp.componentInstance;
                                     });
                                 }
-                                if ((vifFunc && vifFunc.call(this)) || !vifFunc) {
+                                if ((vifFunc && vifFunc.call(this, slotProps)) || !vifFunc) {
                                     return (
                                         <div
                                             class={['flag-sup-$-comp-box', 'comp-box', {'config-box': abs && !that.preview}, {'stc-box': !abs && !that.preview}]}
@@ -475,7 +564,7 @@
                     width: 100%;
                     height: 100%;
                     padding: 5px;
-                    border: 1px solid @dep;
+                    border: 1px solid @sub;
                     border-radius: 3px;
                     z-index: 10;
                 }
@@ -485,7 +574,7 @@
             &:hover {
                 box-sizing: border-box;
                 padding: 5px;
-                border: 1px solid @dep;
+                border: 1px solid @sub;
                 border-radius: 3px;
                 z-index: 10;
             }
