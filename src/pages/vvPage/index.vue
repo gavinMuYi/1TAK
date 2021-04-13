@@ -16,6 +16,10 @@
                 Vv Page<span class="iconfont icon-yezhu"></span>
             </div>
             <div class="actions">
+                <span @click="changeMock">
+                    <span class="iconfont icon-quanjituanxiangmuguanli"></span>
+                    mock调试{{ windowMock ? 'on' : 'off' }}
+                </span>
                 <span @click="globelData = !globelData">
                     <span class="iconfont icon-yuming"></span>
                     页面信息
@@ -103,6 +107,7 @@
         data () {
             window.mock = true;
             return {
+                windowMock: true,
                 dosave: false,
                 globelData: false,
                 abs: true,
@@ -181,6 +186,10 @@
                     }
                 });
                 this.dosave = false;
+            },
+            changeMock () {
+                this.windowMock = !this.windowMock;
+                window.mock = !window.mock;
             },
             slotChange (slotData) {
                 this.refreshWorkSpace();
