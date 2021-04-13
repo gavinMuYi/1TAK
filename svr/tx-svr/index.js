@@ -72,6 +72,18 @@ app.get(/^\/mock/, (req, res) => {
     });
 });
 
+app.get('/getMockList', (req, res) => {
+    mockData.get().then(e => {
+        res.status(200)
+        res.json({
+            code: 0,
+            data: {
+                records: e.data
+            }
+        })
+    });
+});
+
 app.post('/saveMock', function (req, res) {
     var body = JSON.parse(Qs.parse(req.body).mockData);
     mockDate.add(body).then(e => {
