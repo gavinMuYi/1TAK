@@ -59,7 +59,7 @@ app.get(/^\/mock/, (req, res) => {
     var requestedUrl = new URL(requestedUrlSTR);
     mockDate
     .where({
-        pathname: requestedUrl.pathname
+        pathname: requestedUrl.pathname.replace('mock/', '')
     })
     .get().then(e => {
         res.status(200)
