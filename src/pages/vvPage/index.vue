@@ -19,7 +19,8 @@
                     <span class="iconfont icon-quanjituanxiangmuguanli"></span>
                     mock调试{{ windowMock ? 'on' : 'off' }}
                 </span>
-                <span>
+                <span @click="showInterface">
+                    <interface-editor ref="interface" />
                     <span class="iconfont icon-fuzhi"></span>
                     接口协议
                 </span>
@@ -82,6 +83,7 @@
 <script>
     import clone from 'clone';
     import qs from 'qs';
+    import InterfaceEditor from '../../components/interfaceEditor';
     import LeftBar from './components/leftBar';
     import RightBar from './components/rightBar';
     import DrawBoard from './components/drawBoard';
@@ -95,7 +97,8 @@
         components: {
             LeftBar,
             RightBar,
-            DrawBoard
+            DrawBoard,
+            InterfaceEditor
         },
         props: {
             preCusComp: {
@@ -188,6 +191,9 @@
                     }
                 });
                 this.dosave = false;
+            },
+            showInterface () {
+                this.$refs.interface.visibleChange();
             },
             changeMock () {
                 this.windowMock = !this.windowMock;
