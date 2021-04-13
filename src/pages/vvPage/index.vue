@@ -14,13 +14,13 @@
             <div class="pro-title">
                 Vv Page<span class="iconfont icon-yezhu"></span>
             </div>
+            <interface-editor ref="interface" />
             <div class="actions">
                 <span @click="changeMock">
                     <span class="iconfont icon-quanjituanxiangmuguanli"></span>
                     mock调试{{ windowMock ? 'on' : 'off' }}
                 </span>
                 <span @click="showInterface">
-                    <interface-editor ref="interface" />
                     <span class="iconfont icon-fuzhi"></span>
                     接口协议
                 </span>

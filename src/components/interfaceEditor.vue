@@ -1,15 +1,21 @@
 <template>
     <div class="interface-editor" v-if="showPanel">
-        111
+        <single-select v-model="currentMock" :options="mockUrls" />
     </div>
 </template>
 
 <script>
+    import SingleSelect from './styleEditor/components/single-select';
     export default {
         name: 'InterfaceEditor',
+        components: {
+            SingleSelect
+        },
         data () {
             return {
-                showPanel: false
+                showPanel: false,
+                currentMock: '',
+                mockUrls: []
             }
         },
         methods: {
@@ -31,5 +37,9 @@
         width: 800px;
         height: 100%;
         overflow: auto;
+        .single-select {
+            background: #fff;
+            margin: 20px 40px;
+        }
     }
 </style>
