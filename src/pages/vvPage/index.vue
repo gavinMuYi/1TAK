@@ -101,6 +101,7 @@
             }
         },
         data () {
+            window.mock = true;
             return {
                 dosave: false,
                 globelData: false,
@@ -172,11 +173,8 @@
             save () {
                 this.pageData.meta = this.cusComp;
                 this.pageData.lastModifiy = +new Date();
-                const ajaxP = this.$ajax.create({
-                    headers: { 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' }
-                });
-                ajaxP.post('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/saveMeta',
-                           qs.stringify({ pageData: JSON.stringify(this.pageData) })
+                this.$ajax.post('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/saveMeta',
+                                qs.stringify({ pageData: JSON.stringify(this.pageData) })
                 ).then(e => {
                     if (e.data.code === 0) {
                         alert('保存成功~');
