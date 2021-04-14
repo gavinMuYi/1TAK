@@ -75,10 +75,7 @@ app.get(/^\/mock/, (req, res) => {
     })
     .get().then(e => {
         res.status(200)
-        res.json({
-            code: 0,
-            data: e.data[0]
-        })
+        res.json(e.data[0].data.responsebody)
     });
 });
 

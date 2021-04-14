@@ -2,54 +2,113 @@
     <div class="interface-editor" v-if="showPanel">
         <div class="top">
             <span class="title">接口：</span>
-            <div class="input-box" v-if="create"><input placeholder="接口名称" v-model="currentMock" /></div>
-            <single-select v-else v-model="currentMock" :options="mockUrls" />
-            <span class="iconfont icon-baocun_mian"></span>
+            <div class="input-box" v-if="create"><input placeholder="接口名称" v-model="currentRule.pathname" /></div>
+            <single-select v-else v-model="currentRule.pathname" :options="mockUrls" @input="handleSelect" />
+            <span class="iconfont icon-baocun_mian" @click="save"></span>
             <span class="iconfont icon-gengduo1" @click="doCreate" v-if="!create"></span>
             <span class="iconfont icon-zhongzuo" @click="cancelCreate" v-else></span>
         </div>
         <div class="type">
             <span class="title">接口类型：</span>
-            <single-select v-model="type" :options="types" />
+            <single-select v-model="currentRule.type" :options="types" />
+        </div>
+        <div class="request" :key="'interface-req-' + currentRule.pathname">
+            <span class="title">请求参数：</span>
+            <ide-textarea :code="JSON.stringify(currentRule.requestparams)" ref="reqIDE" />
+        </div>
+        <div class="response" :key="'interface-res-' + currentRule.pathname">
+            <span class="title">返回结果：</span>
+            <ide-textarea :code="JSON.stringify(currentRule.responsebody)" ref="resIDE" />
         </div>
     </div>
 </template>
 
 <script>
     import SingleSelect from './styleEditor/components/single-select';
+    import IdeTextarea from './ideTextarea';
+    import qs from 'qs';
+    import clone from 'clone';
     export default {
         name: 'InterfaceEditor',
         components: {
-            SingleSelect
+            SingleSelect,
+            IdeTextarea
         },
         data () {
             return {
                 create: false,
                 showPanel: false,
-                currentMock: '',
+                currentRule: {
+                    pathname: '',
+                    requestparams: {},
+                    responsebody: {},
+                    type: 'get'
+                },
                 mockUrls: [],
-                type: 'get',
-                types: ['get', 'post', 'put', 'delete']
+                types: ['get', 'post', 'put', 'delete'],
+                ruleList: []
             }
         },
         mounted () {
-            this.$ajax.get('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/getListMock').then(e => {
-                var list = e.data.data.records.map(item => { return item.pathname });
-                this.currentMock = list[0];
-                this.$set(this, 'mockUrls', list);
-            });
+            this.init();
         },
         methods: {
             visibleChange () {
                 this.showPanel = !this.showPanel;
             },
+            save () {
+                var params = {
+                    ...this.currentRule,
+                    requestparams: JSON.parse(this.$refs.reqIDE.getValue()),
+                    responsebody: JSON.parse(this.$refs.resIDE.getValue())
+                }
+                if (!params.pathname) {
+                    alert('接口名称必填');
+                    return;
+                }
+                if (this.create) {
+                    this.$ajax.post('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/saveMock',
+                                    qs.stringify({ mockData: JSON.stringify(params) })
+                    ).then(e => {
+                        if (e.data.code === 0) {
+                            alert('保存成功~');
+                            this.create = false;
+                            this.init(params.pathname);
+                        }
+                    });
+                } else {
+                    // 更新
+                }
+            },
+            init (pn) {
+                this.$ajax.get('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/getListMock').then(e => {
+                    var list = e.data.data.records.map(item => { return item.pathname });
+                    this.ruleList = e.data.data.records;
+                    this.$set(this, 'currentRule', clone(this.ruleList).filter(e => {
+                        return (pn || list[0]) === e.pathname;
+                    })[0]);
+                    this.$set(this, 'mockUrls', list);
+                });
+            },
             doCreate () {
-                this.currentMock = '';
                 this.create = true;
+                this.currentRule = {
+                    pathname: '',
+                    requestparams: {},
+                    responsebody: {},
+                    type: 'get'
+                };
             },
             cancelCreate () {
-                this.currentMock = this.mockUrls[0];
                 this.create = false;
+                this.$set(this, 'currentRule', clone(this.ruleList).filter(e => {
+                    return this.mockUrls[0] === e.pathname;
+                })[0]);
+            },
+            handleSelect (val) {
+                this.$set(this, 'currentRule', clone(this.ruleList).filter(e => {
+                    return val === e.pathname;
+                })[0]);
             }
         }
     }
@@ -115,6 +174,7 @@
         }
         .type {
             padding-left: 40px;
+            margin-bottom: 10px;
             .title {
                 color: @dep;
             }
@@ -122,6 +182,20 @@
                 background: #fff;
                 margin: 20px 40px;
                 border-radius: 3px;
+            }
+        }
+        .response,
+        .request {
+            padding-left: 40px;
+            margin-bottom: 10px;
+            .title {
+                color: @dep;
+            }
+            .CodeMirror {
+                width: 720px;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                height: 320px;
             }
         }
     }
