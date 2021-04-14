@@ -38,6 +38,18 @@ app.get('/getList', (req, res) => {
     });
 });
 
+app.get('/getMockList', (req, res) => {
+    mockDate.get().then(e => {
+        res.status(200)
+        res.json({
+            code: 0,
+            data: {
+                records: e.data
+            }
+        })
+    });
+});
+
 app.get('/getMeta', (req, res) => {
     pageDate
     .where({
@@ -65,22 +77,7 @@ app.get(/^\/mock/, (req, res) => {
         res.status(200)
         res.json({
             code: 0,
-            data: {
-                data: e.data[0]
-            }
-        })
-    });
-});
-
-app.get('/getMockList', (req, res) => {
-    mockDate
-    .get().then(e => {
-        res.status(200)
-        res.json({
-            code: 0,
-            data: {
-                records: e
-            }
+            data: e.data[0]
         })
     });
 });
