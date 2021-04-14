@@ -38,14 +38,13 @@ app.get('/getList', (req, res) => {
     });
 });
 
-app.get('/getMockList', (req, res) => {
-    mockDate.get().then(e => {
+app.get('/getInterfaceList', (req, res) => {
+    mockDate.where({}).get().then(e => {
+        console.log(e);
         res.status(200)
         res.json({
-            code: 0,
-            data: {
-                records: e.data
-            }
+            records: e.data,
+            da: e
         })
     });
 });
