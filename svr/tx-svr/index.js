@@ -38,13 +38,14 @@ app.get('/getList', (req, res) => {
     });
 });
 
-app.get('/getInterfaceList', (req, res) => {
-    mockDate.where({}).get().then(e => {
-        console.log(e);
+app.get('/getListMock', (req, res) => {
+    mockDate.get().then(e => {
         res.status(200)
         res.json({
-            records: e.data,
-            da: e
+            code: 0,
+            data: {
+                records: e.data
+            }
         })
     });
 });
@@ -108,6 +109,7 @@ app.post('/saveMeta', function (req, res) {
 });
 
 const port = process.env.PORT || 80;
+
 app.listen(port, () => {
-    console.log('Hello world listening on port', port);
+    console.log('Hello world listening on port now!!', port);
 });

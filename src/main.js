@@ -17,7 +17,8 @@ window.basicUrl = 'https://' + BASE_URL;
 var whiteList = [
     '/saveMeta',
     '/getMeta',
-    '/getList'
+    '/getList',
+    '/getListMock'
 ].map(url => {
     return 'https://' + BASE_URL + url
 });

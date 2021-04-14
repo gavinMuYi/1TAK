@@ -19,9 +19,11 @@
             }
         },
         mounted () {
-            this.$ajax.get('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/getInterfaceList').then(e => {
-                console.log(e.data.data.records);
-                this.$set(this, 'mockUrls', e.data.data.records);
+            this.$ajax.get('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/getListMock').then(e => {
+                console.log(e.data);
+                var list = e.data.data.records.map(item => { return item.pathname });
+                this.currentMock = list[0];
+                this.$set(this, 'mockUrls', list);
             });
         },
         methods: {
@@ -39,7 +41,6 @@
         top: 0px;
         left: 0px;
         background: @mainop;
-        color: @dep;
         width: 800px;
         height: 100%;
         overflow: auto;
