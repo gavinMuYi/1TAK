@@ -92,6 +92,23 @@ app.post('/saveMock', function (req, res) {
     })
 });
 
+app.post('/updateMock', function (req, res) {
+    var body = JSON.parse(Qs.parse(req.body).mockData);
+    var id = JSON.parse(Qs.parse(req.body).id);
+    mockDate
+    .doc(String(id))
+    .set(body)
+    .then(e => {
+        if (e.id) {
+            res.status(200)
+            res.json({
+                code: 0,
+                body: body
+            });
+        }
+    })
+});
+
 app.post('/saveMeta', function (req, res) {
     var body = JSON.parse(Qs.parse(req.body).pageData);
     pageDate.add(body).then(e => {

@@ -19,7 +19,8 @@ var whiteList = [
     '/getMeta',
     '/getList',
     '/getListMock',
-    '/saveMock'
+    '/saveMock',
+    '/updateMock'
 ].map(url => {
     return 'https://' + BASE_URL + url
 });
