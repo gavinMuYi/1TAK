@@ -183,7 +183,7 @@
             save () {
                 this.pageData.meta = this.cusComp;
                 this.pageData.lastModifiy = +new Date();
-                this.$ajax.post('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/saveMeta',
+                this.$ajax.post('/saveMeta',
                                 qs.stringify({ pageData: JSON.stringify(this.pageData) })
                 ).then(e => {
                     if (e.code === 0) {

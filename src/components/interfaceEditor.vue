@@ -67,7 +67,7 @@
                     return;
                 }
                 if (this.create) {
-                    this.$ajax.post('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/saveMock',
+                    this.$ajax.post('/saveMock',
                                     qs.stringify({ mockData: JSON.stringify(params) })
                     ).then(e => {
                         if (e.code === 0) {
@@ -77,7 +77,7 @@
                         }
                     });
                 } else {
-                    this.$ajax.post('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/updateMock',
+                    this.$ajax.post('/updateMock',
                                     qs.stringify({
                                         mockData: JSON.stringify(params)
                                     })
@@ -91,7 +91,7 @@
                 }
             },
             init (pn) {
-                this.$ajax.get('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/getListMock').then(e => {
+                this.$ajax.get('/getListMock').then(e => {
                     var list = e.data.records.map(item => { return item.pathname });
                     this.ruleList = e.data.records;
                     this.$set(this, 'currentRule', clone(this.ruleList).filter(e => {
