@@ -39,7 +39,7 @@
         },
         mounted () {
             this.$ajax.get('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/getList').then(e => {
-                this.$set(this, 'list', e.data.data.records);
+                this.$set(this, 'list', e.data.records);
             });
         }
     }

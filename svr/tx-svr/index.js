@@ -59,9 +59,7 @@ app.get('/getMeta', (req, res) => {
         res.status(200)
         res.json({
             code: 0,
-            data: {
-                data: e.data[0]
-            }
+            data: e.data[0]
         })
     });
 });

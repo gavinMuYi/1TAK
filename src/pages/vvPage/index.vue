@@ -186,7 +186,7 @@
                 this.$ajax.post('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/saveMeta',
                                 qs.stringify({ pageData: JSON.stringify(this.pageData) })
                 ).then(e => {
-                    if (e.data.code === 0) {
+                    if (e.code === 0) {
                         alert('保存成功~');
                     }
                 });

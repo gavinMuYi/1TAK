@@ -29,13 +29,13 @@ Vue.prototype.$ajax.post = function (url, options) {
     if (window.mock && whiteList.indexOf(url) === -1) {
         url = url.replace(BASE_URL, BASE_URL + '/mock');
     }
-    return ajaxP.post(url, options);
+    return ajaxP.post(url, options).then(res => Promise.resolve(res.data));
 };
 Vue.prototype.$ajax.get = function (url, options) {
     if (window.mock && whiteList.indexOf(url) === -1) {
         url = url.replace(BASE_URL, BASE_URL + '/mock');
     }
-    return ajaxP.get(url, options);
+    return ajaxP.get(url, options).then(res => Promise.resolve(res.data));
 }
 
 /* eslint-disable */

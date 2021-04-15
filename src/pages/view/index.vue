@@ -80,7 +80,7 @@
                     metaID: this.metaID
                 }
             }).then(e => {
-                this.$set(this, 'cusComp', e.data.data.data.meta);
+                this.$set(this, 'cusComp', e.data.meta);
                 this.getData = true;
             });
         },

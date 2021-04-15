@@ -70,7 +70,7 @@
                     this.$ajax.post('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/saveMock',
                                     qs.stringify({ mockData: JSON.stringify(params) })
                     ).then(e => {
-                        if (e.data.code === 0) {
+                        if (e.code === 0) {
                             alert('保存成功~');
                             this.create = false;
                             this.init(params.pathname);
@@ -82,7 +82,7 @@
                                         mockData: JSON.stringify(params)
                                     })
                     ).then(e => {
-                        if (e.data.code === 0) {
+                        if (e.code === 0) {
                             alert('保存成功~');
                             this.create = false;
                             this.init(params.pathname);
@@ -92,8 +92,8 @@
             },
             init (pn) {
                 this.$ajax.get('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/getListMock').then(e => {
-                    var list = e.data.data.records.map(item => { return item.pathname });
-                    this.ruleList = e.data.data.records;
+                    var list = e.data.records.map(item => { return item.pathname });
+                    this.ruleList = e.data.records;
                     this.$set(this, 'currentRule', clone(this.ruleList).filter(e => {
                         return (pn || list[0]) === e.pathname;
                     })[0]);
