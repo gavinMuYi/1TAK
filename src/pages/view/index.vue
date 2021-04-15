@@ -25,6 +25,7 @@
             DrawBoard
         },
         data () {
+            window.mock = false;
             return {
                 getData: false,
                 metaID: this.$route.query.metaID,
