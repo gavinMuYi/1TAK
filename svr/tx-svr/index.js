@@ -94,16 +94,27 @@ app.post('/saveMock', function (req, res) {
 
 app.post('/updateMock', function (req, res) {
     var body = JSON.parse(Qs.parse(req.body).mockData);
-    var id = JSON.parse(Qs.parse(req.body).id);
+    var pathname = body.pathname;
     mockDate
-    .doc(String(id))
-    .set(body)
+    .where({ pathname: pathname })
+    .options({ multiple: false })
+    .update({
+        requestparams: body.requestparams,
+        responsebody: body.responsebody,
+        type: body.type
+    })
     .then(e => {
-        if (e.id) {
+        if (e.updated) {
             res.status(200)
             res.json({
                 code: 0,
-                body: body
+                msg: 'success'
+            }); 
+        } else {
+            res.status(200)
+            res.json({
+                code: 1,
+                msg: 'fail'
             });
         }
     })
@@ -116,7 +127,13 @@ app.post('/saveMeta', function (req, res) {
             res.status(200)
             res.json({
                 code: 0,
-                body: body
+                msg: 'success'
+            });
+        } else {
+            res.status(200)
+            res.json({
+                code: 1,
+                msg: 'fail'
             });
         }
     })

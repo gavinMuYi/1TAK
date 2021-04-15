@@ -398,6 +398,19 @@
                     display: inline-block!important;
                 }
             }
+            .interface-btn {
+                display: inline-block!important;
+                position: fixed;
+                right: 195px;
+                top: 40px;
+                font-size: 16px;
+                font-weight: 700;
+                span {
+                    display: inline-block!important;
+                    color: @dep;
+                    font-size: 16px;
+                }
+            }
         }
     }
     .slot-editor-panel-close {

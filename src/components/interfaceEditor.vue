@@ -77,12 +77,8 @@
                         }
                     });
                 } else {
-                    var nid = clone(this.ruleList).filter(item => {
-                        return item.pathname === params.pathname;
-                    })[0]._id;
                     this.$ajax.post('https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/container-gahoulab/updateMock',
                                     qs.stringify({
-                                        id: JSON.stringify(nid),
                                         mockData: JSON.stringify(params)
                                     })
                     ).then(e => {

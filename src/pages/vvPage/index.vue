@@ -20,7 +20,7 @@
                     <span class="iconfont icon-quanjituanxiangmuguanli"></span>
                     mock调试{{ windowMock ? 'on' : 'off' }}
                 </span>
-                <span @click="showInterface">
+                <span @click="showInterface" class="interface-btn">
                     <span class="iconfont icon-fuzhi"></span>
                     接口协议
                 </span>
