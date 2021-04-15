@@ -3,7 +3,8 @@ exports.iconCompMap = {
     'icon-shurukuang': 'G_INPUT',
     'icon-wenzi': 'G_TEXT',
     'icon-tupian': 'G_IMAGE',
-    'icon-anniu': 'G_BUTTON'
+    'icon-anniu': 'G_BUTTON',
+    'icon-fuzhi': 'G_TABLE'
 };
 
 exports.unitCompIcons = [{
@@ -21,4 +22,7 @@ exports.unitCompIcons = [{
 }, {
     key: 'icon-anniu',
     name: '按钮'
+}, {
+    key: 'icon-fuzhi',
+    name: '列表'
 }];
