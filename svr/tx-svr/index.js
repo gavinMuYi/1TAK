@@ -74,8 +74,21 @@ app.get(/^\/mock/, (req, res) => {
         pathname: requestedUrl.pathname.replace('mock/', '')
     })
     .get().then(e => {
-        res.status(200)
-        res.json(e.data[0].responsebody)
+        try {
+            /* eslint-disable */
+            var resFunc = new Function('return ' + e.data[0].responsebody).call(this);
+            /* eslint-enable */
+            var resVal = resFunc.call(this, JSON.parse(e.data[0].requestparams));
+            res.status(200)
+            res.json(resVal)
+        } catch (e) {
+            res.status(200)
+            res.json({
+                code: 1,
+                err: e,
+                responsebodyStr: e.data[0].responsebody
+            })
+        }
     });
 });
 

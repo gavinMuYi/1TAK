@@ -14,11 +14,11 @@
         </div>
         <div class="request" :key="'interface-req-' + currentRule.pathname">
             <span class="title">请求参数：</span>
-            <ide-textarea :code="JSON.stringify(currentRule.requestparams)" ref="reqIDE" />
+            <ide-textarea :code="currentRule.requestparams" ref="reqIDE" />
         </div>
         <div class="response" :key="'interface-res-' + currentRule.pathname">
             <span class="title">返回结果：</span>
-            <ide-textarea :code="JSON.stringify(currentRule.responsebody)" ref="resIDE" />
+            <ide-textarea :code="currentRule.responsebody" ref="resIDE" />
         </div>
     </div>
 </template>
@@ -40,8 +40,8 @@
                 showPanel: false,
                 currentRule: {
                     pathname: '',
-                    requestparams: {},
-                    responsebody: {},
+                    requestparams: '{}',
+                    responsebody: 'function (req) { return {}; }',
                     type: 'get'
                 },
                 mockUrls: [],
@@ -59,8 +59,8 @@
             save () {
                 var params = {
                     ...this.currentRule,
-                    requestparams: JSON.parse(this.$refs.reqIDE.getValue()),
-                    responsebody: JSON.parse(this.$refs.resIDE.getValue())
+                    requestparams: this.$refs.reqIDE.getValue(),
+                    responsebody: this.$refs.resIDE.getValue()
                 }
                 if (!params.pathname) {
                     alert('接口名称必填');
@@ -104,8 +104,8 @@
                 this.create = true;
                 this.currentRule = {
                     pathname: '',
-                    requestparams: {},
-                    responsebody: {},
+                    requestparams: '{}',
+                    responsebody: 'function (req) { return {}; }',
                     type: 'get'
                 };
             },
