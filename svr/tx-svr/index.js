@@ -74,6 +74,46 @@ app.get(/^\/mock/, (req, res) => {
         pathname: requestedUrl.pathname.replace('mock/', '')
     })
     .get().then(e => {
+        if (e.data[0].type !== 'get') {
+            res.status(200)
+            res.json({
+                code: 1,
+                msg: 'type error'
+            })
+        }
+        try {
+            /* eslint-disable */
+            var resFunc = new Function('return ' + e.data[0].responsebody).call(this);
+            /* eslint-enable */
+            var resVal = resFunc.call(this, JSON.parse(e.data[0].requestparams));
+            res.status(200)
+            res.json(resVal)
+        } catch (e) {
+            res.status(200)
+            res.json({
+                code: 1,
+                err: e,
+                responsebodyStr: e.data[0].responsebody
+            })
+        }
+    });
+});
+
+app.post(/^\/mock/, (req, res) => {
+    var requestedUrlSTR = req.protocol + '://' + req.get('Host') + req.url;
+    var requestedUrl = new URL(requestedUrlSTR);
+    mockDate
+    .where({
+        pathname: requestedUrl.pathname.replace('mock/', '')
+    })
+    .get().then(e => {
+        if (e.data[0].type !== 'post') {
+            res.status(200)
+            res.json({
+                code: 1,
+                msg: 'type error'
+            })
+        }
         try {
             /* eslint-disable */
             var resFunc = new Function('return ' + e.data[0].responsebody).call(this);
