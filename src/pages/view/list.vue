@@ -77,6 +77,8 @@
     .table {
         width: 1240px;
         margin: 100px auto;
+        height: 665px;
+        overflow: auto;
         .th,.tl {
             .tr {
                 display: inline-block;
