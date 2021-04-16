@@ -1,20 +1,21 @@
 <template>
     <div class="G_table">
         <div class="th">
-            <div class="tr tr1">名称</div>
-            <div class="tr tr2">ID</div>
-            <div class="tr tr3">备注</div>
-            <div class="tr tr4">最近修改时间</div>
-            <div class="tr tr5">操作</div>
+            <div
+                class="tr"
+                :style="`width: ${100/columns.length}%`"
+                v-for="(column, cindex) in columns"
+                :key="'label' + column.key + cindex">
+                {{ column.label }}
+            </div>
         </div>
-        <div class="tl" v-for="line in list" :key="line._id">
-            <div class="tr tr1">{{ line.pageName }}</div>
-            <div class="tr tr2">{{ line.metaID }}</div>
-            <div class="tr tr3">{{ line.remark }}</div>
-            <div class="tr tr4">{{ new Date(line.lastModifiy).Format("yyyy-MM-dd hh:mm:ss") }}</div>
-            <div class="tr tr5">
-                <router-link :to="{ name: 'View', query: { metaID: line.metaID } }">查看</router-link>
-                <span>删除</span>
+        <div class="tl" v-for="(line, lindex) in list" :key="'line' + lindex">
+            <div
+                class="tr"
+                :style="`width: ${100/columns.length}%`"
+                v-for="(column, cindex) in columns"
+                :key="'val' + column.key + cindex">
+                {{ line[column.key] }}
             </div>
         </div>
     </div>
@@ -23,14 +24,37 @@
 <script>
     export default {
         name: 'G_TABLE',
-        props: {},
+        props: {
+            columns: {
+                type: Array,
+                default: () => {
+                    return [{
+                        key: 'pageName',
+                        label: '名称'
+                    }, {
+                        key: 'metaID',
+                        label: 'ID'
+                    }, {
+                        key: 'remark',
+                        label: '备注'
+                    }, {
+                        key: 'lastModifiy',
+                        label: '最近修改时间'
+                    }];
+                }
+            },
+            dataSrc: {
+                type: String,
+                default: '/getList'
+            }
+        },
         data () {
             return {
                 list: []
             }
         },
         mounted () {
-            this.$ajax.get('/getList').then(e => {
+            this.$ajax.get(this.dataSrc).then(e => {
                 this.$set(this, 'list', e.data.records);
             });
         }
@@ -39,8 +63,8 @@
 
 <style lang="less">
     .G_table {
-        width: 1240px;
-        margin: 100px auto;
+        width: 100%;
+        min-width: 1000px;
         .th,.tl {
             .tr {
                 display: inline-block;
@@ -48,34 +72,16 @@
                 padding-left: 20px;
             }
             .tr1 {
-                width: 20%;
+                width: 25%;
             }
             .tr2 {
-                width: 20%;
+                width: 25%;
             }
             .tr3 {
                 width: 25%;
             }
             .tr4 {
-                width: 20%;
-            }
-            .tr5 {
-                width: 15%;
-                a {
-                    color: @main;
-                    text-decoration: none;
-                    &:hover {
-                        color: @sub;
-                    }
-                }
-                span {
-                    display: inline-block;
-                    margin-left: 10px;
-                    &:hover {
-                        color: @sub;
-                        cursor: pointer;
-                    }
-                }
+                width: 25%;
             }
         }
         .th {
