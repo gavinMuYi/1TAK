@@ -15,7 +15,12 @@
                 :style="`width: ${100/columns.length}%`"
                 v-for="(column, cindex) in columns"
                 :key="'val' + column.key + cindex">
-                {{ line[column.key] }}
+                <slot name="tableColumn" :props="{
+                    lineData: line,
+                    columnData: column
+                }">
+                    {{ line[column.key] }}
+                </slot>
             </div>
         </div>
     </div>
@@ -24,6 +29,10 @@
 <script>
     export default {
         name: 'G_TABLE',
+        slot: [{
+            name: 'tableColumn',
+            params: 'lineData, columnData'
+        }],
         props: {
             columns: {
                 type: Array,
