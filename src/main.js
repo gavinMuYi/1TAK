@@ -6,14 +6,27 @@ import { install, Prototypes, ColorPicker, Slider } from 'heyui';
 import 'default-passive-events';
 import '@/assets/system-icons/iconfont.css';
 require('../css/heyui.less');
+// 指令
+const req = require.context('./utils/directives/', false, /\.js/);
+const directives = req.keys().reduce((directives, module) => {
+    const mod = req(module);
+    directives[module.replace('./', '').replace('.js', '')] = mod.default;
+    return directives;
+}, {});
+Object.keys(directives).forEach(key => {
+    Vue.directive(key, directives[key]);
+})
+
 Vue.config.errorHandler = function (err, vm, info) {
     var errBox = document.getElementById('error-box');
     var div = document.createElement('div');
     div.innerHTML = err;
     errBox.appendChild(div);
 };
+
 Vue.config.productionTip = false;
 Vue.use(install, { components: { ColorPicker, Slider }, prototypes: Prototypes });
+
 const ajax = axios.create({
     headers: { 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' }
 });
