@@ -1,6 +1,6 @@
 <template>
     <div :class="['G_pop', {'default-pop-show': !previewMode.preview}]" v-show="!previewMode.preview || show" ref="selfPop" @mouseenter.stop="hover = true" @mouseleave.stop="hover = false">
-        <slot>{{previewNow}}</slot>
+        <slot></slot>
     </div>
 </template>
 <script>
@@ -64,11 +64,6 @@
                     name && (window.pops[name] = this);
                     oval && (window.pops[oval] = null);
                 }
-            }
-        },
-        computed: {
-            previewNow () {
-                return this.previewMode.preview;
             }
         },
         created () {

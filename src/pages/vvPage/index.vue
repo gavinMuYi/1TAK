@@ -402,9 +402,7 @@
                     : (dragCompData.config = {
                         hash: createHash(4),
                         props: {},
-                        directives: `function () {
-                            return [];
-                        }`,
+                        directives: 'function () { return []; }',
                         slot: (cmps[this.iconCompMap[data.id]].slot || []).map(e => { return { ...e, children: [] } }),
                         vif: undefined,
                         vfor: undefined
