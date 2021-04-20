@@ -357,6 +357,10 @@
                                         Object.keys(configEventHandlers).forEach(funcKey => {
                                             funcKey.indexOf(comp.config.hash) > -1 && (loopEventhandlers[configEventHandlers[funcKey].name] = funcGroup[configEventHandlers[funcKey].name + comp.config.hash]);
                                         });
+                                        /* eslint-disable */
+                                        var directivesResFunc = new Function('return ' + comp.config.directives).call(this);
+                                        /* eslint-enable */
+                                        var directivesRes = directivesResFunc.call(this);
                                         var nodeDom = h(comp.name, {
                                             attrs: {
                                                 id: comp.config.hash
@@ -365,6 +369,7 @@
                                             on: {
                                                 ...loopEventhandlers
                                             },
+                                            directives: directivesRes,
                                             scopedSlots: scopedSlots
                                         });
                                         this.$nextTick(() => {

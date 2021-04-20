@@ -625,7 +625,7 @@
             &:before {
                 content: '';
                 position: absolute;
-                background: @mainop;
+                background: #011210e8;
                 opacity: 0.7;
                 z-index: 10000;
                 width: 100%;
