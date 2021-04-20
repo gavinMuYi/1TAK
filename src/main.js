@@ -6,7 +6,12 @@ import { install, Prototypes, ColorPicker, Slider } from 'heyui';
 import 'default-passive-events';
 import '@/assets/system-icons/iconfont.css';
 require('../css/heyui.less');
-
+Vue.config.errorHandler = function (err, vm, info) {
+    var errBox = document.getElementById('error-box');
+    var div = document.createElement('div');
+    div.innerHTML = err;
+    errBox.appendChild(div);
+};
 Vue.config.productionTip = false;
 Vue.use(install, { components: { ColorPicker, Slider }, prototypes: Prototypes });
 const ajax = axios.create({

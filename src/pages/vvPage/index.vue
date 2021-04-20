@@ -1,82 +1,89 @@
 <template>
-    <div class="factory">
-        <pre class="globel-data" v-if="globelData">{{cusComp}}</pre>
-        <div class="save-msg" v-if="dosave">
-            <div class="input-box"><input placeholder="页面名称" v-model="pageData.pageName" /></div>
-            <div class="input-box"><input placeholder="页面ID" v-model="pageData.metaID" /></div>
-            <div class="input-box"><input placeholder="页面备注" v-model="pageData.remark" /></div>
-            <div class="btn-bar">
-                <div class="btn" @click="save">保存</div>
-                <div class="btn" @click="dosave = false">取消</div>
-            </div>
-        </div>
-        <div class="top-bar">
-            <div class="pro-title">
-                Vv Page<span class="iconfont icon-yezhu"></span>
-            </div>
-            <interface-editor ref="interface" />
-            <div class="actions">
-                <span @click="changeMock">
-                    <span class="iconfont icon-quanjituanxiangmuguanli"></span>
-                    mock调试{{ windowMock ? 'on' : 'off' }}
-                </span>
-                <span @click="showInterface" class="interface-btn">
-                    <span class="iconfont icon-fuzhi"></span>
-                    接口协议
-                </span>
-                <span @click="globelData = !globelData">
-                    <span class="iconfont icon-yuming"></span>
-                    页面信息
-                </span>
-                <span @click="preview = !preview;previewMode.preview = !previewMode.preview;refreshWorkSpace();">
-                    <span class="iconfont icon-qiehuan1"></span>
-                    {{ preview ? '预览' : '配置' }}态
-                </span>
-                <span @click="abs = !abs;refreshWorkSpace();" class="layout">
-                    <span class="iconfont icon-moxingzuzhuang"></span>
-                    {{ abs ? '拖动' : '排列' }}
-                </span>
-                <span @click="back" :class="{'disable-action': !snapshot_flag}">
-                    <span class="iconfont icon-shangyibu"></span>
-                    撤销
-                </span>
-                <span @click="redo" :class="{'disable-action': snapshot_flag === snapshot.length - 1 || !snapshot.length}">
-                    <span class="iconfont icon-liuchengtuh5-29"></span>
-                    重做
-                </span>
-                <span @click="dosave = true" class="iconLast">
-                    <span class="iconfont icon-baocun_mian"></span>
-                    保存
-                </span>
-            </div>
-        </div>
-        <div :class="['work-space', {'preview': preview}]">
-            <left-bar :preview="preview" @editContent="editContent" />
-            <div class="space-content">
-                <div class="component-draw-space" ref="drawSpace" @drop="drop" @dragover="ev => {ev.preventDefault()}">
-                    <draw-board
-                        :comps="comps"
-                        :topDataLevel="topDataLevel"
-                        @editComponent="editComponent"
-                        @editContent="editContent"
-                        @changeInline="changeInline"
-                        @action="action"
-                        :cusComp="cusComp"
-                        :key="refresh"
-                        :preview="preview" />
+    <div :class="['factory-box', { 'factory-box-errShow': errShow }]">
+        <div :class="['factory', { 'errShow': errShow }]">
+            <pre class="globel-data" v-if="globelData">{{cusComp}}</pre>
+            <div class="save-msg" v-if="dosave">
+                <div class="input-box"><input placeholder="页面名称" v-model="pageData.pageName" /></div>
+                <div class="input-box"><input placeholder="页面ID" v-model="pageData.metaID" /></div>
+                <div class="input-box"><input placeholder="页面备注" v-model="pageData.remark" /></div>
+                <div class="btn-bar">
+                    <div class="btn" @click="save">保存</div>
+                    <div class="btn" @click="dosave = false">取消</div>
                 </div>
             </div>
-            <right-bar
-                :nowEdit="nowEdit"
-                :cusComp="cusComp"
-                :lifeCycle="lifeCycle"
-                @updateParams="updateParams"
-                @globalData="setGlobalData"
-                @lifeCycle="setLifeCycle"
-                @setProps="setProps"
-                @setV="setV"
-                @slotChange="slotChange" />
+            <div class="top-bar">
+                <div class="pro-title">
+                    Vv Page<span class="iconfont icon-yezhu"></span>
+                </div>
+                <interface-editor ref="interface" />
+                <div class="actions">
+                    <span @click="changeMock">
+                        <span class="iconfont icon-quanjituanxiangmuguanli"></span>
+                        mock调试{{ windowMock ? 'on' : 'off' }}
+                    </span>
+                    <span @click="showInterface" class="interface-btn">
+                        <span class="iconfont icon-fuzhi"></span>
+                        接口协议
+                    </span>
+                    <span @click="globelData = !globelData">
+                        <span class="iconfont icon-xinxitishi"></span>
+                        页面信息
+                    </span>
+                    <span @click="preview = !preview;previewMode.preview = !previewMode.preview;refreshWorkSpace();">
+                        <span class="iconfont icon-qiehuan1"></span>
+                        {{ preview ? '预览' : '配置' }}态
+                    </span>
+                    <span @click="abs = !abs;refreshWorkSpace();" class="layout">
+                        <span class="iconfont icon-moxingzuzhuang"></span>
+                        {{ abs ? '拖动' : '排列' }}
+                    </span>
+                    <span @click="back" :class="{'disable-action': !snapshot_flag}">
+                        <span class="iconfont icon-shangyibu"></span>
+                        撤销
+                    </span>
+                    <span @click="redo" :class="{'disable-action': snapshot_flag === snapshot.length - 1 || !snapshot.length}">
+                        <span class="iconfont icon-liuchengtuh5-29"></span>
+                        重做
+                    </span>
+                    <span @click="errShow = !errShow" class="layout">
+                        <span class="iconfont icon-tishi1"></span>
+                        报错信息
+                    </span>
+                    <span @click="dosave = true" class="iconLast">
+                        <span class="iconfont icon-baocun_mian"></span>
+                        保存
+                    </span>
+                </div>
+            </div>
+            <div :class="['work-space', {'preview': preview}]">
+                <left-bar :preview="preview" @editContent="editContent" />
+                <div class="space-content">
+                    <div class="component-draw-space" ref="drawSpace" @drop="drop" @dragover="ev => {ev.preventDefault()}">
+                        <draw-board
+                            :comps="comps"
+                            :topDataLevel="topDataLevel"
+                            @editComponent="editComponent"
+                            @editContent="editContent"
+                            @changeInline="changeInline"
+                            @action="action"
+                            :cusComp="cusComp"
+                            :key="refresh"
+                            :preview="preview" />
+                    </div>
+                </div>
+                <right-bar
+                    :nowEdit="nowEdit"
+                    :cusComp="cusComp"
+                    :lifeCycle="lifeCycle"
+                    @updateParams="updateParams"
+                    @globalData="setGlobalData"
+                    @lifeCycle="setLifeCycle"
+                    @setProps="setProps"
+                    @setV="setV"
+                    @slotChange="slotChange" />
+            </div>
         </div>
+        <div id="error-box"></div>
     </div>
 </template>
 
@@ -118,6 +125,7 @@
         data () {
             window.mock = true;
             return {
+                errShow: false,
                 windowMock: true,
                 dosave: false,
                 globelData: false,
@@ -422,10 +430,45 @@
 </script>
 
 <style lang="less">
-
+.factory-box {
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+    #error-box {
+        width: 350px;
+        height: 100%;
+        display: inline-block;
+        background: #000202d9;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        vertical-align: top;
+        overflow: auto;
+        text-indent: 2em;
+        padding: 10px;
+        box-sizing: border-box;
+        div {
+            margin-bottom: 10px;
+        }
+    }
+    .errShow {
+        width: ~'calc(100% - 350px)';
+        display: inline-block;
+        #stylePanelOther,
+        #stylePanelContent,
+        #stylePanel {
+            width: ~'calc(100% - 350px)'!important;
+        }
+    }
+}
+.factory-box-errShow {
+    min-width: 1850px;
+    font-size: 0px;
+}
 .factory {
     height: 100%;
     overflow: hidden;
+    font-size: 16px;
     .save-msg {
         z-index: 100000;
         position: absolute;
