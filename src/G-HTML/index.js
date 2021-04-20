@@ -4,6 +4,7 @@ import G_TEXT from './text';
 import G_IMAGE from './image';
 import G_BUTTON from './button';
 import G_TABLE from './table';
+import G_POP from './pop';
 
 window._ghtml = {
     G_INPUT,
@@ -11,7 +12,8 @@ window._ghtml = {
     G_TEXT,
     G_IMAGE,
     G_BUTTON,
-    G_TABLE
+    G_TABLE,
+    G_POP
 };
 
 export default window._ghtml;

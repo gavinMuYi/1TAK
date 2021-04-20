@@ -388,6 +388,10 @@
                                             }).call(this);
                                         });
                                     });
+                                    /* eslint-disable */
+                                    var directivesResFunc = new Function('return ' + comp.config.directives).call(this);
+                                    /* eslint-enable */
+                                    var directivesRes = directivesResFunc.call(this);
                                     domComp = h(comp.name, {
                                         attrs: {
                                             id: comp.config.hash
@@ -396,6 +400,7 @@
                                         on: {
                                             ...eventhandlers
                                         },
+                                        directives: directivesRes,
                                         scopedSlots: scopedSlots
                                     });
                                     this.$nextTick(() => {

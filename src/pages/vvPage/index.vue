@@ -28,7 +28,7 @@
                     <span class="iconfont icon-yuming"></span>
                     页面信息
                 </span>
-                <span @click="preview = !preview;refreshWorkSpace();">
+                <span @click="preview = !preview;previewMode.preview = !previewMode.preview;refreshWorkSpace();">
                     <span class="iconfont icon-qiehuan1"></span>
                     {{ preview ? '预览' : '配置' }}态
                 </span>
@@ -100,6 +100,11 @@
             DrawBoard,
             InterfaceEditor
         },
+        provide () {
+            return {
+                previewMode: this.previewMode
+            };
+        },
         props: {
             preCusComp: {
                 type: Object,
@@ -133,7 +138,10 @@
                     remark: ''
                 },
                 globalData: {},
-                lifeCycle: this.preCusComp ? this.preCusComp.config.lifeCycle : {}
+                lifeCycle: this.preCusComp ? this.preCusComp.config.lifeCycle : {},
+                previewMode: {
+                    preview: false
+                }
             }
         },
         computed: {
@@ -394,6 +402,9 @@
                     : (dragCompData.config = {
                         hash: createHash(4),
                         props: {},
+                        directives: `function () {
+                            return [];
+                        }`,
                         slot: (cmps[this.iconCompMap[data.id]].slot || []).map(e => { return { ...e, children: [] } }),
                         vif: undefined,
                         vfor: undefined

@@ -4,7 +4,8 @@ exports.iconCompMap = {
     'icon-wenzi': 'G_TEXT',
     'icon-tupian': 'G_IMAGE',
     'icon-anniu': 'G_BUTTON',
-    'icon-fuzhi': 'G_TABLE'
+    'icon-fuzhi': 'G_TABLE',
+    'icon-tishi3': 'G_POP'
 };
 
 exports.unitCompIcons = [{
@@ -25,4 +26,7 @@ exports.unitCompIcons = [{
 }, {
     key: 'icon-fuzhi',
     name: '列表'
+}, {
+    key: 'icon-tishi3',
+    name: '弹窗'
 }];

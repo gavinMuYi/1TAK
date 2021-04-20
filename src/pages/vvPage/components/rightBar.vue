@@ -71,6 +71,13 @@
                                     <ide-textarea :code="currentEdit.config.vfor" ref="vforIDE" />
                                 </span>
                             </div>
+                            <div class="config-comp vbtn-box" v-if="!currentEdit.content">
+                                <span class="config-comp-title vv-title">指令: </span>
+                                <span v-if="currentEdit.config.directives" class="props-data">
+                                    <span @click="emitSetV(true, 'directives')" class="iconfont icon-gengxin2 directives-data-gx"></span>
+                                    <ide-textarea :code="currentEdit.config.directives" ref="directivesIDE" />
+                                </span>
+                            </div>
                             <div class="config-comp vv-title" v-if="Object.keys(cusComp.config.data.data[key]).length">组件接口:</div>
                             <div class="config-comp props-item" v-for="datakey in Object.keys(cusComp.config.data.data[key])" :key="datakey">
                                 <span class="config-comp-title props-title" :title="datakey">
@@ -596,6 +603,13 @@
                     position: absolute;
                     top: -18px;
                     right: 35px;
+                    font-size: 24px;
+                    float: right;
+                }
+                .directives-data-gx {
+                    position: absolute;
+                    top: -18px;
+                    right: 0px;
                     font-size: 24px;
                     float: right;
                 }
