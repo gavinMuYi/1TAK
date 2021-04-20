@@ -405,6 +405,9 @@
                     display: inline-block!important;
                 }
             }
+            .erricon {
+                display: none!important;
+            }
             .interface-btn {
                 display: inline-block!important;
                 position: fixed;

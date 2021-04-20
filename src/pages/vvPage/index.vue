@@ -45,7 +45,7 @@
                         <span class="iconfont icon-liuchengtuh5-29"></span>
                         重做
                     </span>
-                    <span @click="errShow = !errShow" class="layout">
+                    <span @click="errShow = !errShow" class="layout erricon">
                         <span class="iconfont icon-tishi1"></span>
                         报错信息
                     </span>
