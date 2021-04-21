@@ -4,14 +4,25 @@
             <div class="title">{{ menu.title }}</div>
             <ul class="materials-list" :style="{height: `calc(${100 * (index ? 2 : 3) / 5}% - 30px)`}">
                 <li class="material" v-for="icon in menu.components" :key="icon.key">
-                    <span
-                        :id="icon.key"
-                        :class="['list-icon', 'iconfont', icon.key]"
-                        draggable="true"
-                        @dragstart="drag($event, index ? 'combination' : 'unit')">
-                    </span>
-                    <div class="material-name">
-                        {{ icon.name }}
+                    <div v-if="menu.key === 'system'">
+                        <span
+                            :id="icon.key"
+                            :class="['list-icon', 'iconfont', icon.key]"
+                            draggable="true"
+                            @dragstart="drag($event, index ? 'combination' : 'unit')">
+                        </span>
+                        <div class="material-name">
+                            {{ icon.name }}
+                        </div>
+                    </div>
+                    <div v-else class="customer-box-menu">
+                        <div
+                            class="customer-item"
+                            :id="icon.key"
+                            draggable="true"
+                            @dragstart="drag($event, index ? 'combination' : 'unit')">
+                            {{ icon.label }}
+                        </div>
                     </div>
                 </li>
             </ul>
@@ -39,10 +50,12 @@
         computed: {
             componentsMenu () {
                 return [{
-                    title: '单位 组件',
+                    title: '系统 组件',
+                    key: 'system',
                     components: this.unitCompIcons
                 }, {
-                    title: '复合 组件',
+                    title: '自定义 组件',
+                    key: 'custom',
                     components: this.outCompIcons
                 }]
             }
@@ -68,6 +81,20 @@
     .left-bar {
         display: inline-block;
         height: 100%;
-        border-right: 1px solid #ededed;;
+        border-right: 1px solid #ededed;
+        .customer-item {
+            width: 260px;
+            border: 1px solid @main;
+            font-size: 16px;
+            margin: 5px auto;
+            border-radius: 5px;
+            &:hover {
+                background: @sub;
+                color: @dep;
+            }
+        }
+        .customer-box-menu {
+            width: 310px;
+        }
     }
 </style>

@@ -132,12 +132,13 @@ Vue.prototype.$ajax.get('/getList').then(res => {
                         // 前置脚本
                         try {
                             window.outCompMap = {
-                                'icon--qiyong': 'van-icon'
+                                'ivancon': 'van-icon'
                             };
                         
                             window.outCompIcons = [{
-                                key: 'icon--qiyong',
-                                name: 'van-icon'
+                                key: 'ivancon',
+                                name: 'van-icon',
+                                label: 'van图标'
                             }];
                             var vantCamps = {}
                             Object.keys(window.vant).forEach(key => {
