@@ -12,6 +12,11 @@
                 </div>
             </div>
             <div class="top-bar">
+                <div class="pre-script">
+                    <div class="btn-xiala">
+                        <span class="iconfont icon-xiala2"></span>
+                    </div>
+                </div>
                 <div class="pro-title">
                     Vv Page<span class="iconfont icon-yezhu"></span>
                 </div>
@@ -555,6 +560,30 @@
             color: #cabcbc;
             &:hover {
                 cursor: not-allowed;
+            }
+        }
+        .pre-script {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            .btn-xiala {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                vertical-align: middle;
+                text-align: center;
+                line-height: 50px;
+                background: #0a403a;
+                position: relative;
+                top: -25px;
+                left: -25px;
+                .iconfont {
+                    color: #fff;
+                }
+                &:hover {
+                    top: -10px;
+                    cursor: pointer;
+                }
             }
         }
         .pro-title {

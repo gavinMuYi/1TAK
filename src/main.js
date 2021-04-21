@@ -135,6 +135,7 @@ Vue.prototype.$ajax.get('/getList').then(res => {
             'https://cdn.jsdelivr.net/npm/vant@2.12/lib/index.css'
         ];
         res.data.useScript = true;
+        window.preScript = res.data;
         if (res.data.useScript) {
             res.data.scriptList.forEach(url => {
                 loadScript(url, function () {
