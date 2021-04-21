@@ -3,7 +3,7 @@
         <div class="top">
             <span class="title">接口：</span>
             <div class="input-box" v-if="create"><input placeholder="接口名称" v-model="currentRule.pathname" /></div>
-            <single-select v-else v-model="currentRule.pathname" :options="mockUrls" @input="handleSelect" />
+            <single-select v-else v-model="currentRule.pathname" :search="true" :options="mockUrls" @input="handleSelect" @search="doSearch"/>
             <span class="iconfont icon-baocun_mian" @click="save"></span>
             <span class="iconfont icon-gengduo1" @click="doCreate" v-if="!create"></span>
             <span class="iconfont icon-zhongzuo" @click="cancelCreate" v-else></span>
@@ -90,8 +90,13 @@
                     });
                 }
             },
-            init (pn) {
-                this.$ajax.get('/getListMock').then(e => {
+            init (pn, val) {
+                var params = val ? {
+                    searchKey: val
+                } : {};
+                this.$ajax.get('/getListMock', {
+                    params: params
+                }).then(e => {
                     var list = e.data.records.map(item => { return item.pathname });
                     this.ruleList = e.data.records;
                     this.$set(this, 'currentRule', clone(this.ruleList).filter(e => {
@@ -99,6 +104,9 @@
                     })[0]);
                     this.$set(this, 'mockUrls', list);
                 });
+            },
+            doSearch (val) {
+                this.init(undefined, val);
             },
             doCreate () {
                 this.create = true;

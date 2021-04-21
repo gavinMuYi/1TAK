@@ -1,14 +1,17 @@
 <template>
     <div :class="['single-select', {'active-select': showSelectComp}]">
         <div class="trigger-name box-trigger" @click.stop="showChange">
-            {{ currentVal || '空'}}
+            <slot name="placeholder" :props="{currentVal: currentVal}">{{ currentVal || '空'}}</slot>
             <span class="open iconfont icon-xiala1"></span>
         </div>
         <div class="select-pop" v-if="showSelectComp">
+            <div class="input-box" v-if="search && showSelectComp"><input v-model="searchKey" @change="doSearch" /></div>
             <div
                 v-for="item in options"
                 :key="item"
-                @click.stop="doSelectComp(item)">{{ item }}</div>
+                @click.stop="doSelectComp(item)">
+                <slot name="listItem" :props="{item: item}">{{ item }}</slot>
+            </div>
         </div>
     </div>
 </template>
@@ -28,10 +31,15 @@
             value: {
                 type: String,
                 default: ''
+            },
+            search: {
+                type: Boolean,
+                default: false
             }
         },
         data () {
             return {
+                searchKey: '',
                 showSelectComp: false,
                 currentVal: clone(this.value)
             }
@@ -55,6 +63,9 @@
             },
             showChange () {
                 this.showSelectComp = !this.showSelectComp;
+            },
+            doSearch () {
+                this.$emit('search', this.searchKey);
             }
         }
     }
@@ -81,6 +92,32 @@
                 float: right;
                 font-size: 12px;
                 color: #a4a9af;
+            }
+        }
+        .input-box {
+            background: #fff;
+            display: inline-block;
+            height: 31px;
+            margin: 0px!important;
+            width: 508px!important;
+            box-sizing: border-box;
+            padding: 2px 8px;
+            border: 1px solid #dadee7;
+            border-radius: 3px;
+            transition: border-color .25s;
+            input {
+                position: relative;
+                display: block;
+                width: 100%;
+                line-height: inherit;
+                height: 26px;
+                padding: 7px 0;
+                color: #1e2330;
+                outline: none;
+                border: 0 none;
+                background: none;
+                box-sizing: border-box;
+                width: 100%;
             }
         }
         .select-pop {
