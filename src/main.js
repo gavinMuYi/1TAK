@@ -103,6 +103,27 @@ function loadScript (src, callback) {
     }
     head.appendChild(script);
 };
+function loadLink (src, callback) {
+    var linkTag = document.createElement('link');
+    var head = document.getElementsByTagName('head')[0];
+    linkTag.id = 'dynamic-style';
+    linkTag.href = src;
+    linkTag.setAttribute('rel', 'stylesheet');
+    linkTag.setAttribute('type', 'text/css');
+    if (linkTag.addEventListener) {
+        linkTag.addEventListener('load', function () {
+            callback();
+        }, false);
+    } else if (linkTag.attachEvent) {
+        linkTag.attachEvent('onreadystatechange', function () {
+            var target = window.event.srcElement;
+            if (target.readyState === 'loaded') {
+                callback();
+            }
+        });
+    }
+    head.appendChild(linkTag);
+};
 
 // 获取前置脚本信息
 Vue.prototype.$ajax.get('/getList').then(res => {
@@ -111,11 +132,18 @@ Vue.prototype.$ajax.get('/getList').then(res => {
             'https://cdn.jsdelivr.net/npm/vant@2.12/lib/vant.min.js',
             'https://cdn.jsdelivr.net/npm/vue@2.6/dist/vue.min.js'
         ];
-        res.data.styleList = [];
+        res.data.styleList = [
+            'https://cdn.jsdelivr.net/npm/vant@2.12/lib/index.css'
+        ];
         res.data.useScript = true;
         if (res.data.useScript) {
             res.data.scriptList.forEach(url => {
                 loadScript(url, function () {
+                    scriptMaps.count++;
+                });
+            });
+            res.data.styleList.forEach(url => {
+                loadLink(url, function () {
                     scriptMaps.count++;
                 });
             });
