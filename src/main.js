@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import axios from 'axios';
 import App from './App';
-// import router from './router';
 import { install, Prototypes, ColorPicker, Slider } from 'heyui';
 import 'default-passive-events';
 import '@/assets/system-icons/iconfont.css';
