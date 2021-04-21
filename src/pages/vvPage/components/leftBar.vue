@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import { unitCompIcons } from '../config.js';
+    import { unitCompIcons, outCompIcons } from '../config.js';
 
     export default {
         name: 'LeftBar',
@@ -32,7 +32,8 @@
         },
         data () {
             return {
-                unitCompIcons: unitCompIcons
+                unitCompIcons: unitCompIcons,
+                outCompIcons: outCompIcons
             }
         },
         computed: {
@@ -42,7 +43,7 @@
                     components: this.unitCompIcons
                 }, {
                     title: '复合 组件',
-                    components: []
+                    components: this.outCompIcons
                 }]
             }
         },

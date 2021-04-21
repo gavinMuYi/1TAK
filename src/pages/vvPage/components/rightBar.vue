@@ -150,7 +150,7 @@
 </template>
 
 <script>
-    import { unitCompIcons } from '../config.js';
+    import { unitCompIcons, outCompIcons } from '../config.js';
     import IdeTextarea from '../../../components/ideTextarea';
     import StyleEditor from '../../../components/styleEditor/styleEditor';
     import SingleSelect from '../../../components/styleEditor/components/single-select';
@@ -187,6 +187,7 @@
             return {
                 preCusComp: undefined,
                 unitCompIcons: unitCompIcons,
+                outCompIcons: outCompIcons,
                 bycode: false,
                 slotPanel: false,
                 slotName: '',
@@ -320,6 +321,9 @@
             getType (id) {
                 let res = '';
                 this.unitCompIcons.forEach(item => {
+                    item.key === id && (res = item.name);
+                });
+                this.outCompIcons.forEach(item => {
                     item.key === id && (res = item.name);
                 });
                 return res;

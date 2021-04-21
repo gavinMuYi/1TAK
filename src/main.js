@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import App from './App';
-import router from './router';
+// import router from './router';
 import { install, Prototypes, ColorPicker, Slider } from 'heyui';
 import 'default-passive-events';
 import '@/assets/system-icons/iconfont.css';
@@ -83,17 +83,107 @@ Date.prototype.Format = function (fmt) {
     }
     return fmt;
 }
-/* eslint-enable */
+function loadScript (src, callback) {
+    var script = document.createElement('script');
+    var head = document.getElementsByTagName('head')[0];
+    script.type = 'text/javascript';
+    script.charset = 'UTF-8';
+    script.src = src;
+    if (script.addEventListener) {
+        script.addEventListener('load', function () {
+            callback();
+        }, false);
+    } else if (script.attachEvent) {
+        script.attachEvent('onreadystatechange', function () {
+            var target = window.event.srcElement;
+            if (target.readyState === 'loaded') {
+                callback();
+            }
+        });
+    }
+    head.appendChild(script);
+};
 
-router.beforeEach((to, from, next) => {
-    document.title = 'Vv Page - ' + to.meta.title;
-    next();
-});
-
-/* eslint-disable no-new */
-new Vue({
-    el: '#app',
-    router,
-    components: { App },
-    template: '<App/>'
+// 获取前置脚本信息
+Vue.prototype.$ajax.get('/getList').then(res => {
+    if (res.code === 0) {
+        res.data.scriptList = [
+            'https://cdn.jsdelivr.net/npm/vant@2.12/lib/vant.min.js',
+            'https://cdn.jsdelivr.net/npm/vue@2.6/dist/vue.min.js'
+        ];
+        res.data.styleList = [];
+        res.data.useScript = true;
+        if (res.data.useScript) {
+            res.data.scriptList.forEach(url => {
+                loadScript(url, function () {
+                    scriptMaps.count++;
+                });
+            });
+            var scriptMaps = {};
+            var scriptMapsCount = 0;
+            var check = res.data.scriptList.length + res.data.styleList.length;
+            Object.defineProperty(scriptMaps, 'count', {
+                get: () => {
+                    return scriptMapsCount;
+                },
+                set: function (newValue) {
+                    scriptMapsCount = newValue;
+                    if (newValue === check) {
+                        // 前置脚本
+                        try {
+                            window.outCompMap = {
+                                'icon--qiyong': 'van-icon'
+                            };
+                        
+                            window.outCompIcons = [{
+                                key: 'icon--qiyong',
+                                name: 'van-icon'
+                            }];
+                            var vantCamps = {}
+                            Object.keys(window.vant).forEach(key => {
+                                vantCamps[window.vant[key].name] = window.vant[key];
+                            });
+                            window.outCamps = vantCamps;
+                        } catch (e) {
+                            console.log(e);
+                        }
+                        // new Vue
+                        var router = require('./router').default;
+                        /* eslint-enable */
+                        router.beforeEach((to, from, next) => {
+                            document.title = 'Vv Page - ' + to.meta.title;
+                            next();
+                        });
+                        /* eslint-disable no-new */
+                        new Vue({
+                            el: '#app',
+                            router,
+                            components: { App },
+                            template: '<App/>'
+                        });
+                    }
+                }
+            });
+        } else {
+            window.outCompMap = {};
+            window.outCompIcons = [];
+            window.outCamps = {}
+            // new Vue
+            var router = require('./router').default;
+            /* eslint-enable */
+            router.beforeEach((to, from, next) => {
+                document.title = 'Vv Page - ' + to.meta.title;
+                next();
+            });
+            /* eslint-disable no-new */
+            new Vue({
+                el: '#app',
+                router,
+                components: { App },
+                template: '<App/>'
+            });
+        }
+    } else {
+        alert('获取前置脚本失败！')
+    }
 });

@@ -114,7 +114,7 @@
                     for (let i = 0; i < root.childNodes.length; i++) {
                         var node = root.childNodes[i];
                         // 过滤 text 节点、script 节点
-                        if ((node.nodeType !== 3) && (node.nodeName !== 'SCRIPT')) {
+                        if (([3, 4, 7, 8, 10, 12].indexOf(node.nodeType) < 0) && (node.nodeName !== 'SCRIPT')) {
                             var child = this.getTree(node);
                             children.push(child);
                         }

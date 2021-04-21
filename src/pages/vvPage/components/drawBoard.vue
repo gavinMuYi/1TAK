@@ -24,7 +24,10 @@
     // 注册单位组件
     import gtml from '../../../G-HTML';
     var cmps = gtml;
-
+    cmps = {
+        ...cmps,
+        ...window.outCamps
+    };
     export default {
         name: 'DrawBoard',
         components: {
@@ -148,37 +151,39 @@
                                 let propsFunc = tar ? tar.config.props : {};
                                 this[comp.config.hash] && Object.keys(cmps[comp.name].props).forEach(item => {
                                     localProps[item] = null;
-                                    switch (typeof cmps[comp.name].props[item].type()) {
-                                    case 'object':
-                                        try {
-                                            localProps[item] = JSON.parse(this[comp.config.hash][item]);
-                                        } catch (e) {
-                                            localProps[item] = null
+                                    if (!(cmps[comp.name].props[item].type instanceof Array)) {
+                                        switch (typeof cmps[comp.name].props[item].type()) {
+                                        case 'object':
+                                            try {
+                                                localProps[item] = JSON.parse(this[comp.config.hash][item]);
+                                            } catch (e) {
+                                                localProps[item] = null
+                                            }
+                                            break;
+                                        case 'function':
+                                            try {
+                                                /* eslint-disable */
+                                                var resFunc = new Function('return ' + this[comp.config.hash][item]).call(this);
+                                                /* eslint-enable */
+                                                localProps[item] = resFunc.bind(this._self);
+                                            } catch (e) {
+                                                localProps[item] = () => {};
+                                            }
+                                            break;
+                                        case 'number':
+                                            localProps[item] = Number(this[comp.config.hash][item]);
+                                            break;
+                                        case 'boolean':
+                                            try {
+                                                localProps[item] = JSON.parse(this[comp.config.hash][item]);
+                                            } catch (e) {
+                                                localProps[item] = null
+                                            }
+                                            break;
+                                        default:
+                                            localProps[item] = this[comp.config.hash][item];
+                                            break;
                                         }
-                                        break;
-                                    case 'function':
-                                        try {
-                                            /* eslint-disable */
-                                            var resFunc = new Function('return ' + this[comp.config.hash][item]).call(this);
-                                            /* eslint-enable */
-                                            localProps[item] = resFunc.bind(this._self);
-                                        } catch (e) {
-                                            localProps[item] = () => {};
-                                        }
-                                        break;
-                                    case 'number':
-                                        localProps[item] = Number(this[comp.config.hash][item]);
-                                        break;
-                                    case 'boolean':
-                                        try {
-                                            localProps[item] = JSON.parse(this[comp.config.hash][item]);
-                                        } catch (e) {
-                                            localProps[item] = null
-                                        }
-                                        break;
-                                    default:
-                                        localProps[item] = this[comp.config.hash][item];
-                                        break;
                                     }
                                     if (propsFunc[item]) {
                                         let flag = true;
@@ -270,37 +275,39 @@
                                         // 复写localProps传loopProps
                                         this[comp.config.hash] && Object.keys(cmps[comp.name].props).forEach(item => {
                                             localProps[item] = null;
-                                            switch (typeof cmps[comp.name].props[item].type()) {
-                                            case 'object':
-                                                try {
-                                                    localProps[item] = JSON.parse(this[comp.config.hash][item]);
-                                                } catch (e) {
-                                                    localProps[item] = null
+                                            if (!(cmps[comp.name].props[item].type instanceof Array)) {
+                                                switch (typeof cmps[comp.name].props[item].type()) {
+                                                case 'object':
+                                                    try {
+                                                        localProps[item] = JSON.parse(this[comp.config.hash][item]);
+                                                    } catch (e) {
+                                                        localProps[item] = null
+                                                    }
+                                                    break;
+                                                case 'function':
+                                                    try {
+                                                        /* eslint-disable */
+                                                        var resFunc = new Function('return ' + this[comp.config.hash][item]).call(this);
+                                                        /* eslint-enable */
+                                                        localProps[item] = resFunc.bind(this._self);
+                                                    } catch (e) {
+                                                        localProps[item] = () => {};
+                                                    }
+                                                    break;
+                                                case 'number':
+                                                    localProps[item] = Number(this[comp.config.hash][item]);
+                                                    break;
+                                                case 'boolean':
+                                                    try {
+                                                        localProps[item] = JSON.parse(this[comp.config.hash][item]);
+                                                    } catch (e) {
+                                                        localProps[item] = null
+                                                    }
+                                                    break;
+                                                default:
+                                                    localProps[item] = this[comp.config.hash][item];
+                                                    break;
                                                 }
-                                                break;
-                                            case 'function':
-                                                try {
-                                                    /* eslint-disable */
-                                                    var resFunc = new Function('return ' + this[comp.config.hash][item]).call(this);
-                                                    /* eslint-enable */
-                                                    localProps[item] = resFunc.bind(this._self);
-                                                } catch (e) {
-                                                    localProps[item] = () => {};
-                                                }
-                                                break;
-                                            case 'number':
-                                                localProps[item] = Number(this[comp.config.hash][item]);
-                                                break;
-                                            case 'boolean':
-                                                try {
-                                                    localProps[item] = JSON.parse(this[comp.config.hash][item]);
-                                                } catch (e) {
-                                                    localProps[item] = null
-                                                }
-                                                break;
-                                            default:
-                                                localProps[item] = this[comp.config.hash][item];
-                                                break;
                                             }
                                             if (propsFunc[item]) {
                                                 let flag = true;

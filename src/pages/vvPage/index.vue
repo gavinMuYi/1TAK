@@ -94,11 +94,14 @@
     import LeftBar from './components/leftBar';
     import RightBar from './components/rightBar';
     import DrawBoard from './components/drawBoard';
-    import { iconCompMap } from './config.js';
+    import { iconCompMap, outCompMap } from './config.js';
     import { createHash } from '../../utils/common.js';
     import gtml from '../../G-HTML';
     var cmps = gtml;
-
+    cmps = {
+        ...cmps,
+        ...window.outCamps
+    };
     export default {
         name: 'VvPage',
         components: {
@@ -133,6 +136,7 @@
                 preview: false,
                 refresh: 0,
                 iconCompMap: iconCompMap,
+                outCompMap: outCompMap,
                 nowEdit: {},
                 comps: this.preCusComp ? this.preCusComp.comps : [],
                 cusCompHash: this.preCusComp ? this.preCusComp.config.hash : createHash(4),
@@ -374,7 +378,11 @@
                     this.$set(props, comp.config.hash, {});
                     var prop = cmps[comp.name].props;
                     for (let key in prop) {
-                        this.$set(props[comp.config.hash], key, typeof prop[key].type() === 'object' ? JSON.stringify(prop[key].default()) : prop[key].default);
+                        let value;
+                        if (!(prop[key].type instanceof Array)) {
+                            value = typeof prop[key].type() === 'object' ? JSON.stringify(prop[key].default()) : prop[key].default;
+                        }
+                        this.$set(props[comp.config.hash], key, value);
                     }
                 });
                 return props;
@@ -398,7 +406,7 @@
                     id: data.id,
                     x: this.abs || domabs ? ev.clientX - this.$refs.drawSpace.offsetLeft : undefined,
                     y: this.abs || domabs ? ev.clientY - this.$refs.drawSpace.offsetTop : undefined,
-                    name: this.iconCompMap[data.id]
+                    name: this.iconCompMap[data.id] || this.outCompMap[data.id]
                 };
                 if (data.config && data.config.hash && !domabs) {
                     dragCompData.x = undefined;
@@ -411,7 +419,7 @@
                         hash: createHash(4),
                         props: {},
                         directives: 'function () { return []; }',
-                        slot: (cmps[this.iconCompMap[data.id]].slot || []).map(e => { return { ...e, children: [] } }),
+                        slot: (cmps[this.iconCompMap[data.id] || this.outCompMap[data.id]].slot || []).map(e => { return { ...e, children: [] } }),
                         vif: undefined,
                         vfor: undefined
                 });
