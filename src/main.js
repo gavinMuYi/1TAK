@@ -168,12 +168,6 @@ Vue.prototype.$ajax.get('/getList').then(res => {
                     if (newValue === check) {
                         // 前置脚本
                         try {
-                            window.outCompMap = {
-                                'ivancon': 'van-icon',
-                                'vanbutton': 'van-button',
-                                'vancell': 'van-cell'
-                            };
-                        
                             window.outCompIcons = [{
                                 key: 'ivancon',
                                 name: 'van-icon',

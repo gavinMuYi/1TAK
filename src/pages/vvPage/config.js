@@ -31,6 +31,11 @@ exports.unitCompIcons = [{
     name: '提示'
 }];
 
-exports.outCompMap = window.outCompMap;
+var outCompMap = {};
+window.outCompIcons.forEach(item => {
+    outCompMap[item.key] = item.name;
+});
+
+exports.outCompMap = outCompMap;
 
 exports.outCompIcons = window.outCompIcons;
