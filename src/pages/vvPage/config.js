@@ -28,7 +28,7 @@ exports.unitCompIcons = [{
     name: '列表'
 }, {
     key: 'icon-tishi3',
-    name: '弹窗'
+    name: '提示'
 }];
 
 exports.outCompMap = window.outCompMap;
