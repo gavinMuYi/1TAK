@@ -172,6 +172,22 @@ Vue.prototype.$ajax.get('/getList').then(res => {
                             Object.keys(window.vant).forEach(key => {
                                 vantCamps[window.vant[key].name] = window.vant[key];
                             });
+                            vantCamps['van-button'].slot = [{
+                                name: 'default',
+                                params: ''
+                            }, {
+                                name: 'loading',
+                                params: ''
+                            }];
+                            vantCamps['van-button'].event = [{
+                                name: 'click',
+                                label: '按钮点击事件',
+                                params: ''
+                            }, {
+                                name: 'touchstart',
+                                label: '开始触摸按钮时触发',
+                                params: 'TouchEvent'
+                            }];
                             window.customerCamps = vantCamps;
                             window.customerCampsConfig = [{
                                 key: 'ivancon',
