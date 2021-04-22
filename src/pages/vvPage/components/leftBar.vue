@@ -83,11 +83,20 @@
         height: 100%;
         border-right: 1px solid #ededed;
         .customer-item {
-            width: 260px;
-            border: 1px solid @main;
+            width: 96px;
+            box-sizing: border-box;
+            padding: 5px;
+            height: 60px;
+            font-weight: 700;
+            line-height: 50px;
             font-size: 16px;
-            margin: 5px auto;
+            margin: 5px 0 0px 5px;
+            display: inline-block;
             border-radius: 5px;
+            text-align: center;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
             &:hover {
                 background: @sub;
                 color: @dep;
@@ -95,6 +104,7 @@
         }
         .customer-box-menu {
             width: 310px;
+            text-align: left;
         }
     }
 </style>
