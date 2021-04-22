@@ -169,19 +169,30 @@ Vue.prototype.$ajax.get('/getList').then(res => {
                         // 前置脚本
                         try {
                             window.outCompMap = {
-                                'ivancon': 'van-icon'
+                                'ivancon': 'van-icon',
+                                'vanbutton': 'van-button',
+                                'vancell': 'van-cell'
                             };
                         
                             window.outCompIcons = [{
                                 key: 'ivancon',
                                 name: 'van-icon',
                                 label: 'van图标'
+                            }, {
+                                key: 'vanbutton',
+                                name: 'van-button',
+                                label: 'van按钮'
+                            }, {
+                                key: 'vancell',
+                                name: 'van-cell',
+                                label: 'van单元格'
                             }];
                             var vantCamps = {}
                             Object.keys(window.vant).forEach(key => {
                                 vantCamps[window.vant[key].name] = window.vant[key];
                             });
                             window.outCamps = vantCamps;
+                            console.log(window.outCamps);
                         } catch (e) {
                             console.log(e);
                         }

@@ -3,7 +3,7 @@
         <span v-for="(menu, index) in componentsMenu" :key="menu.title">
             <div class="title">{{ menu.title }}</div>
             <ul class="materials-list" :style="{height: `calc(${100 * (index ? 2 : 3) / 5}% - 30px)`}">
-                <li class="material" v-for="icon in menu.components" :key="icon.key">
+                <li :class="menu.key === 'system' ? 'material' : 'customer-material'" v-for="icon in menu.components" :key="icon.key">
                     <div v-if="menu.key === 'system'">
                         <span
                             :id="icon.key"
@@ -15,14 +15,13 @@
                             {{ icon.name }}
                         </div>
                     </div>
-                    <div v-else class="customer-box-menu">
-                        <div
-                            class="customer-item"
-                            :id="icon.key"
-                            draggable="true"
-                            @dragstart="drag($event, index ? 'combination' : 'unit')">
-                            {{ icon.label }}
-                        </div>
+                    <div
+                        v-else
+                        class="customer-item"
+                        :id="icon.key"
+                        draggable="true"
+                        @dragstart="drag($event, index ? 'combination' : 'unit')">
+                        {{ icon.label }}
                     </div>
                 </li>
             </ul>
@@ -102,9 +101,8 @@
                 color: @dep;
             }
         }
-        .customer-box-menu {
-            width: 310px;
-            text-align: left;
+        .customer-material {
+            display: inline-block;
         }
     }
 </style>
