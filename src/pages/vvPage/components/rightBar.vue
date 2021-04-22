@@ -81,10 +81,10 @@
                             <div class="config-comp vv-title" v-if="Object.keys(cusComp.config.data.data[key]).length">组件接口:</div>
                             <div class="config-comp props-item" v-for="datakey in Object.keys(cusComp.config.data.data[key])" :key="datakey">
                                 <span class="config-comp-title props-title" :title="datakey">
-                                    <span @click="emitSetProps(datakey, false)" :class="['iconfont', {'icon-shurukuang1': !currentEdit.config.props[datakey]}, {'icon-daima': currentEdit.config.props[datakey]}]"></span>
+                                    <span @click="emitSetProps(datakey, false)" :class="['iconfont', {'icon-shurukuang1': !currentEdit.config.props[datakey]}, {'icon-daima': currentEdit.config.props[datakey]}, {'disable-icon': getProps(currentEdit.id)[datakey].type instanceof Array}]"></span>
                                     {{ datakey }}
                                 </span>
-                                <span v-if="currentEdit.config.props[datakey]" class="props-data">
+                                <span v-if="currentEdit.config.props[datakey] || (getProps(currentEdit.id)[datakey].type instanceof Array)" class="props-data">
                                     <span @click="emitSetProps(datakey, true)" class="icon-gengxin2 iconfont"></span>
                                     <ide-textarea :code="currentEdit.config.props[datakey]" :ref="datakey + 'IDE'" />
                                 </span>
@@ -150,11 +150,17 @@
 </template>
 
 <script>
-    import { unitCompIcons, outCompIcons } from '../config.js';
+    import { iconCompMap, unitCompIcons, outCompIcons } from '../config.js';
     import IdeTextarea from '../../../components/ideTextarea';
     import StyleEditor from '../../../components/styleEditor/styleEditor';
     import SingleSelect from '../../../components/styleEditor/components/single-select';
-
+    // 注册单位组件
+    import gtml from '../../../G-HTML';
+    var cmps = gtml;
+    cmps = {
+        ...cmps,
+        ...window.outCamps
+    };
     export default {
         name: 'RightBar',
         components: {
@@ -186,6 +192,7 @@
         data () {
             return {
                 preCusComp: undefined,
+                iconCompMap: iconCompMap,
                 unitCompIcons: unitCompIcons,
                 outCompIcons: outCompIcons,
                 bycode: false,
@@ -324,9 +331,19 @@
                     item.key === id && (res = item.name);
                 });
                 this.outCompIcons.forEach(item => {
-                    item.key === id && (res = item.name);
+                    item.key === id && (res = item.label);
                 });
                 return res;
+            },
+            getProps (id) {
+                let res = '';
+                this.unitCompIcons.forEach(item => {
+                    item.key === id && (res = this.iconCompMap[item.key]);
+                });
+                this.outCompIcons.forEach(item => {
+                    item.key === id && (res = item.name);
+                });
+                return cmps[res] && cmps[res].props;
             },
             moveDom (ev, s) {
                 switch (ev.keyCode) {
@@ -483,6 +500,10 @@
             font-weight: 700;
             position: relative;
             top: 1px;
+        }
+        .disable-icon {
+            color: #c0c0c0;
+            pointer-events: none;
         }
         .props-title {
             display: block!important;
