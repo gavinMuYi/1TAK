@@ -438,7 +438,11 @@
                         vfor: undefined
                 });
                 data.index !== undefined && this.comps.splice(data.index, 1);
-                this.comps.push(dragCompData);
+                if (cmps[dragCompData.name].cusDirectives && cmps[dragCompData.name].cusDirectives.length) {
+                    this.comps.unshift(dragCompData);
+                } else {
+                    this.comps.push(dragCompData);
+                }
                 this.editComponent(dragCompData);
             },
             editComponent (e) {
