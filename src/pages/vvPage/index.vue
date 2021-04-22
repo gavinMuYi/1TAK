@@ -390,7 +390,7 @@
                     var prop = cmps[comp.name].props;
                     for (let key in prop) {
                         let value;
-                        if (!(prop[key].type instanceof Array)) {
+                        if (!(prop[key].type instanceof Array) && prop[key].type) {
                             value = typeof prop[key].type() === 'object' ? JSON.stringify(prop[key].default()) : prop[key].default;
                         }
                         this.$set(props[comp.config.hash], key, value);

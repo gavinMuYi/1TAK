@@ -81,10 +81,10 @@
                             <div class="config-comp vv-title" v-if="Object.keys(cusComp.config.data.data[key]).length">组件接口:</div>
                             <div class="config-comp props-item" v-for="datakey in Object.keys(cusComp.config.data.data[key])" :key="datakey">
                                 <span class="config-comp-title props-title" :title="datakey">
-                                    <span @click="emitSetProps(datakey, false)" :class="['iconfont', {'icon-shurukuang1': !currentEdit.config.props[datakey]}, {'icon-daima': currentEdit.config.props[datakey]}, {'disable-icon': getProps(currentEdit.id)[datakey].type instanceof Array}]"></span>
+                                    <span @click="emitSetProps(datakey, false)" :class="['iconfont', {'icon-shurukuang1': !currentEdit.config.props[datakey]}, {'icon-daima': currentEdit.config.props[datakey]}, {'disable-icon': getProps(currentEdit.id)[datakey].type instanceof Array || !getProps(currentEdit.id)[datakey].type}]"></span>
                                     {{ datakey }}
                                 </span>
-                                <span v-if="currentEdit.config.props[datakey] || (getProps(currentEdit.id)[datakey].type instanceof Array)" class="props-data">
+                                <span v-if="currentEdit.config.props[datakey] || (getProps(currentEdit.id)[datakey].type instanceof Array) || !getProps(currentEdit.id)[datakey].type" class="props-data">
                                     <span @click="emitSetProps(datakey, true)" class="icon-gengxin2 iconfont"></span>
                                     <ide-textarea :code="currentEdit.config.props[datakey]" :ref="datakey + 'IDE'" />
                                 </span>

@@ -151,7 +151,7 @@
                                 let propsFunc = tar ? tar.config.props : {};
                                 this[comp.config.hash] && Object.keys(cmps[comp.name].props).forEach(item => {
                                     localProps[item] = null;
-                                    if (!(cmps[comp.name].props[item].type instanceof Array)) {
+                                    if (!(cmps[comp.name].props[item].type instanceof Array) && cmps[comp.name].props[item].type) {
                                         switch (typeof cmps[comp.name].props[item].type()) {
                                         case 'object':
                                             try {
@@ -275,7 +275,7 @@
                                         // 复写localProps传loopProps
                                         this[comp.config.hash] && Object.keys(cmps[comp.name].props).forEach(item => {
                                             localProps[item] = null;
-                                            if (!(cmps[comp.name].props[item].type instanceof Array)) {
+                                            if (!(cmps[comp.name].props[item].type instanceof Array) && cmps[comp.name].props[item].type) {
                                                 switch (typeof cmps[comp.name].props[item].type()) {
                                                 case 'object':
                                                     try {

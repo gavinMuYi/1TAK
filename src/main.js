@@ -16,12 +16,12 @@ Object.keys(directives).forEach(key => {
     Vue.directive(key, directives[key]);
 })
 
-Vue.config.errorHandler = function (err, vm, info) {
-    var errBox = document.getElementById('error-box');
-    var div = document.createElement('div');
-    div.innerHTML = err;
-    errBox.appendChild(div);
-};
+// Vue.config.errorHandler = function (err, vm, info) {
+//     var errBox = document.getElementById('error-box');
+//     var div = document.createElement('div');
+//     div.innerHTML = err;
+//     errBox.appendChild(div);
+// };
 
 Vue.config.productionTip = false;
 Vue.use(install, { components: { ColorPicker, Slider }, prototypes: Prototypes });
@@ -192,7 +192,6 @@ Vue.prototype.$ajax.get('/getList').then(res => {
                                 vantCamps[window.vant[key].name] = window.vant[key];
                             });
                             window.outCamps = vantCamps;
-                            console.log(window.outCamps);
                         } catch (e) {
                             console.log(e);
                         }
