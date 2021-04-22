@@ -12,8 +12,9 @@
                 </div>
             </div>
             <div class="top-bar">
+                <preScriptEditor ref="preScriptEditorPanel" />
                 <div class="pre-script">
-                    <div class="btn-xiala">
+                    <div class="btn-xiala" @click="openPreScriptEditor">
                         <span class="iconfont icon-xiala2"></span>
                     </div>
                 </div>
@@ -95,6 +96,7 @@
 <script>
     import clone from 'clone';
     import qs from 'qs';
+    import preScriptEditor from '../../components/preScriptEditor';
     import InterfaceEditor from '../../components/interfaceEditor';
     import LeftBar from './components/leftBar';
     import RightBar from './components/rightBar';
@@ -113,7 +115,8 @@
             LeftBar,
             RightBar,
             DrawBoard,
-            InterfaceEditor
+            InterfaceEditor,
+            preScriptEditor
         },
         provide () {
             return {
@@ -216,6 +219,9 @@
                     }
                 });
                 this.dosave = false;
+            },
+            openPreScriptEditor () {
+                this.$refs.preScriptEditorPanel.openPannel();
             },
             showInterface () {
                 this.$refs.interface.visibleChange();

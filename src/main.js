@@ -87,7 +87,16 @@ function loadScript (src, callback) {
     var head = document.getElementsByTagName('head')[0];
     script.type = 'text/javascript';
     script.charset = 'UTF-8';
+    script.async = false;
     script.src = src;
+    // function answer () {
+    //     if (!script.readyState || script.readyState === 'loaded' || script.readyState === 'complete') {
+    //         if (callback) {
+    //             callback();
+    //         }
+    //         script.onload = script.onreadystatechange = null;
+    //     }
+    // };
     if (script.addEventListener) {
         script.addEventListener('load', function () {
             callback();
@@ -128,8 +137,8 @@ function loadLink (src, callback) {
 Vue.prototype.$ajax.get('/getList').then(res => {
     if (res.code === 0) {
         res.data.scriptList = [
-            'https://cdn.jsdelivr.net/npm/vant@2.12/lib/vant.min.js',
-            'https://cdn.jsdelivr.net/npm/vue@2.6/dist/vue.min.js'
+            'https://cdn.jsdelivr.net/npm/vue@2.6/dist/vue.min.js',
+            'https://cdn.jsdelivr.net/npm/vant@2.12/lib/vant.min.js'
         ];
         res.data.styleList = [
             'https://cdn.jsdelivr.net/npm/vant@2.12/lib/index.css'
