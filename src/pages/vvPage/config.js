@@ -32,10 +32,10 @@ exports.unitCompIcons = [{
 }];
 
 var outCompMap = {};
-window.outCompIcons.forEach(item => {
+window.customerCampsConfig.forEach(item => {
     outCompMap[item.key] = item.name;
 });
 
 exports.outCompMap = outCompMap;
 
-exports.outCompIcons = window.outCompIcons;
+exports.outCompIcons = window.customerCampsConfig;

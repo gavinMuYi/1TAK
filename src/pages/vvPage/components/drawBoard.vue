@@ -26,7 +26,7 @@
     var cmps = gtml;
     cmps = {
         ...cmps,
-        ...window.outCamps
+        ...window.customerCamps
     };
     export default {
         name: 'DrawBoard',

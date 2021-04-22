@@ -16,12 +16,12 @@ Object.keys(directives).forEach(key => {
     Vue.directive(key, directives[key]);
 })
 
-// Vue.config.errorHandler = function (err, vm, info) {
-//     var errBox = document.getElementById('error-box');
-//     var div = document.createElement('div');
-//     div.innerHTML = err;
-//     errBox.appendChild(div);
-// };
+Vue.config.errorHandler = function (err, vm, info) {
+    var errBox = document.getElementById('error-box');
+    var div = document.createElement('div');
+    div.innerHTML = err;
+    errBox.appendChild(div);
+};
 
 Vue.config.productionTip = false;
 Vue.use(install, { components: { ColorPicker, Slider }, prototypes: Prototypes });
@@ -168,7 +168,12 @@ Vue.prototype.$ajax.get('/getList').then(res => {
                     if (newValue === check) {
                         // 前置脚本
                         try {
-                            window.outCompIcons = [{
+                            var vantCamps = {}
+                            Object.keys(window.vant).forEach(key => {
+                                vantCamps[window.vant[key].name] = window.vant[key];
+                            });
+                            window.customerCamps = vantCamps;
+                            window.customerCampsConfig = [{
                                 key: 'ivancon',
                                 name: 'van-icon',
                                 label: 'van图标'
@@ -181,11 +186,6 @@ Vue.prototype.$ajax.get('/getList').then(res => {
                                 name: 'van-cell',
                                 label: 'van单元格'
                             }];
-                            var vantCamps = {}
-                            Object.keys(window.vant).forEach(key => {
-                                vantCamps[window.vant[key].name] = window.vant[key];
-                            });
-                            window.outCamps = vantCamps;
                         } catch (e) {
                             console.log(e);
                         }
@@ -207,9 +207,8 @@ Vue.prototype.$ajax.get('/getList').then(res => {
                 }
             });
         } else {
-            window.outCompMap = {};
-            window.outCompIcons = [];
-            window.outCamps = {}
+            window.customerCamps = {};
+            window.customerCampsConfig = [];
             // new Vue
             var router = require('./router').default;
             /* eslint-enable */
