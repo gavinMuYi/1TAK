@@ -365,6 +365,9 @@
                 if (comps.content) {
                     this.config_data_data_bak = comps.config.data.data;
                     this.config_data_eventHandlers_bak = comps.config.data.eventHandlers;
+                } else {
+                    this.config_data_data_bak = this.cusComp.config.data.data;
+                    this.config_data_eventHandlers_bak = this.cusComp.config.data.eventHandlers;
                 }
             },
             getCompsEvents (comps) {

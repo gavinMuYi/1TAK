@@ -99,6 +99,7 @@
             &:hover {
                 background: @sub;
                 color: @dep;
+                cursor: pointer;
             }
         }
         .customer-material {
