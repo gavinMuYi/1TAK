@@ -18,9 +18,11 @@ Object.keys(directives).forEach(key => {
 
 Vue.config.errorHandler = function (err, vm, info) {
     var errBox = document.getElementById('error-box');
-    var div = document.createElement('div');
-    div.innerHTML = err;
-    errBox.appendChild(div);
+    if (errBox) {
+        var div = document.createElement('div');
+        div.innerHTML = err;
+        errBox.appendChild(div);
+    }
 };
 
 Vue.config.productionTip = false;
