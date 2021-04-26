@@ -590,8 +590,9 @@
                 position: relative;
                 top: -25px;
                 left: -25px;
+                font-weight: 700;
                 .iconfont {
-                    color: #fff;
+                    color: @dep;
                 }
                 &:hover {
                     top: -10px;
