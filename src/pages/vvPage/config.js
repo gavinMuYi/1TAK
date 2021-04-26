@@ -5,7 +5,8 @@ exports.iconCompMap = {
     'icon-tupian': 'G_IMAGE',
     'icon-anniu': 'G_BUTTON',
     'icon-fuzhi': 'G_TABLE',
-    'icon-tishi3': 'G_POP'
+    'icon-tishi3': 'G_POP',
+    'icon-tubiaozhexiantu': 'G_LINE'
 };
 
 exports.unitCompIcons = [{
@@ -29,6 +30,9 @@ exports.unitCompIcons = [{
 }, {
     key: 'icon-tishi3',
     name: '提示'
+}, {
+    key: 'icon-tubiaozhexiantu',
+    name: '折线图'
 }];
 
 var outCompMap = {};
