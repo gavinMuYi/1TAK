@@ -93,14 +93,6 @@ function loadScript (src, callback) {
     script.charset = 'UTF-8';
     script.async = false;
     script.src = src;
-    // function answer () {
-    //     if (!script.readyState || script.readyState === 'loaded' || script.readyState === 'complete') {
-    //         if (callback) {
-    //             callback();
-    //         }
-    //         script.onload = script.onreadystatechange = null;
-    //     }
-    // };
     if (script.addEventListener) {
         script.addEventListener('load', function () {
             callback();
