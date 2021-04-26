@@ -20,6 +20,7 @@ app.all('*', (req, res, next) => {
 const DBapp = tcb.init({});
 const pageDate = DBapp.database().collection("page_date_db");
 const mockDate = DBapp.database().collection("mock_date_db");
+const preScriptData = DBapp.database().collection("prescript_date_db");
 
 app.get('/', (req, res) => {
     res.status(200)
@@ -188,6 +189,47 @@ app.post('/saveMeta', function (req, res) {
             });
         }
     })
+});
+
+app.post('/updatePreScript', function (req, res) {
+    var body = JSON.parse(Qs.parse(req.body).preScript);
+    var id = body.id;
+    preScriptData
+    .where({ id: id })
+    .options({ multiple: false })
+    .update({
+        useScript: body.useScript,
+        scriptList: body.scriptList,
+        styleList: body.styleList,
+        script: body.script
+    })
+    .then(e => {
+        if (e.updated) {
+            res.status(200)
+            res.json({
+                code: 0,
+                msg: 'success'
+            }); 
+        } else {
+            res.status(200)
+            res.json({
+                code: 1,
+                msg: 'fail'
+            });
+        }
+    })
+});
+
+app.get('/getPreScript', (req, res) => {
+    preScriptData.get().then(e => {
+        res.status(200)
+        res.json({
+            code: 0,
+            data: {
+                script: e.data[0]
+            }
+        })
+    });
 });
 
 const port = process.env.PORT || 80;

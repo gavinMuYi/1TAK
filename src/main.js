@@ -39,7 +39,9 @@ var whiteList = [
     '/getList',
     '/getListMock',
     '/saveMock',
-    '/updateMock'
+    '/updateMock',
+    '/getPreScript',
+    '/updatePreScript'
 ].map(url => {
     return 'https://' + BASE_URL + url
 });
@@ -136,31 +138,23 @@ function loadLink (src, callback) {
 };
 
 // 获取前置脚本信息
-Vue.prototype.$ajax.get('/getList').then(res => {
+Vue.prototype.$ajax.get('/getPreScript').then(res => {
     if (res.code === 0) {
-        res.data.scriptList = [
-            'https://cdn.jsdelivr.net/npm/vue@2.6/dist/vue.min.js',
-            'https://cdn.jsdelivr.net/npm/vant@2.12/lib/vant.min.js'
-        ];
-        res.data.styleList = [
-            'https://cdn.jsdelivr.net/npm/vant@2.12/lib/index.css'
-        ];
-        res.data.useScript = true;
-        window.preScript = res.data;
-        if (res.data.useScript) {
-            res.data.scriptList.forEach(url => {
+        window.preScript = res.data.script;
+        if (res.data.script.useScript) {
+            res.data.script.scriptList.forEach(url => {
                 loadScript(url, function () {
                     scriptMaps.count++;
                 });
             });
-            res.data.styleList.forEach(url => {
+            res.data.script.styleList.forEach(url => {
                 loadLink(url, function () {
                     scriptMaps.count++;
                 });
             });
             var scriptMaps = {};
             var scriptMapsCount = 0;
-            var check = res.data.scriptList.length + res.data.styleList.length;
+            var check = res.data.script.scriptList.length + res.data.script.styleList.length;
             Object.defineProperty(scriptMaps, 'count', {
                 get: () => {
                     return scriptMapsCount;
@@ -170,40 +164,10 @@ Vue.prototype.$ajax.get('/getList').then(res => {
                     if (newValue === check) {
                         // 前置脚本
                         try {
-                            var vantCamps = {}
-                            Object.keys(window.vant).forEach(key => {
-                                vantCamps[window.vant[key].name] = window.vant[key];
-                            });
-                            vantCamps['van-button'].slot = [{
-                                name: 'default',
-                                params: ''
-                            }, {
-                                name: 'loading',
-                                params: ''
-                            }];
-                            vantCamps['van-button'].event = [{
-                                name: 'click',
-                                label: '按钮点击事件',
-                                params: ''
-                            }, {
-                                name: 'touchstart',
-                                label: '开始触摸按钮时触发',
-                                params: 'TouchEvent'
-                            }];
-                            window.customerCamps = vantCamps;
-                            window.customerCampsConfig = [{
-                                key: 'ivancon',
-                                name: 'van-icon',
-                                label: 'van图标'
-                            }, {
-                                key: 'vanbutton',
-                                name: 'van-button',
-                                label: 'van按钮'
-                            }, {
-                                key: 'vancell',
-                                name: 'van-cell',
-                                label: 'van单元格'
-                            }];
+                            /* eslint-disable */
+                            var resFunc = new Function('return ' + res.data.script.script).call(this);
+                            /* eslint-enable */
+                            resFunc.call(this, Vue);
                         } catch (e) {
                             console.log(e);
                         }
