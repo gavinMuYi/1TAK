@@ -141,20 +141,20 @@ function loadLink (src, callback) {
 Vue.prototype.$ajax.get('/getPreScript').then(res => {
     if (res.code === 0) {
         window.preScript = res.data.script;
-        if (res.data.script.useScript) {
-            res.data.script.scriptList.forEach(url => {
+        if (window.preScript.useScript) {
+            window.preScript.scriptList.forEach(url => {
                 loadScript(url, function () {
                     scriptMaps.count++;
                 });
             });
-            res.data.script.styleList.forEach(url => {
+            window.preScript.styleList.forEach(url => {
                 loadLink(url, function () {
                     scriptMaps.count++;
                 });
             });
             var scriptMaps = {};
             var scriptMapsCount = 0;
-            var check = res.data.script.scriptList.length + res.data.script.styleList.length;
+            var check = window.preScript.scriptList.length + window.preScript.styleList.length;
             Object.defineProperty(scriptMaps, 'count', {
                 get: () => {
                     return scriptMapsCount;
@@ -165,7 +165,7 @@ Vue.prototype.$ajax.get('/getPreScript').then(res => {
                         // 前置脚本
                         try {
                             /* eslint-disable */
-                            var resFunc = new Function('return ' + res.data.script.script).call(this);
+                            var resFunc = new Function('return ' + window.preScript.script).call(this);
                             /* eslint-enable */
                             resFunc.call(this, Vue);
                         } catch (e) {
