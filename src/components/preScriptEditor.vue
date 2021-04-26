@@ -2,8 +2,14 @@
     <div :class="['pre-script-editor', { 'pre-script-editor-open': open }]">
         <span class="iconfont icon-zuzhuangguanli" @click="update"></span>
         <span class="iconfont icon-shangyibu top-icon" @click="closePannel"></span>
-        <div class="pre-script-title">前置脚本</div>
-        <div class="list">
+        <div class="pre-script-title">
+            前置脚本
+            <span
+                @click="preScript.useScript = !preScript.useScript"
+                :class="['iconfont', {'icon--qiyong': !preScript.useScript}, {'icon-qiyong': preScript.useScript}]">
+            </span>
+        </div>
+        <div class="list" v-show="preScript.useScript">
             <span class="title">scriptList：</span>
             <span v-for="(item, index) in preScript.scriptList" :key="item" class="item">
                 {{ item }}<span class="iconfont icon-shangyibu" @click="del('scriptList', index)" />
@@ -16,7 +22,7 @@
                 <span class="iconfont icon-shangyibu" @click="newScript = '';scriptList = false"/>
             </span>
         </div>
-        <div class="list">
+        <div class="list" v-show="preScript.useScript">
             <span class="title">styleList：</span>
             <span v-for="(item, index) in preScript.styleList" :key="item" class="item">
                 {{ item }}<span class="iconfont icon-shangyibu" @click="del('styleList', index)" />
@@ -29,7 +35,7 @@
                 <span class="iconfont icon-shangyibu" @click="newStyle = '';styleList = false"/>
             </span>
         </div>
-        <div class="script-text" :key="'interface-preScript' + Math.random()">
+        <div class="script-text" v-show="preScript.useScript" :key="'interface-preScript' + Math.random()">
             <span class="title">脚本：</span>
             <ide-textarea :code="preScript.script" ref="scriptIDE" />
         </div>
@@ -104,6 +110,15 @@
         border-right: 1px solid #034a43;
         display: none;
         background: #034a43e8;
+        .icon-qiyong,
+        .icon--qiyong {
+            font-size: 26px;
+            margin-right: 20px;
+            z-index: 10;
+        }
+        .icon--qiyong {
+            color: #7e7e7e!important;
+        }
         .script-text {
             padding-left: 40px;
             margin-bottom: 50px;
