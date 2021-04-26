@@ -134,6 +134,7 @@ Vue.prototype.$ajax.get('/getPreScript').then(res => {
     if (res.code === 0) {
         window.preScript = res.data.script;
         if (window.preScript.useScript) {
+            document.getElementById('preLoading').innerText = '前置脚本执行中。。。';
             window.preScript.scriptList.forEach(url => {
                 loadScript(url, function () {
                     scriptMaps.count++;

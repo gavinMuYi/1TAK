@@ -12,6 +12,17 @@
       body {
           min-width: 1500px;
       }
+      #preLoading {
+          text-align: center;
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          margin-left: -200px;
+          margin-top: -25px;
+          color: #034a43;
+          font-size: 50px;
+          font-weight: 50px;
+      }
       *::-webkit-scrollbar {
         width: 5px;
         height: 1px;
@@ -29,6 +40,8 @@
     </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+        <div id="preLoading">正在获取前置脚本。。。</div>
+    </div>
   </body>
 </html>
