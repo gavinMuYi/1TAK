@@ -86,7 +86,7 @@
                                 </span>
                                 <span v-if="currentEdit.config.props[datakey] || (getProps(currentEdit.id)[datakey].type instanceof Array) || !getProps(currentEdit.id)[datakey].type" class="props-data">
                                     <span @click="emitSetProps(datakey, true)" class="icon-gengxin2 iconfont"></span>
-                                    <ide-textarea :code="currentEdit.config.props[datakey]" :ref="datakey + 'IDE'" />
+                                    <ide-textarea :code="currentEdit.config.props[datakey] || 'function() {}'" :ref="datakey + 'IDE'" />
                                 </span>
                                 <textarea v-else v-model="cusComp.config.data.data[key][datakey]" @change="emitChange()" />
                             </div>
