@@ -146,6 +146,7 @@
                 iconCompMap: iconCompMap,
                 outCompMap: outCompMap,
                 nowEdit: {},
+                rightBarChange: false,
                 comps: this.preCusComp ? this.preCusComp.comps : [],
                 cusCompHash: this.preCusComp ? this.preCusComp.config.hash : createHash(4),
                 config_data_data_bak: this.preCusComp ? this.preCusComp.config.data.data : {},
@@ -199,7 +200,7 @@
         watch: {
             nowEdit: {
                 handler (val) {
-                    this.refreshWorkSpace();
+                    // this.refreshWorkSpace();
                 },
                 deep: true
             }
@@ -361,6 +362,10 @@
                 this.$set(this.lifeCycle, key, val);
             },
             updateParams (comps) {
+                if (this.rightBarChange) {
+                    this.rightBarChange = false;
+                    return;
+                }
                 this.refreshWorkSpace();
                 if (comps.content) {
                     this.config_data_data_bak = comps.config.data.data;
@@ -446,10 +451,16 @@
                 this.editComponent(dragCompData);
             },
             editComponent (e) {
-                this.$set(this, 'nowEdit', e);
+                if (JSON.stringify(this.nowEdit) !== JSON.stringify(e)) {
+                    this.$set(this, 'nowEdit', e);
+                    this.rightBarChange = true;
+                }
             },
             editContent () {
-                this.$set(this, 'nowEdit', this.cusComp);
+                if (JSON.stringify(this.nowEdit) !== JSON.stringify(this.cusComp)) {
+                    this.$set(this, 'nowEdit', this.cusComp);
+                    this.rightBarChange = true;
+                }
             }
         }
     }
