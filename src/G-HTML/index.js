@@ -6,6 +6,10 @@ import G_BUTTON from './button';
 import G_TABLE from './table';
 import G_POP from './pop';
 import G_LINE from './line';
+import G_AREA from './area';
+import G_CYCLE from './cycle';
+import G_PIE from './pie';
+import G_COLUMN from './column';
 
 window._ghtml = {
     G_INPUT,
@@ -15,7 +19,11 @@ window._ghtml = {
     G_BUTTON,
     G_TABLE,
     G_POP,
-    G_LINE
+    G_LINE,
+    G_AREA,
+    G_CYCLE,
+    G_PIE,
+    G_COLUMN
 };
 
 export default window._ghtml;

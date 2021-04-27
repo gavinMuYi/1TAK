@@ -6,7 +6,11 @@ exports.iconCompMap = {
     'icon-anniu': 'G_BUTTON',
     'icon-fuzhi': 'G_TABLE',
     'icon-tishi3': 'G_POP',
-    'icon-tubiaozhexiantu': 'G_LINE'
+    'icon-tubiaozhexiantu': 'G_LINE',
+    'icon-quyutu': 'G_AREA',
+    'icon-huanzhuangtu': 'G_CYCLE',
+    'icon-bingtu': 'G_PIE',
+    'icon-tubiaozhuzhuangtu': 'G_COLUMN'
 };
 
 exports.unitCompIcons = [{
@@ -33,6 +37,18 @@ exports.unitCompIcons = [{
 }, {
     key: 'icon-tubiaozhexiantu',
     name: '折线图'
+}, {
+    key: 'icon-quyutu',
+    name: '区域图'
+}, {
+    key: 'icon-huanzhuangtu',
+    name: '环状图'
+}, {
+    key: 'icon-bingtu',
+    name: '饼图'
+}, {
+    key: 'icon-tubiaozhuzhuangtu',
+    name: '柱状图'
 }];
 
 var outCompMap = {};
