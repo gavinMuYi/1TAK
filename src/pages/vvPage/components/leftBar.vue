@@ -85,10 +85,10 @@
             width: 96px;
             box-sizing: border-box;
             padding: 5px;
-            height: 60px;
+            height: 50px;
             font-weight: 700;
-            line-height: 50px;
-            font-size: 16px;
+            line-height: 40px;
+            font-size: 13px;
             margin: 5px 0 0px 5px;
             display: inline-block;
             border-radius: 5px;
