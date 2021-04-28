@@ -20,7 +20,6 @@
                 <div class="tr tr4">{{ new Date(line.lastModifiy).Format("yyyy-MM-dd hh:mm:ss") }}</div>
                 <div class="tr tr5">
                     <router-link :to="{ name: 'View', query: { metaID: line.metaID } }">查看</router-link>
-                    <span>删除</span>
                 </div>
             </div>
         </div>
