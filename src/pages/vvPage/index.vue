@@ -107,7 +107,7 @@
     var cmps = gtml;
     cmps = {
         ...cmps,
-        ...window.customerCamps
+        ...window.$Manager('get', 'customerCamps')
     };
     export default {
         name: 'VvPage',
@@ -134,7 +134,7 @@
             }
         },
         data () {
-            window.mock = true;
+            window.$Manager('set', 'mock', true);
             return {
                 errShow: false,
                 windowMock: true,
@@ -229,7 +229,7 @@
             },
             changeMock () {
                 this.windowMock = !this.windowMock;
-                window.mock = !window.mock;
+                window.$Manager('set', 'mock', !window.$Manager('get', 'mock'));
             },
             slotChange (slotData) {
                 this.refreshWorkSpace();

@@ -50,7 +50,7 @@ Vue.prototype.$ajax.post = function (url, options) {
     if (url[0] === '/') {
         url = window.basicUrl + url;
     }
-    if (window.mock && whiteList.indexOf(url) === -1) {
+    if (window.$Manager('get', 'mock') && whiteList.indexOf(url) === -1) {
         url = url.replace(BASE_URL, BASE_URL + '/mock');
     }
     return ajax.post(url, options).then(res => Promise.resolve(res.data));
@@ -59,7 +59,7 @@ Vue.prototype.$ajax.get = function (url, options) {
     if (url[0] === '/') {
         url = window.basicUrl + url;
     }
-    if (window.mock && whiteList.indexOf(url) === -1) {
+    if (window.$Manager('get', 'mock') && whiteList.indexOf(url) === -1) {
         url = url.replace(BASE_URL, BASE_URL + '/mock');
     }
     return ajax.get(url, options).then(res => Promise.resolve(res.data));
@@ -129,6 +129,29 @@ function loadLink (src, callback) {
     head.appendChild(linkTag);
 };
 
+// 创建管理类
+var VvPageManager = function () {
+    var globelData = {
+        customerCamps: {},
+        customerCampsConfig: [],
+        mock: false
+    };
+    return function (method, name, value) {
+        switch (method) {
+            case 'set':
+                globelData[name] = value
+                break;
+            case 'get':
+                return globelData[name];
+        }
+    }
+};
+Object.defineProperty(window, "$Manager", {
+	value: new VvPageManager(),
+	writable: false,
+	configurable: false
+});
+
 // 获取前置脚本信息
 Vue.prototype.$ajax.get('/getPreScript').then(res => {
     if (res.code === 0) {
@@ -182,8 +205,8 @@ Vue.prototype.$ajax.get('/getPreScript').then(res => {
                 }
             });
         } else {
-            window.customerCamps = {};
-            window.customerCampsConfig = [];
+            window.$Manager('set', 'customerCamps', {});
+            window.$Manager('set', 'customerCampsConfig', []);
             // new Vue
             var router = require('./router').default;
             /* eslint-enable */

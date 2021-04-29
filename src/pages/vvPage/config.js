@@ -52,10 +52,10 @@ exports.unitCompIcons = [{
 }];
 
 var outCompMap = {};
-window.customerCampsConfig.forEach(item => {
+window.$Manager('get', 'customerCampsConfig').forEach(item => {
     outCompMap[item.key] = item.name;
 });
 
 exports.outCompMap = outCompMap;
 
-exports.outCompIcons = window.customerCampsConfig;
+exports.outCompIcons = window.$Manager('get', 'customerCampsConfig');

@@ -159,7 +159,7 @@
     var cmps = gtml;
     cmps = {
         ...cmps,
-        ...window.customerCamps
+        ...window.$Manager('get', 'customerCamps')
     };
     export default {
         name: 'RightBar',
