@@ -17,10 +17,6 @@ app.all('*', (req, res, next) => {
 });
 
 const DBapp = tcb.init({
-    secretId: "AKIDlIbqrUkCDz762q9KGG3cujM6cV9Yae6J",
-    secretKey: "92ddeoJXWNypQlFUTDI7y533nFbeaHlz",
-    env: "mini-lab-cloudbase-4dxr8e7b614a4",
-    timeout: 5000
 });
 const pageDate = DBapp.database().collection("page_date_db");
 
