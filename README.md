@@ -43,14 +43,4 @@
 ![Image text](https://raw.githubusercontent.com/gavinMuYi/VvPage/main/static/企业微信截图_60800bf2-b18b-4b46-b3b5-4ef201183c90.png)
 ![Image text](https://raw.githubusercontent.com/gavinMuYi/VvPage/main/static/企业微信截图_d24b56d1-5c4b-4d53-ae9c-fdc137d8e1d6.png)
 
-## 体验地址
-
-首页(忽略ghtml btn)
-https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/Vvpage#/
-
-配置页
-https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/Vvpage#/vvPage
-
-查看页
-https://mini-lab-cloudbase-4dxr8e7b614a4-1259082755.ap-shanghai.app.tcloudbase.com/Vvpage#/pageList
 
